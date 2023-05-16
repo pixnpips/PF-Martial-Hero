@@ -1,0 +1,61 @@
+.title {
+    -fx-font-size: 36px;
+    -fx-text-fill: #f8f8f8;
+    -fx-font-family: "Press Start 2P", monospace;
+    -fx-effect: dropshadow(three-pass-box, black, 5, 0.4, 2, 2);
+}
+
+.menu-button {
+    -fx-background-color: darkred transparent;
+    -fx-border-color: #f8f8f8;
+    -fx-border-width: 2px;
+    -fx-text-fill: #f8f8f8;
+    -fx-font-size: 24px;
+    -fx-font-family: "Press Start 2P", monospace;
+    -fx-effect: dropshadow(three-pass-box, black, 5, 0.4, 2, 2);
+    -fx-padding: 5px;
+    -fx-width: 50px;
+}
+
+.menu-button:hover {
+    -fx-background-color: #f8f8f8;
+    -fx-text-fill: #303030;
+}
+
+VBox {
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+
+.startBox{
+    -fx-background-image: url("../images/StartBG.png");
+}
+
+.pauseBox{
+    -fx-background-image: url("../images/BG_Pause.png");
+}
+
+.highBox{
+    -fx-background-image: url("../images/BG_Highscore.png");
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #333333;
+}
+
+.table-view .column-header {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14pt;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #e0e0e0;
+}
+
+.table-row-cell {
+    -fx-font-size: 12pt;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" styleClass="highBox" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="title" text="Highscores" />
+            <VBox layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0" spacing="10.0">
+                <TableView fx:id="highscoreTable" layoutX="100.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Name" />
+                        <TableColumn fx:id="scoreColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Score" />
+                    </columns>
+            <VBox.margin>
+               <Insets left="100.0" />
+            </VBox.margin>
+                </TableView>
+            </VBox>
+    </children>
+</VBox>
