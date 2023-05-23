@@ -39,6 +39,10 @@ VBox {
     -fx-background-image: url("../images/BG_Highscore.png");
 }
 
+.mapChoiceBox{
+    -fx-background-image: url("../images/BG_MapChoice.png");
+}
+
 .table-view {
     -fx-background-color: transparent;
 }
