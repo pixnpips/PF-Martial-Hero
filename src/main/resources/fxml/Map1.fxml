@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<HBox maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../styles/map.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController">
-    <children>
-        <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="title" text="Energiebalken" />
-    </children>
-</HBox>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <ImageView fitHeight="1080.0" fitWidth="3000.0">
+               <image>
+                  <Image url="@../images/Map2.png" />
+               </image>
+            </ImageView>
+            <BorderPane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0">
+               <bottom>
+                  <HBox fx:id="hb1" id="hb1" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_CENTER">
+                     <children>
+                        <Circle fx:id="c1" id="c1" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="500.0" />
+                        <Circle fx:id="c2" id="c2" fill="RED" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1000.0" />
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </children>
+      </StackPane>
+   </children>
+</VBox>

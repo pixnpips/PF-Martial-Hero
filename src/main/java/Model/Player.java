@@ -1,6 +1,7 @@
 package Model;
 
 import Application.Main;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -8,20 +9,16 @@ import javafx.scene.shape.Shape;
 public class Player {
 
     private String name;
-    private Circle C1;
+    private Node N;
 
-    private int num;
 
-    public Player(String n, int num){
+    public Player(String n, Node N){
         this.name=n;
-        this.C1=new Circle(100);
-        if(num==1) {
-            this.C1.setFill(Color.BLUE);
-        }else this.C1.setFill(Color.RED);
+        this.N=N;
     }
 
-    public Circle getShape(){
-        return this.C1;
+    public Node getNode(){
+        return this.N;
     }
 
 }
