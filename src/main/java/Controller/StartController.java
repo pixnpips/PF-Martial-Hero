@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class StartController {
 
-
     @FXML
     private Label welcomeText;
 

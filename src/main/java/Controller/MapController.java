@@ -8,11 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MapController {
 
@@ -47,7 +45,7 @@ public class MapController {
 
         addMovement(scene,N1, N2);
 
-        setAnimationtimer(N1);
+        setJump(N1);
 
 //      Main.startStage.setTitle("Choose your Map");
 
@@ -101,7 +99,7 @@ public class MapController {
         });
     }
 
-    public void setAnimationtimer(Node n){
+    public void setJump(Node n){
         // Animationsschleife, um den Sprung und die Schwerkraft anzuwenden
         javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
             @Override
