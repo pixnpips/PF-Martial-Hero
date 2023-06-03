@@ -1,18 +1,19 @@
 package Controller;
 
-import Application.Main_V;
+import Application.Main;
 import Model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 
 import java.io.IOException;
 
-public class MapController_V {
+public class MapController {
 
     private double jump_amount= 50;
     double GRAVITY = 2;
@@ -20,20 +21,30 @@ public class MapController_V {
 
     @FXML
     protected void pause(){
-        Main_V.startStage.close();
+        Main.startStage.close();
+    }
+
+
+    @FXML
+    public VBox background;
+    public void chooseMap(int mapNr){
+
+        if(mapNr==1){
+            background.getStyleClass().add("map01");
+        } else {
+            background.getStyleClass().add("map02");
+        }
     }
 
 
     @FXML
     protected void openMap1() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main_V.class.getResource("/fxml/Map1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
 
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
-        VBox root =fxmlLoader.getRoot();
-
-        System.out.println(root.getChildren().get(0).getClass().toString());
+        ScrollPane root=fxmlLoader.getRoot();
 
         Node N1= root.lookup("#c1");
         Node N2= root.lookup("#c2");
@@ -49,13 +60,14 @@ public class MapController_V {
 
 //      Main.startStage.setTitle("Choose your Map");
 
-        Main_V.startStage.setScene(scene);
-        Main_V.startStage.show();
+        Main.startStage.setScene(scene);
+        Main.startStage.show();
     }
+
 
     @FXML
     protected void exit(){
-        Main_V.startStage.close();
+        Main.startStage.close();
     }
 
     @FXML
