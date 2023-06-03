@@ -27,6 +27,7 @@ public class MapController {
 
     @FXML
     public VBox background;
+
     public void chooseMap(int mapNr){
 
         if(mapNr==1){
@@ -52,16 +53,17 @@ public class MapController {
         Player player1= new Player("P1", N1);
         Player player2= new Player("P2", N2);
 
-        System.out.println(N1.getClass().toString());
+//       System.out.println(N1.getClass().toString());
+
 
         addMovement(scene,N1, N2);
-
         setJump(N1);
-
-//      Main.startStage.setTitle("Choose your Map");
 
         Main.startStage.setScene(scene);
         Main.startStage.show();
+
+        MapController MC1=fxmlLoader.getController();
+        MC1.chooseMap(1);
     }
 
 
@@ -112,22 +114,22 @@ public class MapController {
     }
 
     public void setJump(Node n){
-        // Animationsschleife, um den Sprung und die Schwerkraft anzuwenden
-        javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                // Anwenden der Schwerkraft
-                velocity += GRAVITY;
-                n.setTranslateY(n.getTranslateY() + velocity);
-                // Überprüfen, ob das Rechteck den Boden berührt
-                if (n.getTranslateY() >=0) {
-                    // Zurücksetzen der Vertikalgeschwindigkeit
-                    velocity = 0;
-                    n.setTranslateY(0);
-                }
-            }
-        };
-        timer.start();
+//        // Animationsschleife, um den Sprung und die Schwerkraft anzuwenden
+//        javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                // Anwenden der Schwerkraft
+//                velocity += GRAVITY;
+//                n.setTranslateY(n.getTranslateY() + velocity);
+//                // Überprüfen, ob das Rechteck den Boden berührt
+//                if (n.getTranslateY() >=0) {
+//                    // Zurücksetzen der Vertikalgeschwindigkeit
+//                    velocity = 0;
+//                    n.setTranslateY(0);
+//                }
+//            }
+//        };
+//        timer.start();
     }
 
 }
