@@ -1,39 +1,22 @@
-.title {
-    -fx-font-size: 36px;
-    -fx-text-fill: #f8f8f8;
-    -fx-font-family: "Press Start 2P", monospace;
-    -fx-effect: dropshadow(three-pass-box, black, 5, 0.4, 2, 2);
+VBox {
+    -fx-background-position: center center;
+    -fx-background-size: cover;
 }
 
-
-
-HBox {
-    -fx-background-position: center;
-    -fx-background-size: cover;
-    -fx-background-origin: content-box;
-    fx-background-repeat: no-repeat;
+.map01{
+    -fx-background-image: url("../images/Map2.png");
+}
+.map02{
     -fx-background-image: url("../images/Map1.png");
 }
 
-
-
-.table-view {
-    -fx-background-color: transparent;
+.health-bar{
+    -fx-text-box-border: transparent;
+    -fx-control-inner-background: transparent;
 }
-
-.table-view .column-header-background {
-    -fx-background-color: #333333;
+.hp01{
+    -fx-accent: yellowgreen;
 }
-
-.table-view .column-header {
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 14pt;
-}
-
-.table-row-cell:odd {
-    -fx-background-color: #e0e0e0;
-}
-
-.table-row-cell {
-    -fx-font-size: 12pt;
+.hp02{
+    -fx-accent: orange;
 }

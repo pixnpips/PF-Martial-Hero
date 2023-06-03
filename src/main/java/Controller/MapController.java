@@ -46,15 +46,19 @@ public class MapController {
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         ScrollPane root=fxmlLoader.getRoot();
+        //System.out.println(fxmlLoader.getRoot().toString());
 
-        Node N1= root.lookup("#c1");
-        Node N2= root.lookup("#c2");
+        Node VB1=root.getContent();
+        Node N1= VB1.lookup("#c1");
+        Node N2= VB1.lookup("#c2");
+
+        System.out.println(N1.getClass());
+        System.out.println(N2.getClass());
 
         Player player1= new Player("P1", N1);
         Player player2= new Player("P2", N2);
 
 //       System.out.println(N1.getClass().toString());
-
 
         addMovement(scene,N1, N2);
         setJump(N1);
@@ -65,7 +69,6 @@ public class MapController {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(1);
     }
-
 
     @FXML
     protected void exit(){
@@ -114,22 +117,22 @@ public class MapController {
     }
 
     public void setJump(Node n){
-//        // Animationsschleife, um den Sprung und die Schwerkraft anzuwenden
-//        javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                // Anwenden der Schwerkraft
-//                velocity += GRAVITY;
-//                n.setTranslateY(n.getTranslateY() + velocity);
-//                // Überprüfen, ob das Rechteck den Boden berührt
-//                if (n.getTranslateY() >=0) {
-//                    // Zurücksetzen der Vertikalgeschwindigkeit
-//                    velocity = 0;
-//                    n.setTranslateY(0);
-//                }
-//            }
-//        };
-//        timer.start();
+        // Animationsschleife, um den Sprung und die Schwerkraft anzuwenden
+        javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                // Anwenden der Schwerkraft
+                velocity += GRAVITY;
+                n.setTranslateY(n.getTranslateY() + velocity);
+                // Überprüfen, ob das Rechteck den Boden berührt
+                if (n.getTranslateY() >=0) {
+                    // Zurücksetzen der Vertikalgeschwindigkeit
+                    velocity = 0;
+                    n.setTranslateY(0);
+                }
+            }
+        };
+        timer.start();
     }
 
 }

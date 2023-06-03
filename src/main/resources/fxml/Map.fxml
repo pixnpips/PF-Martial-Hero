@@ -10,39 +10,39 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<ScrollPane fitToHeight="true" hbarPolicy="NEVER" hvalue="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" vbarPolicy="NEVER" vmax="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController">
-   <content>
-      <VBox fx:id="background" maxHeight="850" maxWidth="2550" minHeight="850" minWidth="2550" prefHeight="850.0" prefWidth="2550.0" stylesheets="@../styles/map.css">
-         <children>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="2550.0">
-               <children>
-                  <ProgressIndicator fx:id="timer" layoutX="1252.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" progress="0.3" scaleX="3.0" scaleY="3.0" />
-                  <ProgressBar fx:id="hp01" layoutX="700.0" layoutY="100.0" prefWidth="200.0" progress="0.27" scaleX="2.5" scaleY="3.0" stylesheets="@../styles/map.css" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="1550.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <styleClass>
-                        <String fx:value="health-bar" />
-                        <String fx:value="hp01" />
-                     </styleClass>
-                  </ProgressBar>
-                  <ProgressBar fx:id="hp02" layoutX="1580.0" layoutY="100.0" prefWidth="200.0" progress="0.55" rotate="180.0" scaleX="2.5" scaleY="3.0" stylesheets="@../styles/map.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="1550.0">
-                     <styleClass>
-                        <String fx:value="health-bar" />
-                        <String fx:value="hp02" />
-                     </styleClass>
-                  </ProgressBar>
-               </children>
-            </AnchorPane>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="2550.0">
-               <children>
-                  <Circle id="c1" fx:id="c1" fill="DODGERBLUE" layoutY="490.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1000.0" />
-                  <Circle id="c2" fx:id="c2" fill="RED" layoutY="490.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1600.0" />
-                  <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="10.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="2550.0" y="590.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-   </content>
 
-</ScrollPane>
+   <ScrollPane fitToHeight="true" hbarPolicy="NEVER" hvalue="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" vbarPolicy="NEVER" vmax="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController">
+      <content>
+         <VBox fx:id="background" maxHeight="850" maxWidth="2550" minHeight="850" minWidth="2550" prefHeight="850.0" prefWidth="2550.0" stylesheets="@../styles/map.css">
+            <children>
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="2550.0">
+                  <children>
+                     <ProgressIndicator fx:id="timer" layoutX="1252.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" progress="0.3" scaleX="3.0" scaleY="3.0" />
+                     <ProgressBar fx:id="hp01" layoutX="700.0" layoutY="100.0" prefWidth="200.0" progress="0.27" scaleX="2.5" scaleY="3.0" stylesheets="@../styles/map.css" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="1550.0">
+                        <opaqueInsets>
+                           <Insets />
+                        </opaqueInsets>
+                        <styleClass>
+                           <String fx:value="health-bar" />
+                           <String fx:value="hp01" />
+                        </styleClass>
+                     </ProgressBar>
+                     <ProgressBar fx:id="hp02" layoutX="1580.0" layoutY="100.0" prefWidth="200.0" progress="0.55" rotate="180.0" scaleX="2.5" scaleY="3.0" stylesheets="@../styles/map.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="1550.0">
+                        <styleClass>
+                           <String fx:value="health-bar" />
+                           <String fx:value="hp02" />
+                        </styleClass>
+                     </ProgressBar>
+                  </children>
+               </AnchorPane>
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="2550.0">
+                  <children>
+                     <Circle id="c1" fx:id="c1" fill="DODGERBLUE" layoutY="490.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1000.0" />
+                     <Circle id="c2" fx:id="c2" fill="RED" layoutY="490.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1600.0" />
+                     <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="10.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="2550.0" y="590.0" />
+                  </children>
+               </AnchorPane>
+            </children>
+         </VBox>
+      </content>
+   </ScrollPane>
