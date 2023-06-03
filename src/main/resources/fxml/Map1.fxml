@@ -12,7 +12,7 @@
    <children>
       <StackPane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0">
          <children>
-            <ImageView fitHeight="1080.0" fitWidth="3000.0">
+            <ImageView fitHeight="1080.0" fitWidth="3500.0">
                <image>
                   <Image url="@../images/Map2.png" />
                </image>
