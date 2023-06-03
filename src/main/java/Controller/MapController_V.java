@@ -1,6 +1,6 @@
 package Controller;
 
-import Application.Main;
+import Application.Main_V;
 import Model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class MapController {
+public class MapController_V {
 
     private double jump_amount= 50;
     double GRAVITY = 2;
@@ -20,13 +20,13 @@ public class MapController {
 
     @FXML
     protected void pause(){
-        Main.startStage.close();
+        Main_V.startStage.close();
     }
 
 
     @FXML
     protected void openMap1() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main_V.class.getResource("/fxml/Map1.fxml"));
         System.out.println(fxmlLoader.getLocation());
 
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
@@ -49,13 +49,13 @@ public class MapController {
 
 //      Main.startStage.setTitle("Choose your Map");
 
-        Main.startStage.setScene(scene);
-        Main.startStage.show();
+        Main_V.startStage.setScene(scene);
+        Main_V.startStage.show();
     }
 
     @FXML
     protected void exit(){
-        Main.startStage.close();
+        Main_V.startStage.close();
     }
 
     @FXML
