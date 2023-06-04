@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerController {
 
@@ -34,7 +35,8 @@ public class PlayerController {
         // Load the sprite frames
         frames =  new ArrayList<>();
         for (int i = 1; i <= NUM_FRAMES; i++) {
-            Image frame = new Image("F:\\Studium\\Berliner Hochschule für Technik\\SS 2023\\Patterns und Frameworks\\Projects\\PF-Martial-Hero\\src\\main\\resources\\images\\sprites\\char1/Idle_" + i + ".png");
+            String imagePath = "/images/sprites/char1/Idle_" + i + ".png";
+            Image frame = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
             frames.add(frame);
         }
 
