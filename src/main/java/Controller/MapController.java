@@ -1,15 +1,12 @@
 package Controller;
 
 import Application.Main;
-import Model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
-import Controller.PlayerController;
 
 
 import java.io.IOException;
@@ -52,11 +49,17 @@ public class MapController  {
         System.out.println(N1.getClass());
         System.out.println(N2.getClass());
 
-        PlayerController PC1= new PlayerController(N1, scene, 1);
-        PlayerController PC2= new PlayerController(N2, scene, 2);
+//        Player1Controller PC1= new Player1Controller(N1, scene, 1);
+//        Player2Controller PC2= new Player2Controller(N2, scene, 2);
+//
+//        PC1.start();
+//        PC2.start();
 
-        PC1.start();
-        PC2.start();
+//        System.out.println(PC1.getState());
+//        System.out.println(PC2.getState());
+
+        PlayerController PC= new PlayerController(N1,N2,scene);
+        PC.start();
 
         Main.startStage.setScene(scene);
         Main.startStage.show();
