@@ -3,13 +3,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
-    <children>
-        <HBox layoutX="300.0" layoutY="210.0" prefHeight="200.0" prefWidth="400.0">
-            <children>
-                <fx:include fx:id="playerImageView" source="PlayerMovement.fxml" />
-                <fx:include fx:id="enemyImageView" source="Player2Movement.fxml" />
-            </children></HBox>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+            prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MainController">
+    <HBox layoutX="300.0" layoutY="210.0" prefHeight="200.0" prefWidth="400.0">
+        <fx:include fx:id="canvas" source="PlayerMovement.fxml"/>
+        <fx:include fx:id="canvas2" source="Player2Movement.fxml"/>
+    </HBox>
 </AnchorPane>
 

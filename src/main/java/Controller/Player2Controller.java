@@ -1,14 +1,14 @@
 package Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class Player2Controller {
 
     @FXML
-    private ImageView enemyImageView;
+    private Canvas canvas2;
 
     @FXML
     void handleKeyPressed(KeyEvent event) {

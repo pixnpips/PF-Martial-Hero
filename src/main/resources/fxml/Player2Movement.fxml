@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<ImageView fx:id="enemyImageView" fitHeight="200.0" fitWidth="200.0" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onMouseClicked="#handleMouseClicked" pickOnBounds="true" preserveRatio="true" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Player2Controller">
-    <image>
-        <Image url="@../images/sprites/char2/Idle_1.png" />
-    </image>
-</ImageView>
+<AnchorPane onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onMouseClicked="#handleMouseClicked"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Player2Controller">
+    <Canvas fx:id="canvas2" height="200.0" width="200.0"/>
+</AnchorPane>
