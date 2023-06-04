@@ -2,12 +2,14 @@ package Controller;
 
 import Application.Main;
 import Model.Player;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class PlayerController extends Thread {
@@ -20,6 +22,9 @@ public class PlayerController extends Thread {
 
     private Scene S;
 
+    private boolean moveRight;
+    private static final double NODE_SPEED = 5.0;
+
 
     public PlayerController(Node N, Scene S, int player){
         this.N=N;
@@ -28,13 +33,43 @@ public class PlayerController extends Thread {
     }
 
 
-    public void run() {
-        if (this.player==1){
-            addTransP1();
-        }else addTransP2();
-        setJump(this.N);
-        System.out.println(this.getName()+ "gestartet");
+//    public void run() {
+//        if (this.player==1){
+//            addTransP1();
+//        }else addTransP2();
+//        setJump(this.N);
+//        System.out.println(this.getName()+ "gestartet");
+//    }
+
+    public void run(){
+        this.S.setOnKeyPressed(this::handleKeyPress);
+        this.S.setOnKeyReleased(this::handleKeyRelease);
     }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.D) {
+            moveRight = true;
+        }
+    }
+
+    private void handleKeyRelease(KeyEvent event) {
+        if (event.getCode() == KeyCode.D) {
+            moveRight = false;
+        }
+    }
+
+    public void setRight(Node N){
+        AnimationTimer animationTimer1 = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (moveRight) {
+                    N.setTranslateX((N.getTranslateX() + NODE_SPEED));
+                }
+            }
+        };
+        animationTimer1.start();
+    }
+
 
 
     public void setJump(Node n){
@@ -56,7 +91,7 @@ public class PlayerController extends Thread {
         timer.start();
     }
 
-    private void addTransP1(){
+/*    private void addTransP1(){
         this.S.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.D) {
                 // Bewege den Kreis um MOVE_AMOUNT Pixel nach rechts
@@ -71,9 +106,9 @@ public class PlayerController extends Thread {
                 velocity= -jump_amount;
             }
         });
-    }
+    }*/
 
-    private void addTransP2(){
+/*    private void addTransP2(){
         this.S.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.RIGHT) {
                 // Bewege den Kreis um MOVE_AMOUNT Pixel nach rechts
@@ -88,6 +123,5 @@ public class PlayerController extends Thread {
                 velocity= -jump_amount;
             }
         });
-    }
-
+    }*/
 }
