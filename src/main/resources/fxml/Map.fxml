@@ -10,6 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
+
 <ScrollPane fitToHeight="true" hbarPolicy="NEVER" hvalue="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" vbarPolicy="NEVER" vmax="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController">
       <content>
          <VBox fx:id="background" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" stylesheets="@../styles/map.css">
@@ -36,7 +37,8 @@
                </AnchorPane>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="3500.0">
                   <children>
-                     <Circle id="c1" fx:id="c1" fill="DODGERBLUE" layoutX="315.0" layoutY="658.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" translateX="1000.0" />
+                     <fx:include source="PlayerMovement.fxml"></fx:include>
+                     <Circle id="c1" fx:id="c1" fill="DODGERBLUE" layoutX="315.0" layoutY="658.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" d" />
                      <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="10.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="3500.0" y="590.0" />
                      <Circle id="c2" fx:id="c2" fill="RED" layoutX="2130.0" layoutY="658.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
                   </children>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Canvas xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SpriteController" fx:id="canvas" height="400.0" width="600.0" layoutX="600.0" layoutY="658.0" translateX="1000.0" translateY="-300.0"/>
