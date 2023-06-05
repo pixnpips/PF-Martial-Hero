@@ -31,7 +31,6 @@ public class MapController  {
     }
 
 
-
     @FXML
     protected void openMap()  throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
@@ -41,8 +40,13 @@ public class MapController  {
 
         Node VB1=root.getContent();
 
-        Node N1= VB1.lookup("#c1");
-        Node N2= VB1.lookup("#c2");
+//        Node N1= VB1.lookup("#c1");
+//
+//       Node N2= VB1.lookup("#c2");
+
+        Node N1= VB1.lookup("#canvas1");
+        Node N2= VB1.lookup("#canvas2");
+
 
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();

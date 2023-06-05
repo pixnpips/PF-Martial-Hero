@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.shape.Rectangle?>
 
 
@@ -37,10 +38,9 @@
                </AnchorPane>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="3500.0">
                   <children>
-                     <fx:include source="PlayerMovement.fxml"></fx:include>
-                     <Circle id="c1" fx:id="c1" fill="DODGERBLUE" layoutX="315.0" layoutY="658.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" d" />
+                     <fx:include source="PlayerMovement1.fxml"></fx:include>
+                     <fx:include source="PlayerMovement2.fxml"></fx:include>
                      <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="10.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="3500.0" y="590.0" />
-                     <Circle id="c2" fx:id="c2" fill="RED" layoutX="2130.0" layoutY="658.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
                   </children>
                </AnchorPane>
             </children>
