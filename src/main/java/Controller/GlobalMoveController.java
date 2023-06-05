@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class PlayerController extends Thread {
+public class GlobalMoveController extends Thread {
     private double jump_amount= 50;
     double GRAVITY = 2;
     private double velocityN1 =0;
@@ -24,7 +24,7 @@ public class PlayerController extends Thread {
     private static final double NODE_SPEED = 10.0;
 
 
-    public PlayerController(Node N1, Node N2, Scene S){
+    public GlobalMoveController(Node N1, Node N2, Scene S){
         this.N1 =N1;
         this.N2 =N2;
         this.S=S;

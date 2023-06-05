@@ -5,17 +5,17 @@ import javafx.scene.Node;
 public class Player {
 
     private String name;
-    private Node N;
+    private Sprite S;
 
     private int wins;
 
-    public Player(String n, Node N){
+    public Player(String n, Sprite S){
         this.name=n;
-        this.N=N;
+        this.S=S;
     }
 
-    public Node getNode(){
-        return this.N;
+    public Sprite getSprite(){
+        return this.S;
     }
 
     public String getName(){

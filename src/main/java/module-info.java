@@ -9,6 +9,4 @@ module com.example.pfmartialhero {
     exports View;
     opens Controller to javafx.fxml;
     exports Controller;
-    exports Application;
-    opens Application to javafx.fxml;
 }
