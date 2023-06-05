@@ -27,7 +27,7 @@ public class Sprite2Controller {
         private static final int NUM_FRAMES_JUMP = 2;
 
         @FXML
-        private Canvas dcanvas2;
+        private Canvas canvas2;
 
         private List<Image> idleFrames;
         private List<Image> runFrames;
