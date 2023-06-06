@@ -38,21 +38,20 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-                if(checkCollision()){
-                    N1.setTranslateX(N1.getTranslateX()-NODE_SPEED);
-                }
-                if (moveRightN1) {
-                    N1.setTranslateX((N1.getTranslateX() + NODE_SPEED));
-                }
-                if (moveLeftN1) {
-                    N1.setTranslateX((N1.getTranslateX() - NODE_SPEED));
-                }
-                if (moveRightN2) {
-                    N2.setTranslateX((N2.getTranslateX() + NODE_SPEED));
-                }
-                if (moveLeftN2) {
-                    N2.setTranslateX((N2.getTranslateX() - NODE_SPEED));
-                }
+                if(!checkCollision()) {
+                    if (moveRightN1) {
+                        N1.setTranslateX((N1.getTranslateX() + NODE_SPEED));
+                    }
+                    if (moveLeftN1) {
+                        N1.setTranslateX((N1.getTranslateX() - NODE_SPEED));
+                    }
+                    if (moveRightN2) {
+                        N2.setTranslateX((N2.getTranslateX() + NODE_SPEED));
+                    }
+                    if (moveLeftN2) {
+                        N2.setTranslateX((N2.getTranslateX() - NODE_SPEED));
+                    }
+                }else resetCollision();
             }
     };
 
@@ -167,7 +166,8 @@ public class GlobalMoveController extends Thread {
     }
 
     public boolean checkCollision() {
-        System.out.println(this.isCollision);
+       // System.out.println(this.isCollision);
+
         // Überprüfe, ob die Formen tatsächlich kollidieren
         if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {
             this.isCollision = true;
@@ -176,18 +176,33 @@ public class GlobalMoveController extends Thread {
             this.isCollision = false;
             return false;
         }
+
+
     }
 
-    public boolean checkCollision2() {
-        System.out.println(this.isCollision);
-        // Überprüfe, ob die Formen tatsächlich kollidieren
-        if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {
-            this.isCollision = true;
-            return true;
-        } else {
-            this.isCollision = false;
+    private boolean resetCollision(){
+
+        double N1x= this.N1.getBoundsInParent().getCenterX();
+        double N2x= this.N2.getBoundsInParent().getCenterX();
+        double N1y= this.N1.getTranslateY();
+        double N2y= this.N2.getTranslateY();
+
+        double velocity=1;
+
+        if(N1y!=N2y){
+            velocity=25;
+        }
+
+        if (N1x<N2x){
+            this.N1.setTranslateX(N1.getTranslateX()-velocity);
+            this.N2.setTranslateX(N2.getTranslateX()+velocity);
             return false;
         }
+        if(N1x>N2x){
+            this.N1.setTranslateX(N1.getTranslateX()+velocity);
+            this.N2.setTranslateX(N2.getTranslateX()-velocity);
+            return false;
+        }
+        return true;
     }
-
 }

@@ -122,5 +122,3 @@ public class Sprite1Controller {
         }
 
 }
-
-
