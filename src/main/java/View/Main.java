@@ -1,4 +1,4 @@
-package View;
+package Application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,13 +8,15 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+
    public static Stage startStage;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/StartMenu.fxml"));
         System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        scene.getRoot().requestFocus();
+        stage.setTitle("Martial Hero");
         stage.setScene(scene);
         startStage=stage;
         stage.show();
