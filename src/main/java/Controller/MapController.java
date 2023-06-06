@@ -44,7 +44,6 @@ public class MapController  {
         Node N1= VB1.lookup("#canvas1");
         Node N2= VB1.lookup("#canvas2");
 
-
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();
 

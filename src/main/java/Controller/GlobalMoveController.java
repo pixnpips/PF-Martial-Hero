@@ -1,12 +1,10 @@
 package Controller;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,38 +16,43 @@ public class GlobalMoveController extends Thread {
 
     private double jump_amount= 50;
     double GRAVITY = 2;
-    private double velocityN1 =0;
-    private double velocityN2 =0;
+    private double node1JumpVelocity =0;
+    private double Node2JumpVelocity =0;
+
     private Node N1;
     private Node N2;
     private Scene S;
-
-
 
     private boolean moveRightN1;
     private boolean moveLeftN1;
 
     private boolean moveRightN2;
     private boolean moveLeftN2;
-    private static final double NODE_SPEED = 10.0;
+    private static final double NODE_TRANSLATE_SPEED = 10.0;
 
     private boolean isCollision=false;
+
+
 
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
                 if(!checkCollision()) {
                     if (moveRightN1) {
-                        N1.setTranslateX((N1.getTranslateX() + NODE_SPEED));
+                        N1.setTranslateX((N1.getTranslateX() + NODE_TRANSLATE_SPEED));
+                        getMovement(2);
                     }
                     if (moveLeftN1) {
-                        N1.setTranslateX((N1.getTranslateX() - NODE_SPEED));
+                        N1.setTranslateX((N1.getTranslateX() - NODE_TRANSLATE_SPEED));
+                        getMovement(1);
                     }
                     if (moveRightN2) {
-                        N2.setTranslateX((N2.getTranslateX() + NODE_SPEED));
+                        N2.setTranslateX((N2.getTranslateX() + NODE_TRANSLATE_SPEED));
+                        getMovement(12);
                     }
                     if (moveLeftN2) {
-                        N2.setTranslateX((N2.getTranslateX() - NODE_SPEED));
+                        N2.setTranslateX((N2.getTranslateX() - NODE_TRANSLATE_SPEED));
+                        getMovement(11);
                     }
                 }else resetCollision();
             }
@@ -59,12 +62,12 @@ public class GlobalMoveController extends Thread {
         @Override
         public void handle(long now) {
             // Anwenden der Schwerkraft
-            velocityN1 += GRAVITY;
-            N1.setTranslateY(N1.getTranslateY() + velocityN1);
+            node1JumpVelocity += GRAVITY;
+            N1.setTranslateY(N1.getTranslateY() + node1JumpVelocity);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N1.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
-                velocityN1 = 0;
+                node1JumpVelocity = 0;
                 N1.setTranslateY(0);
             }
         }
@@ -74,12 +77,12 @@ public class GlobalMoveController extends Thread {
         @Override
         public void handle(long now) {
             // Anwenden der Schwerkraft
-            velocityN2 += GRAVITY;
-            N2.setTranslateY(N2.getTranslateY() + velocityN2);
+            Node2JumpVelocity += GRAVITY;
+            N2.setTranslateY(N2.getTranslateY() + Node2JumpVelocity);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N2.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
-                velocityN2 = 0;
+                Node2JumpVelocity = 0;
                 N2.setTranslateY(0);
             }
         }
@@ -114,7 +117,7 @@ public class GlobalMoveController extends Thread {
         }
         if (event.getCode() == KeyCode.W) {
             // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
-            velocityN1 = -jump_amount;
+            node1JumpVelocity = -jump_amount;
 //            System.out.println(this.getState());
         }
         if (event.getCode() == KeyCode.L) {
@@ -129,7 +132,7 @@ public class GlobalMoveController extends Thread {
         }
         if (event.getCode() == KeyCode.I ){
             // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
-            velocityN2 = -jump_amount;
+            Node2JumpVelocity = -jump_amount;
 //            System.out.println(this.getState());
         }
         return true;
@@ -167,7 +170,6 @@ public class GlobalMoveController extends Thread {
 
     public boolean checkCollision() {
        // System.out.println(this.isCollision);
-
         // Überprüfe, ob die Formen tatsächlich kollidieren
         if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {
             this.isCollision = true;
@@ -176,8 +178,6 @@ public class GlobalMoveController extends Thread {
             this.isCollision = false;
             return false;
         }
-
-
     }
 
     private boolean resetCollision(){
@@ -204,5 +204,9 @@ public class GlobalMoveController extends Thread {
             return false;
         }
         return true;
+    }
+
+    public int getMovement(int i){
+        return i;
     }
 }

@@ -88,7 +88,6 @@ public class Sprite1Controller {
                             // Remember the current time for the next frame
                             lastFrameTime = currentTime;
                         }
-
                     }
                 };
             }
