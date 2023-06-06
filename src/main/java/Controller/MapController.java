@@ -30,9 +30,17 @@ public class MapController  {
         }
     }
 
+    @FXML
+    public void map1() throws IOException {
+        openMap(1);
+    }
+    @FXML
+    public void map2() throws IOException {
+        openMap(2);
+    }
 
     @FXML
-    protected void openMap()  throws IOException {
+    protected void openMap(int mapNr)  throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
@@ -40,10 +48,8 @@ public class MapController  {
 
         Node VB1=root.getContent();
 
-
         Node N1= VB1.lookup("#canvas1");
         Node N2= VB1.lookup("#canvas2");
-
 
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();
@@ -52,7 +58,7 @@ public class MapController  {
         Main.startStage.show();
 
         MapController MC1=fxmlLoader.getController();
-        MC1.chooseMap(1);
+        MC1.chooseMap(mapNr);
     }
 
     @FXML
