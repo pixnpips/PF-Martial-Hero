@@ -20,3 +20,11 @@ VBox {
 .hp02{
     -fx-accent: orange;
 }
+#canvas1{
+    -fx-background-color: red;
+}
+
+#canvas2{
+    -fx-background-color: blue;
+}
+

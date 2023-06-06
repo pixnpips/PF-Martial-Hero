@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
@@ -22,7 +23,6 @@ public class MapController  {
     private VBox background;
 
     public void chooseMap(int mapNr){
-
         if(mapNr==1){
             background.getStyleClass().add("map01");
         } else {

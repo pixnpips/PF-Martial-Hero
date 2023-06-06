@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,8 @@ public class Sprite2Controller {
 
     private Sprite S;
 
-        private static final int FRAME_WIDTH = 600;
-        private static final int FRAME_HEIGHT = 600;
+        private static final int FRAME_WIDTH = 300;
+        private static final int FRAME_HEIGHT = 500;
         private static final int FRAME_DURATION = 75000000; // Duration in nanoseconds
         private static final int NUM_FRAMES_IDLE = 8;
         private static final int NUM_FRAMES_RUN = 8;
@@ -77,8 +78,11 @@ public class Sprite2Controller {
                             // Clear the canvas
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
+                            gc.setFill(Color.RED);
+                            gc.fillRect(0,0,FRAME_WIDTH,FRAME_HEIGHT);
+
                             // Draw the current frame
-                            gc.drawImage(frames.get(currentFrameIndex), 0,0, FRAME_WIDTH, FRAME_HEIGHT);
+                            gc.drawImage(frames.get(currentFrameIndex),-560,-520,1500,1500);
 
                             // Update the frame index
                             currentFrameIndex = (currentFrameIndex + 1) % frames.size();

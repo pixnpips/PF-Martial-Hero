@@ -8,6 +8,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,8 @@ public class Sprite1Controller {
 
     private Sprite S;
 
-        private static final int FRAME_WIDTH = 600;
-        private static final int FRAME_HEIGHT = 600;
+        private static final int FRAME_WIDTH = 400;
+        private static final int FRAME_HEIGHT = 500;
         private static final int FRAME_DURATION = 75000000; // Duration in nanoseconds
         private static final int NUM_FRAMES_IDLE = 8;
         private static final int NUM_FRAMES_RUN = 8;
@@ -44,12 +46,8 @@ public class Sprite1Controller {
 
         // Hier wird der AnimationTimer initialisiert
         private AnimationTimer timer;
-        private boolean isMoving = false;
 
-//        private double playerVelocityX = 0;
-        private double playerVelocityY = 0;
-//        private double playerPositionX;
-        private double playerPositionY;
+
 
         public void initialize() {
             // Load the sprite frames
@@ -78,8 +76,11 @@ public class Sprite1Controller {
                             // Clear the canvas
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
+                            gc.setFill(Color.BLUE);
+                            gc.fillRect(0,0,FRAME_WIDTH,FRAME_HEIGHT);
+
                             // Draw the current frame
-                            gc.drawImage(frames.get(currentFrameIndex), 0,0,600, 600);
+                            gc.drawImage(frames.get(currentFrameIndex),-560,-520,1500,1500);
 
                             // Update the frame index
                             currentFrameIndex = (currentFrameIndex + 1) % frames.size();
@@ -100,7 +101,6 @@ public class Sprite1Controller {
         @FXML
         void handleMouseClicked(MouseEvent event) {
             // Hier wird die Angriffsanimation des Spielers ausgelöst
-
         }
 
         private List<Image> loadFrames(String imagePathPrefix, int numFrames) {
