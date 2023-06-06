@@ -40,9 +40,6 @@ public class MapController  {
 
         Node VB1=root.getContent();
 
-//        Node N1= VB1.lookup("#c1");
-//
-//       Node N2= VB1.lookup("#c2");
 
         Node N1= VB1.lookup("#canvas1");
         Node N2= VB1.lookup("#canvas2");

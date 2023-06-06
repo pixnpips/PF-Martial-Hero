@@ -11,7 +11,6 @@ public class Player1Controller extends Thread {
     double GRAVITY = 2;
     private double velocity=0;
     private Node N;
-
     private int player;
 
     private Scene S;

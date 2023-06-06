@@ -97,8 +97,6 @@ public class Sprite1Controller {
         }
 
 
-
-
         @FXML
         void handleMouseClicked(MouseEvent event) {
             // Hier wird die Angriffsanimation des Spielers ausgelöst

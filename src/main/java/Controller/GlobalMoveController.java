@@ -12,7 +12,6 @@ public class GlobalMoveController extends Thread {
     private double velocityN1 =0;
     private double velocityN2 =0;
     private Node N1;
-
     private Node N2;
     private Scene S;
 
