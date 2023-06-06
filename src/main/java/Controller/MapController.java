@@ -1,12 +1,15 @@
 package Controller;
 
 import View.Main;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 
@@ -15,12 +18,8 @@ import java.io.IOException;
 public class MapController  {
 
     @FXML
-    protected void pause(){
-        Main.startStage.close();
-    }
-
-    @FXML
     private VBox background;
+    private boolean paused = false;
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -59,7 +58,33 @@ public class MapController  {
 
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
+        preparePause(scene);
     }
+    @FXML
+    protected void preparePause(Scene s){
+        EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE){
+                    try {
+                        map1();
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (event.getCode() == KeyCode.SPACE){
+                    try {
+                        map2();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
+        s.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
+
+    }
+
 
     @FXML
     protected void exit(){
