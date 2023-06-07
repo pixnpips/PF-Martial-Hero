@@ -1,24 +1,36 @@
 package Controller;
 
 import View.Main;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
-
 import java.io.IOException;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapController  {
 
     @FXML
     private VBox background;
+
+    /*@FXML
+    private Label count;*/
     private boolean paused = false;
 
     public void chooseMap(int mapNr){
@@ -59,7 +71,26 @@ public class MapController  {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
+        //prepareTimer(scene);
     }
+
+    /*@FXML
+    protected void prepareTimer(Scene scene){
+        Label count = (Label) scene.lookup("#count");
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int i = 60;
+            public void run(){
+                if (i >= 0) {
+                    count.setText(""+i);
+                    i--;
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }*/
+
     @FXML
     protected void preparePause(Scene s){
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
@@ -82,9 +113,7 @@ public class MapController  {
             }
         };
         s.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
-
     }
-
 
     @FXML
     protected void exit(){
