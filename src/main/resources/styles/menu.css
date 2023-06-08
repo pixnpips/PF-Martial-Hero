@@ -63,3 +63,7 @@ VBox {
 .table-row-cell {
     -fx-font-size: 12pt;
 }
+
+.makeInvisible{
+    -fx-opacity: 0;
+}

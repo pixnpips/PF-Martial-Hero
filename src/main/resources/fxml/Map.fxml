@@ -38,6 +38,11 @@
                            <String fx:value="hp02" />
                         </styleClass>
                      </ProgressBar>
+                  <Label fx:id="pauseMenu" styleClass="menu-button" stylesheets="@../styles/menu.css" text="PAUSE">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Label>
                </children>
                <rotationAxis>
                   <Point3D />
