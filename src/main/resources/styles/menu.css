@@ -32,7 +32,7 @@ VBox {
 }
 
 .pauseBox{
-    -fx-background-image: url("../images/BG_Pause.png");
+    -fx-background-color: transparent;
 }
 
 .highBox{

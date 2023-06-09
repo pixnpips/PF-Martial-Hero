@@ -56,11 +56,6 @@
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
                </ProgressBar>
-            <Label fx:id="pauseMenu" styleClass="menu-button" stylesheets="@../styles/menu.css" text="PAUSE">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
          </children>
       </HBox>
          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="3500.0">
