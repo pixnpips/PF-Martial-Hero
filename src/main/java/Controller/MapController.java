@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
@@ -42,7 +45,6 @@ public class MapController  {
             background.getStyleClass().add("map02");
         }
     }
-
     @FXML
     public void map1() throws IOException {
         openMap(1);
@@ -57,12 +59,9 @@ public class MapController  {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        ScrollPane root=fxmlLoader.getRoot();
 
-        Node VB1=root.getContent();
-
-        Node N1= VB1.lookup("#canvas1");
-        Node N2= VB1.lookup("#canvas2");
+        Node N1 = scene.lookup("#canvas1");
+        Node N2 = scene.lookup("#canvas2");
 
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();
@@ -95,32 +94,22 @@ public class MapController  {
 
     @FXML
     protected void preparePause(Scene scene){
-        Label pauseMenu = (Label) scene.lookup("#pauseMenu");
+        AnchorPane pause = (AnchorPane) scene.lookup("#pause");
+        pause.setVisible(false);
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ESCAPE){
-                    pauseMenu.setVisible(false);
-                    /*Popup pausePopup = new Popup();
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/PauseMenu.fxml"));
-                    try {
-                        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(paused==false){
+                        paused = true;
+                        pause.setVisible(true);
+                        System.out.println("ESCAPE, pause");
+                        return;
                     }
-                    VBox root = (VBox) scene.getRoot();*/
-                    try {
-                        map1();
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (event.getCode() == KeyCode.SPACE){
-                    pauseMenu.setVisible(true);
-                    try {
-                        map2();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(paused==true){
+                        paused = false;
+                        pause.setVisible(false);
+                        System.out.println("ESCAPE, unpause");
+                        return;
                     }
                 }
             }
