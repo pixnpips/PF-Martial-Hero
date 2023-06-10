@@ -83,10 +83,9 @@ public class MapController  {
         System.out.println(scene.getWindow().getHeight());
 
         Main.startStage.setResizable(false);
-//        Main.startStage.sizeToScene();
 
         Main.startStage.hide();
-        Main.startStage.show();
+//        Main.startStage.show();
 
 //        Main.startStage.setFullScreen(true);
 //
