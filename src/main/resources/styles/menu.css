@@ -32,7 +32,7 @@ VBox {
 }
 
 .pauseBox{
-    -fx-background-image: url("../images/BG_Pause.png");
+    -fx-background-color: transparent;
 }
 
 .highBox{
@@ -62,4 +62,8 @@ VBox {
 
 .table-row-cell {
     -fx-font-size: 12pt;
+}
+
+.makeInvisible{
+    -fx-opacity: 0;
 }
