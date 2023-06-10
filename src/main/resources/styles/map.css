@@ -1,6 +1,6 @@
 VBox {
     -fx-background-position: center center;
-    -fx-background-size: cover;
+    -fx-background-size: contain;
 }
 
 .map01{

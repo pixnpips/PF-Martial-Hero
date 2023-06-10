@@ -12,31 +12,31 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController">
+<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0">
    <children>
-      <ScrollPane>
+      <ScrollPane maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" >
          <content>
                <VBox fx:id="background" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" stylesheets="@../styles/map.css" />
          </content>
       </ScrollPane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="3550.0" StackPane.alignment="TOP_CENTER">
          <children>
-               <ProgressBar fx:id="hp01" prefWidth="500.0" progress="0.27" scaleX="2.0" scaleY="3.0" stylesheets="@../styles/map.css" translateX="1000.0" translateY="100.0">
-                  <opaqueInsets>
+               <ProgressBar fx:id="hp01" prefWidth="500.0" progress="0.27" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1000.0" translateY="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <styleClass>
+                        <String fx:value="health-bar" />
+                        <String fx:value="hp01" />
+                     </styleClass>
+                  <padding>
+                     <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                  </padding>
+                  <HBox.margin>
                      <Insets />
-                  </opaqueInsets>
-                  <styleClass>
-                     <String fx:value="health-bar" />
-                     <String fx:value="hp01" />
-                  </styleClass>
-               <padding>
-                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
+                  </HBox.margin>
                </ProgressBar>
-            <Label fx:id="count" prefHeight="50.0" text="Label" translateX="1275.0">
+            <Label fx:id="count" prefHeight="50.0" text="Label" translateX="1200.0">
                <font>
                   <Font size="50.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Insets top="25.0" />
                </HBox.margin>
             </Label>
-               <ProgressBar fx:id="hp02" prefWidth="500.0" progress="0.55" rotate="180.0" scaleX="2.0" scaleY="3.0" stylesheets="@../styles/map.css" translateX="1550.0" translateY="100.0">
+               <ProgressBar fx:id="hp02" prefWidth="500.0" progress="0.55" rotate="180.0" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1350.0" translateY="100.0">
                   <styleClass>
                      <String fx:value="health-bar" />
                      <String fx:value="hp02" />
@@ -58,11 +58,11 @@
                </ProgressBar>
          </children>
       </HBox>
-         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="3500.0">
+         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
             <children>
                <fx:include source="PlayerMovement1.fxml" />
                <fx:include source="PlayerMovement2.fxml" />
-               <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="45.0" layoutY="414.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="3500.0" y="590.0" />
+<!--               <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="45.0" layoutY="414.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="3500.0" y="590.0" />-->
             </children>
          </AnchorPane>
       <AnchorPane fx:id="pause" prefHeight="200.0" prefWidth="200.0" stylesheets="@../styles/menu.css">

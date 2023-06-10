@@ -58,6 +58,7 @@ public class MapController  {
     protected void openMap(int mapNr)  throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
+
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         Node N1 = scene.lookup("#canvas1");
@@ -66,12 +67,33 @@ public class MapController  {
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();
 
-        Main.startStage.setScene(scene);
-        Main.startStage.show();
-
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
+
+        Main.startStage.setScene(scene);
+
+        System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getHeight());
+
+        scene.getWindow().setWidth(1920);
+        scene.getWindow().setHeight(1080);
+
+        System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getHeight());
+
+        Main.startStage.setResizable(false);
+//        Main.startStage.sizeToScene();
+
+        Main.startStage.hide();
+        Main.startStage.show();
+
+//        Main.startStage.setFullScreen(true);
+//
+//        System.out.println(scene.getWindow().getWidth());
+//        System.out.println(scene.getWindow().getHeight());
+
+
         //prepareTimer(scene);
     }
 
