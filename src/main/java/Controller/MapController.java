@@ -85,7 +85,7 @@ public class MapController  {
         Main.startStage.setResizable(false);
 
         Main.startStage.hide();
-//        Main.startStage.show();
+        Main.startStage.show();
 
 //        Main.startStage.setFullScreen(true);
 //
