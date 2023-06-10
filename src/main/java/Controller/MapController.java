@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -67,7 +68,23 @@ public class MapController  {
         PC.start();
 
         Main.startStage.setScene(scene);
+
+        System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getHeight());
+
+        scene.getWindow().setWidth(1920);
+        scene.getWindow().setHeight(1080);
+
+        System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getHeight());
+
+        Main.startStage.setResizable(false);
+
+        Main.startStage.hide();
         Main.startStage.show();
+
+        System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getHeight());
 
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
