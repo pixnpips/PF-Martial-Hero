@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Sprite;
+import Model.Spritefactory;
 import View.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -61,8 +63,8 @@ public class MapController  {
 
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
-        Node N1 = scene.lookup("#canvas1");
-        Node N2 = scene.lookup("#canvas2");
+        Node N1=scene.lookup("#canvas1");
+        Node N2=scene.lookup("#canvas2");
 
         GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
         PC.start();
@@ -96,23 +98,6 @@ public class MapController  {
 
         //prepareTimer(scene);
     }
-
-    /*@FXML
-    protected void prepareTimer(Scene scene){
-        Label count = (Label) scene.lookup("#count");
-
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int i = 60;
-            public void run(){
-                if (i >= 0) {
-                    count.setText(""+i);
-                    i--;
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(task, 0, 1000);
-    }*/
 
     @FXML
     protected void preparePause(Scene scene){

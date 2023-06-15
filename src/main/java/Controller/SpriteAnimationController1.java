@@ -1,23 +1,22 @@
 package Controller;
 
 import Model.Sprite;
+import Model.Spritefactory;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class SpriteAnimationController {
+public class SpriteAnimationController1 {
 
     private Sprite S;
-        @FXML
-        private Canvas canvas1;
+
+    @FXML
+    private Canvas canvas1;
 
     private int currentFrameIndex;
     private long lastFrameTime;
@@ -28,13 +27,15 @@ public class SpriteAnimationController {
 
         // Hier wird der AnimationTimer initialisiert
         private AnimationTimer timer;
-
-
         // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
 
         public void initialize() {
+
+            this.S= Spritefactory.constructSprite(1);
+
             // Load the sprite frames
             List<Image> currentFrames= this.S.getIdleFrames();
+
             {
                 // Create the animation timer
                 timer = new AnimationTimer() {
@@ -50,7 +51,6 @@ public class SpriteAnimationController {
 
                             // Clear the canvas
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-
                             gc.setFill(Color.BLUE);
                             gc.fillRect(0,0,FRAME_WIDTH,FRAME_HEIGHT);
 
@@ -71,18 +71,10 @@ public class SpriteAnimationController {
             timer.start();
         }
 
+        public void getCanvasFromXML(){
 
-        // Hier werden alle Bilder für die Animationen vorgeladen und in einer Arraylist gespeichert
-        private List<Image> loadFrames(String imagePathPrefix, int numFrames) {
-            // Load the sprite frames
-            List<Image> frames = new ArrayList<>();
-            for (int i = 1; i <= numFrames; i++) {
-                String imagePath = imagePathPrefix + i + ".png";
-                Image frame = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
-                frames.add(frame);
-            }
-            return frames;
         }
+
 
         // Hier wird der Timer gestoppt
         public void stopAnimation() {
@@ -90,5 +82,6 @@ public class SpriteAnimationController {
             this.S.setFrames(this.S.getIdleFrames());
             currentFrameIndex = 0;
         }
+
 
 }

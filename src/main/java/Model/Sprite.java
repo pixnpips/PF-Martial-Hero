@@ -54,6 +54,8 @@ public class Sprite {
     // Konstruktor für den Sprite
     public Sprite(String n, String pathToFrames, String idleFolder, String runFolder, String attack1Folder, String attack2Folder, String takeHitFolder, String deathFolder, String jumpFolder ){
         this.Name=n;
+
+        System.out.println(pathToFrames.concat(idleFolder));
         this.idleFrames=this.loadFrames(pathToFrames.concat(idleFolder),NUM_FRAMES_IDLE);
         this.runFrames=this.loadFrames(pathToFrames.concat(runFolder),NUM_FRAMES_RUN);
         this.attack1Frames=this.loadFrames(pathToFrames.concat(attack1Folder),NUM_FRAMES_ATTACK);
@@ -100,6 +102,7 @@ public class Sprite {
         List<Image> frames = new ArrayList<>();
         for (int i = 1; i <= numFrames; i++) {
             String imagePath = imagePathPrefix + i + ".png";
+//           System.out.println (imagePath);
             Image frame = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
             frames.add(frame);
         }

@@ -2,4 +2,4 @@
 
 <?import javafx.scene.canvas.Canvas?>
 
-<Canvas fx:id="canvas2" height="400.0" width="300.0" layoutX="2000.0" layoutY="400.0"    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Sprite2Controller"/>
+<Canvas fx:id="canvas2" height="400.0" width="300.0" layoutX="2000.0" layoutY="400.0"    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SpriteAnimationController2"/>

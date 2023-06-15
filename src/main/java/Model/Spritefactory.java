@@ -8,27 +8,16 @@ public class Spritefactory {
     static String pathtoSprite1 = "/images/sprites/char1/";
     static String pathtoSprite2 = "/images/sprites/char2/";
 
-    static ArrayList<String> imgFolderSprites = new ArrayList<String>();
+    static String imgFolderSprites[]= new String[]{"Idle_","Run_","Attack1_","Attack2_","Take Hit_","Death_","Jump_"};
 
     public Spritefactory() {
-        fillList();
     }
 
-    private void fillList() {
-        imgFolderSprites.add("Idle");
-        imgFolderSprites.add("Run_");
-        imgFolderSprites.add("Attack1");
-        imgFolderSprites.add("Attack2_");
-        imgFolderSprites.add("Take Hit_");
-        imgFolderSprites.add("Death_");
-        imgFolderSprites.add("Jump_");
-    }
-
-    private static Sprite constructSprite(int num) {
+    public static Sprite constructSprite(int num) {
         if (num == 1) {
-            return new Sprite("Player_1", pathtoSprite1, imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0));
-        } else {
-            return new Sprite("Player_1", pathtoSprite2, imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0), imgFolderSprites.get(0));
-        }
+            return new Sprite("Player_1", pathtoSprite1, imgFolderSprites[0], imgFolderSprites[1], imgFolderSprites[2], imgFolderSprites[3], imgFolderSprites[4], imgFolderSprites[5], imgFolderSprites[6]);
+        } else if (num==2) {
+            return new Sprite("Player_2", pathtoSprite2, imgFolderSprites[0], imgFolderSprites[1], imgFolderSprites[2], imgFolderSprites[3], imgFolderSprites[4], imgFolderSprites[5], imgFolderSprites[6]);
+        }else return null;
     }
 }
