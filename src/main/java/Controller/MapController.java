@@ -68,6 +68,7 @@ public class MapController  {
         PC.start();
 
         MapController MC1=fxmlLoader.getController();
+
         MC1.chooseMap(mapNr);
         preparePause(scene);
 
