@@ -9,9 +9,9 @@ import java.util.List;
 
 public class Sprite {
 
-    private Node N;
+
+    //konstante Parameter zur Anwendung des Animation Timers für Sprite interne Animationen!
     private String Name;
-    private double velocity=0;
 
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 600;
@@ -23,8 +23,6 @@ public class Sprite {
     private static final int NUM_FRAMES_DEATH = 6;
     private static final int NUM_FRAMES_JUMP = 2;
 
-    @FXML
-    private Canvas canvas1;
 
     private List<Image> idleFrames;
     private List<Image> runFrames;
@@ -38,12 +36,50 @@ public class Sprite {
     private int currentFrameIndex;
     private long lastFrameTime;
 
-    // Hier wird der AnimationTimer initialisiert
-    private AnimationTimer timer;
 
-    public Sprite(Node N, String Name){
-        this.N=N;
-        this.Name =Name;
+    public void setIdleFrames(List<Image> idleFrames) {
+        this.idleFrames = idleFrames;
     }
 
+    public void setRunFrames(List<Image> runFrames) {
+        this.runFrames = runFrames;
+    }
+
+    public void setAttack1Frames(List<Image> attack1Frames) {
+        this.attack1Frames = attack1Frames;
+    }
+
+    public void setAttack2Frames(List<Image> attack2Frames) {
+        this.attack2Frames = attack2Frames;
+    }
+
+    public void setTakeHitFrames(List<Image> takeHitFrames) {
+        this.takeHitFrames = takeHitFrames;
+    }
+
+    public void setDeathFrames(List<Image> deathFrames) {
+        this.deathFrames = deathFrames;
+    }
+
+    public void setJumpFrames(List<Image> jumpFrames) {
+        this.jumpFrames = jumpFrames;
+    }
+
+    public void setFrames(List<Image> frames) {
+        this.frames = frames;
+    }
+
+    public void setCurrentFrameIndex(int currentFrameIndex) {
+        this.currentFrameIndex = currentFrameIndex;
+    }
+
+    public void setLastFrameTime(long lastFrameTime) {
+        this.lastFrameTime = lastFrameTime;
+    }
+
+
+    // Konstruktor für den Sprite
+    public Sprite(String n){
+        this.Name=n;
+    }
 }

@@ -48,6 +48,7 @@ public class Sprite1Controller {
         private AnimationTimer timer;
 
 
+        // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
 
         public void initialize() {
             // Load the sprite frames
@@ -102,6 +103,7 @@ public class Sprite1Controller {
             // Hier wird die Angriffsanimation des Spielers ausgelöst
         }
 
+        // Hier werden alle Bilder für die Animationen vorgeladen und in einer Arraylist gespeichert
         private List<Image> loadFrames(String imagePathPrefix, int numFrames) {
             // Load the sprite frames
             List<Image> frames = new ArrayList<>();
