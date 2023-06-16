@@ -27,6 +27,9 @@ public class FxmlController {
     public Scene getScene(){
         return scene;
     }
+    public void exit(){
+        Main.startStage.close();
+    }
 
 
 }
