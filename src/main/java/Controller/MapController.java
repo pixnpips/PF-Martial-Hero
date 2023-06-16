@@ -31,7 +31,7 @@ public class MapController  {
     @FXML
     private Label count;
 
-    private int startSeconds = 3; //wird in der Methode startTimer überschrieben
+    private int startSeconds = 60;
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
@@ -152,7 +152,7 @@ public class MapController  {
     protected void prepareTimer(){
         Label count = (Label) scene.lookup("#count");
         count.textProperty().bind(secondsLeft.asString());
-        startTimer(10);
+        startTimer(startSeconds);
     }
     public void stopTimer(){
         timeline.stop();
