@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -119,10 +120,26 @@ public class MapController  {
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         WinController WC = new WinController();
         WC.setScene(scene);
-        WC.setName("Player 1");
+        WC.setName(getWinner());
         Main.startStage.setTitle("WINNER");
         Main.startStage.setScene(scene);
         Main.startStage.show();
+    }
+
+    private String getWinner() {
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        String name ="";
+        if(hp01.getProgress()>hp02.getProgress()){
+            name = "Player 1";
+        }
+        else if(hp01.getProgress()<hp02.getProgress()){
+            name = "Player 2";
+        }
+        else{
+            name = "Unentschieden";
+        }
+        return name;
     }
 
     protected void startTimer(){

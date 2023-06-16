@@ -21,18 +21,4 @@ public class WinController {
         this.scene = scene;
     }
 
-    /*private String name;
-    private Label nameLabel;
-    private Scene scene;
-    @FXML
-    protected void init() {
-    }
-
-    public WinController(Scene scene){
-        this.scene = scene;
-    }
-    public void setWinnerName(String name){
-        nameLabel = (Label) scene.lookup("#name");
-        nameLabel.textProperty().set(name);
-    }*/
 }
