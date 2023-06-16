@@ -3,7 +3,6 @@ package Controller;
 import Model.Sprite;
 import Model.Spritefactory;
 import javafx.animation.AnimationTimer;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -11,12 +10,11 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class SpriteAnimationController1 {
+public class SpriteAnimationController {
 
     private Sprite S;
 
-    @FXML
-    private Canvas canvas1;
+    private Canvas canvas;
 
     private int currentFrameIndex;
     private long lastFrameTime;
@@ -27,15 +25,23 @@ public class SpriteAnimationController1 {
 
         // Hier wird der AnimationTimer initialisiert
         private AnimationTimer timer;
+
+
+        //Dieser Konstruktor wird es werden, den muss ihc erstellen
+
+        public SpriteAnimationController(Canvas C, int num){
+            this.canvas=C;
+            if(num==1){this.S= Spritefactory.constructSprite(1);
+            } else if(num==2){this.S= Spritefactory.constructSprite(2);
+            }
+        }
+
         // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
 
         public void initialize() {
 
-            this.S= Spritefactory.constructSprite(1);
-
             // Load the sprite frames
             List<Image> currentFrames= this.S.getIdleFrames();
-
             {
                 // Create the animation timer
                 timer = new AnimationTimer() {
@@ -47,7 +53,7 @@ public class SpriteAnimationController1 {
                         // If enough time has passed, switch to the next frame
                         if (elapsedTime > FRAME_DURATION) {
                             // Get the GraphicsContext from the Canvas
-                            GraphicsContext gc = canvas1.getGraphicsContext2D();
+                            GraphicsContext gc = canvas.getGraphicsContext2D();
 
                             // Clear the canvas
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
@@ -71,9 +77,12 @@ public class SpriteAnimationController1 {
             timer.start();
         }
 
-        public void getCanvasFromXML(){
-
-        }
+    protected void turn(){
+        this.canvas.setScaleX(-1);
+    }
+    public String getName(){
+        return ("Ich bin Animationcontroller1");
+    }
 
 
         // Hier wird der Timer gestoppt

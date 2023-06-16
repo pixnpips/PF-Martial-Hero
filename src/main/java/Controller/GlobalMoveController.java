@@ -13,7 +13,6 @@ public class GlobalMoveController extends Thread {
 
     public List Listener =new ArrayList();
 
-
     private double jump_amount= 50;
     double GRAVITY = 2;
     private double node1JumpVelocity =0;
@@ -32,6 +31,8 @@ public class GlobalMoveController extends Thread {
 
     private boolean isCollision=false;
 
+    private SpriteAnimationController SAC1;
+    private SpriteAnimationController SAC2;
 
 
     private AnimationTimer translateTimer = new AnimationTimer() {
@@ -57,6 +58,7 @@ public class GlobalMoveController extends Thread {
                 }else resetCollision();
             }
     };
+
 
     private AnimationTimer jumpTimer1= new AnimationTimer() {
         @Override
@@ -89,12 +91,13 @@ public class GlobalMoveController extends Thread {
     };
 
 
-    public GlobalMoveController(Node N1, Node N2, Scene S){
+    public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2){
         this.N1 =N1;
         this.N2 =N2;
         this.S=S;
+        this.SAC1=S1;
+        this.SAC2=S2;
     }
-
 
 
     public void run(){

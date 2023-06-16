@@ -1,43 +1,27 @@
 package Controller;
 
-import Model.Sprite;
-import Model.Spritefactory;
 import View.Main;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MapController  {
+
 
     @FXML
     private VBox background;
 
-    /*@FXML
-    private Label count;*/
+    @FXML
+    AnchorPane SP1;
+
     private boolean paused = false;
 
     public void chooseMap(int mapNr){
@@ -58,21 +42,38 @@ public class MapController  {
 
     @FXML
     protected void openMap(int mapNr)  throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
 
+        fxmlLoader.setController(this);
+
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
-        Node N1=scene.lookup("#canvas1");
-        Node N2=scene.lookup("#canvas2");
+        Canvas C1 = new Canvas(400, 400);
+        C1.setLayoutX(1200); // X-Koordinate: 1200 Pixel
+        C1.setLayoutY(400); // Y-Koordinate: 400 Pixel
 
-        GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
+        SpriteAnimationController SAC1= new SpriteAnimationController(C1,1);
+        SAC1.initialize();
+        SP1.getChildren().add(C1);
+
+        Canvas C2 = new Canvas(400, 400);
+        C2.setLayoutX(2000); // X-Koordinate: 1200 Pixel
+        C2.setLayoutY(400); // Y-Koordinate: 400 Pixel
+
+        SP1.getChildren().add(C2);
+        SpriteAnimationController SAC2= new SpriteAnimationController(C2,2);
+        SAC2.initialize();
+
+
+        GlobalMoveController PC= new GlobalMoveController(C1,C2,scene,SAC1,SAC2);
         PC.start();
 
         MapController MC1=fxmlLoader.getController();
-
         MC1.chooseMap(mapNr);
         preparePause(scene);
+
 
         Main.startStage.setScene(scene);
 
@@ -87,16 +88,10 @@ public class MapController  {
 
         Main.startStage.setResizable(false);
 
+
         Main.startStage.hide();
         Main.startStage.show();
 
-//        Main.startStage.setFullScreen(true);
-//
-//        System.out.println(scene.getWindow().getWidth());
-//        System.out.println(scene.getWindow().getHeight());
-
-
-        //prepareTimer(scene);
     }
 
     @FXML

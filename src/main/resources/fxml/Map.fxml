@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MapController" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0">
+<StackPane fx:id="root1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"  maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0">
    <children>
       <ScrollPane maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" >
          <content>
@@ -58,11 +58,8 @@
                </ProgressBar>
          </children>
       </HBox>
-         <AnchorPane fx:id="spritePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
+         <AnchorPane fx:id="SP1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
             <children>
-               <fx:include source="PlayerMovement1.fxml" />
-               <fx:include source="PlayerMovement2.fxml" />
-<!--               <Rectangle fx:id="floor" arcHeight="5.0" arcWidth="5.0" height="45.0" layoutY="414.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="3500.0" y="590.0" />-->
             </children>
          </AnchorPane>
       <AnchorPane fx:id="pause" prefHeight="200.0" prefWidth="200.0" stylesheets="@../styles/menu.css">
