@@ -31,7 +31,7 @@ public class MapController  {
     @FXML
     private Label count;
 
-    private int startSeconds = 60;
+    private int startSeconds = 6;
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
@@ -114,16 +114,21 @@ public class MapController  {
         }
     }
 
+    @FXML
     private void openWinMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/WinMenu.fxml"));
         System.out.println(fxmlLoader.getLocation());
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        WinController WC = new WinController();
+        /*WinController WC = new WinController();
         WC.setScene(scene);
-        WC.setName(getWinner());
+        WC.setName(getWinner());*/
         Main.startStage.setTitle("WINNER");
         Main.startStage.setScene(scene);
         Main.startStage.show();
+        //WinController WC = new WinController();
+        WinController WC =fxmlLoader.getController();
+        WC.setScene(scene);
+        WC.setName(getWinner());
     }
 
     private String getWinner() {
