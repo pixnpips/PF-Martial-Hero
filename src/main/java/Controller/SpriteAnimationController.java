@@ -14,6 +14,8 @@ public class SpriteAnimationController {
 
     private Sprite S;
 
+    private int playerNum;
+
     private Canvas canvas;
 
     private int currentFrameIndex;
@@ -30,6 +32,7 @@ public class SpriteAnimationController {
         //Dieser Konstruktor wird es werden, den muss ihc erstellen
 
         public SpriteAnimationController(Canvas C, int num){
+            this.playerNum=num;
             this.canvas=C;
             if(num==1){this.S= Spritefactory.constructSprite(1);
             } else if(num==2){this.S= Spritefactory.constructSprite(2);
@@ -57,7 +60,13 @@ public class SpriteAnimationController {
 
                             // Clear the canvas
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-                            gc.setFill(Color.BLUE);
+
+                            if(playerNum==2){
+                                turn();
+                            }
+
+                          //temporär
+                            gc.setFill(Color.RED);
                             gc.fillRect(0,0,FRAME_WIDTH,FRAME_HEIGHT);
 
                             // Draw the current frame
@@ -80,9 +89,7 @@ public class SpriteAnimationController {
     protected void turn(){
         this.canvas.setScaleX(-1);
     }
-    public String getName(){
-        return ("Ich bin Animationcontroller1");
-    }
+    
 
 
         // Hier wird der Timer gestoppt

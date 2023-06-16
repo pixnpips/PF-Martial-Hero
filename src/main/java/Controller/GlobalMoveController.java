@@ -108,7 +108,6 @@ public class GlobalMoveController extends Thread {
         this.setJump2();
     }
 
-
     private boolean handleKeyPressD(KeyEvent event) {
         if (event.getCode() == KeyCode.D) {
              moveRightN1 = true;
