@@ -50,17 +50,17 @@ public class MapController  {
 
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
-        Canvas C1 = new Canvas(400, 400);
-        C1.setLayoutX(1200); // X-Koordinate: 1200 Pixel
-        C1.setLayoutY(400); // Y-Koordinate: 400 Pixel
+        Canvas C1 = new Canvas(1000, 500);
+        C1.setLayoutX(900); // X-Koordinate: 1200 Pixel
+        C1.setLayoutY(300); // Y-Koordinate: 400 Pixel
 
         SpriteAnimationController SAC1= new SpriteAnimationController(C1,1);
         SAC1.initialize();
         SP1.getChildren().add(C1);
 
-        Canvas C2 = new Canvas(400, 400);
-        C2.setLayoutX(2000); // X-Koordinate: 1200 Pixel
-        C2.setLayoutY(400); // Y-Koordinate: 400 Pixel
+        Canvas C2 = new Canvas(1000, 500);
+        C2.setLayoutX(1700); // X-Koordinate: 1200 Pixel
+        C2.setLayoutY(300); // Y-Koordinate: 400 Pixel
 
         SP1.getChildren().add(C2);
         SpriteAnimationController SAC2= new SpriteAnimationController(C2,2);
