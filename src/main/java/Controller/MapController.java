@@ -1,43 +1,39 @@
 package Controller;
 
 import View.Main;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MapController  {
 
     @FXML
     private VBox background;
 
-    /*@FXML
-    private Label count;*/
+    private GlobalMoveController PC;
+
+    @FXML
+    private Label count;
+
+    private int startSeconds = 60;
+    private Timeline timeline;
     private boolean paused = false;
+    private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -64,7 +60,8 @@ public class MapController  {
         Node N1 = scene.lookup("#canvas1");
         Node N2 = scene.lookup("#canvas2");
 
-        GlobalMoveController PC= new GlobalMoveController(N1,N2,scene);
+        //GlobalMoveController PC = new GlobalMoveController(N1,N2,scene);
+        PC = new GlobalMoveController(N1,N2,scene);
         PC.start();
 
         Main.startStage.setScene(scene);
@@ -89,25 +86,28 @@ public class MapController  {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
-        //prepareTimer(scene);
+        background = (VBox) scene.lookup("#background");
+        System.out.println(background.toString());
+        PC.setBackground(background);
+        prepareTimer(scene);
+    }
+    protected void updateTimer(){
+        int s = secondsLeft.get();
+        secondsLeft.set(s-1);
     }
 
-    /*@FXML
+    protected void startTimer(){
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        secondsLeft.set(startSeconds);
+        timeline.play();
+    }
+
     protected void prepareTimer(Scene scene){
         Label count = (Label) scene.lookup("#count");
-
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int i = 60;
-            public void run(){
-                if (i >= 0) {
-                    count.setText(""+i);
-                    i--;
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(task, 0, 1000);
-    }*/
+        count.textProperty().bind(secondsLeft.asString());
+        startTimer();
+    }
 
     @FXML
     protected void preparePause(Scene scene){
@@ -118,12 +118,14 @@ public class MapController  {
                 if (event.getCode() == KeyCode.ESCAPE){
                     if(paused==false){
                         paused = true;
+                        //pauseGMC(true);
                         pause.setVisible(true);
                         System.out.println("ESCAPE, pause");
                         return;
                     }
                     if(paused==true){
                         paused = false;
+                        //pauseGMC(false);
                         pause.setVisible(false);
                         System.out.println("ESCAPE, unpause");
                         return;
@@ -143,5 +145,14 @@ public class MapController  {
     protected void initialize() {
 
     }
+
+    /*protected void pauseGMC(boolean b){
+        if(b){
+            PC.interrupt();
+        }
+        if(!b){
+            PC.start();
+        }
+    }*/
 
 }
