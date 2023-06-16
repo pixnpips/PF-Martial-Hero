@@ -30,10 +30,11 @@ public class MapController  {
     @FXML
     private Label count;
 
-    private int startSeconds = 60;
+    private int startSeconds = 10;
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
+    private Scene scene;
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -82,18 +83,43 @@ public class MapController  {
 
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
+        this.scene = scene;
 
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
-        preparePause(scene);
+        preparePause();
         background = (VBox) scene.lookup("#background");
         System.out.println(background.toString());
         PC.setBackground(background);
-        prepareTimer(scene);
+        prepareTimer();
     }
     protected void updateTimer(){
         int s = secondsLeft.get();
-        secondsLeft.set(s-1);
+        if(s > 0){
+            secondsLeft.set(s-1);
+        }
+        else if (s == 0){
+            endGame();
+        }
+    }
+
+    private void endGame() {
+        stopTimer();
+        exit();
+        try {
+            openWinMenu();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void openWinMenu() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/WinMenu.fxml"));
+        System.out.println(fxmlLoader.getLocation());
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        Main.startStage.setTitle("WINNER");
+        Main.startStage.setScene(scene);
+        Main.startStage.show();
     }
 
     protected void startTimer(){
@@ -103,14 +129,17 @@ public class MapController  {
         timeline.play();
     }
 
-    protected void prepareTimer(Scene scene){
+    protected void prepareTimer(){
         Label count = (Label) scene.lookup("#count");
         count.textProperty().bind(secondsLeft.asString());
         startTimer();
     }
+    public void stopTimer(){
+        timeline.stop();
+    }
 
     @FXML
-    protected void preparePause(Scene scene){
+    protected void preparePause(){
         AnchorPane pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
@@ -143,7 +172,6 @@ public class MapController  {
 
     @FXML
     protected void initialize() {
-
     }
 
     /*protected void pauseGMC(boolean b){

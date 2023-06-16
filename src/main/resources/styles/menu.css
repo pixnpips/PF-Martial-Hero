@@ -67,3 +67,6 @@ VBox {
 .makeInvisible{
     -fx-opacity: 0;
 }
+.win{
+-fx-background-image: url("../images/BG_Highscore.png");
+}
