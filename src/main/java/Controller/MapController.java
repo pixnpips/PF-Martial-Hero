@@ -31,7 +31,7 @@ public class MapController  {
     @FXML
     private Label count;
 
-    private int startSeconds = 3;
+    private int startSeconds = 3; //wird in der Methode startTimer überschrieben
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
@@ -142,17 +142,17 @@ public class MapController  {
         return name;
     }
 
-    protected void startTimer(){
+    protected void startTimer(int seconds){
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
         timeline.setCycleCount(Animation.INDEFINITE);
-        secondsLeft.set(startSeconds);
+        secondsLeft.set(seconds);
         timeline.play();
     }
 
     protected void prepareTimer(){
         Label count = (Label) scene.lookup("#count");
         count.textProperty().bind(secondsLeft.asString());
-        startTimer();
+        startTimer(10);
     }
     public void stopTimer(){
         timeline.stop();
@@ -169,6 +169,7 @@ public class MapController  {
                         paused = true;
                         //pauseGMC(true);
                         pause.setVisible(true);
+                        stopTimer();
                         System.out.println("ESCAPE, pause");
                         return;
                     }
@@ -176,6 +177,7 @@ public class MapController  {
                         paused = false;
                         //pauseGMC(false);
                         pause.setVisible(false);
+                        startTimer(secondsLeft.intValue());
                         System.out.println("ESCAPE, unpause");
                         return;
                     }
