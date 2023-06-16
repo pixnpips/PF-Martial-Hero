@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import Controller.MapController;
 
 public class Timer {
-    private int startSeconds = 50;
+    private int startSeconds = 5;
     private Timeline timeline;
     public final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     @FXML
@@ -42,6 +42,7 @@ public class Timer {
             secondsLeft.set(s-1);
         }
         else if (s == 0){
+            stopTimer();
             mapController.endGame();
         }
     }

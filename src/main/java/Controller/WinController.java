@@ -1,6 +1,7 @@
 package Controller;
 
 import View.FxmlView;
+import View.Main;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -14,7 +15,6 @@ public class WinController {
     public Scene scene;
     @FXML
     private Label nameLabel;
-    //private FxmlView View = new FxmlView();
     private FxmlView View;
 
     public WinController(){
@@ -33,8 +33,7 @@ public class WinController {
     }
 
     public void exit(){
-        View.exit();
+        Main.exit();
     }
-
 
 }

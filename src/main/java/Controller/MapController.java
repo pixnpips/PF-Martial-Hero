@@ -124,7 +124,6 @@ public class MapController  {
 
     }
     public void endGame() {
-        timer.stopTimer();
         Main.exit();
         try {
             openWinMenu();
@@ -135,11 +134,11 @@ public class MapController  {
     @FXML
     private void openWinMenu() throws IOException {
         System.out.println("WinMenu");
-        /*View = new FxmlView();
+        View = new FxmlView();
         View.load("/fxml/WinMenu.fxml", "WinMenu");
         WinController WC = new WinController();
         WC.setScene(View.getScene());
-        WC.setName(getWinner());*/
+        WC.setName(getWinner());
     }
 
     private String getWinner() {
