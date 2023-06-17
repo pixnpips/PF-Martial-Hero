@@ -207,13 +207,15 @@ public class GlobalMoveController extends Thread {
         double x2=this.N2.getBoundsInParent().getCenterX();
         double y2=this.N2.getBoundsInParent().getCenterY();
 
-        if ((x2-x1)<200) {
-            this.isCollision = true;
-            return true;
-        } else {
-            this.isCollision = false;
-            return false;
+        if (x2>x1) {
+            this.isCollision = (x2 - x1) < 200 && (Math.abs(y1 - y2) < 500);
+        }else if (x2 < x1) {
+            this.isCollision = (x1 - x2) < 200 && (Math.abs(y1 - y2) < 500);
         }
+        return this.isCollision;
+
+
+
 
 //        if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {
 //            this.isCollision = true;
