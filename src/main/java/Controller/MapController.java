@@ -1,11 +1,13 @@
 package Controller;
 
 import View.Main;
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,9 +22,32 @@ public class MapController  {
     private VBox background;
 
     @FXML
-    AnchorPane SP1;
+    AnchorPane SpritePane;
+
+    @FXML
+    ScrollPane BackGroundScrollPane;
 
     private boolean paused = false;
+
+    private static final double SCROLL_SPEED = 2.0;
+
+    private AnimationTimer MapScrollTimer= new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            double currentX = BackGroundScrollPane.getTranslateX();
+            double newX = currentX + SCROLL_SPEED;
+
+            double[] positions=GMC.getNodePositions();
+
+            // Überprüfen, ob das Ziel erreicht wurde
+            if (positions[0]<300) {
+                BackGroundScrollPane.setTranslateX(200);
+            }
+        }
+    };
+    private GlobalMoveController GMC;
+    private SpriteAnimationController spriteAnimationController1;
+    private SpriteAnimationController spriteAnimationController2;
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -45,7 +70,6 @@ public class MapController  {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
-
         fxmlLoader.setController(this);
 
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
@@ -54,25 +78,26 @@ public class MapController  {
         C1.setLayoutX(900); // X-Koordinate: 1200 Pixel
         C1.setLayoutY(300); // Y-Koordinate: 400 Pixel
 
-        SpriteAnimationController SAC1= new SpriteAnimationController(C1,1);
-        SAC1.initialize();
-        SP1.getChildren().add(C1);
+        spriteAnimationController1 = new SpriteAnimationController(C1,1);
+        spriteAnimationController1.initialize();
+        SpritePane.getChildren().add(C1);
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1700); // X-Koordinate: 1200 Pixel
         C2.setLayoutY(300); // Y-Koordinate: 400 Pixel
 
-        SP1.getChildren().add(C2);
-        SpriteAnimationController SAC2= new SpriteAnimationController(C2,2);
-        SAC2.initialize();
+        SpritePane.getChildren().add(C2);
+        spriteAnimationController2 = new SpriteAnimationController(C2,2);
+        spriteAnimationController2.initialize();
 
-
-        GlobalMoveController PC= new GlobalMoveController(C1,C2,scene,SAC1,SAC2);
-        PC.start();
+        GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2);
+        GMC.start();
 
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
+
+        MapScrollTimer.start();
 
 
         Main.startStage.setScene(scene);

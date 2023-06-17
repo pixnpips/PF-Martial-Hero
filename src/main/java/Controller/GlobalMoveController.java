@@ -197,24 +197,24 @@ public class GlobalMoveController extends Thread {
         return true;
     }
 
+    public double [] getNodePositions(){
+        return new double[] {N1.getBoundsInParent().getCenterX(),this.N1.getBoundsInParent().getCenterY(),this.N2.getBoundsInParent().getCenterX(), this.N2.getBoundsInParent().getCenterY()};
+    }
+
 
     public boolean checkCollision() {
        // System.out.println(this.isCollision);
         // Überprüfe, ob die Formen tatsächlich kollidieren
 
-        double x1=this.N1.getBoundsInParent().getCenterX();
-        double y1=this.N1.getBoundsInParent().getCenterY();
-        double x2=this.N2.getBoundsInParent().getCenterX();
-        double y2=this.N2.getBoundsInParent().getCenterY();
+        double[] positions= this.getNodePositions();
 
-        if (x2>x1) {
-            this.isCollision = (x2 - x1) < 200 && (Math.abs(y1 - y2) < 500);
-        }else if (x2 < x1) {
-            this.isCollision = (x1 - x2) < 200 && (Math.abs(y1 - y2) < 500);
+
+        if (positions[2]>positions[0] ) {
+            this.isCollision = (positions[2]-positions[0]) < 200 && (Math.abs(positions[1]-positions[3]) < 500);
+        }else if (positions[2]<positions[0]) {
+            this.isCollision = (positions[0]-positions[2]) < 200 && (Math.abs(positions[1]-positions[3]) < 500);
         }
         return this.isCollision;
-
-
 
 
 //        if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {

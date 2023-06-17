@@ -14,7 +14,7 @@
 
 <StackPane fx:id="root1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"  maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0">
    <children>
-      <ScrollPane maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" >
+      <ScrollPane fx:id="BackGroundScrollPane" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" >
          <content>
                <VBox fx:id="background" maxHeight="1080" maxWidth="3500" minHeight="1080" minWidth="3500" prefHeight="1080.0" prefWidth="3500.0" stylesheets="@../styles/map.css" />
          </content>
@@ -58,7 +58,7 @@
                </ProgressBar>
          </children>
       </HBox>
-         <AnchorPane fx:id="SP1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
+         <AnchorPane fx:id="SpritePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
             <children>
             </children>
          </AnchorPane>
