@@ -16,6 +16,17 @@ public class FxmlView {
     public FxmlView(){
 
     }
+    public Stage start(Stage stage, String url, String title) throws IOException {
+        loader = new FXMLLoader(Main.class.getResource(url));
+        System.out.println(loader.getLocation());
+        Scene scene = new Scene(loader.load(), 1920, 1080);
+        stage.setTitle(title);
+        stage.setScene(scene);
+        return stage;
+        //startStage=stage;
+        //stage.show();
+
+    }
     public void load(String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
         scene = new Scene(loader.load(), 1920, 1080);

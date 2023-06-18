@@ -2,8 +2,6 @@ package Controller;
 
 import View.FxmlView;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import View.Main;
 
@@ -13,7 +11,7 @@ public class StartController {
 
     @FXML
     private Label welcomeText;
-    private FxmlView View = new FxmlView();
+    private FxmlView View;
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
@@ -22,9 +20,9 @@ public class StartController {
     protected void exit(){
         Main.startStage.close();
     }
-
     @FXML
     protected void openMapChoice() throws IOException {
+        View = new FxmlView();
         View.load("/fxml/MapChoice.fxml", "Choose your Map");
     }
 
