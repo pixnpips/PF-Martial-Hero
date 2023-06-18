@@ -9,7 +9,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -18,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -33,7 +33,6 @@ public class MapController  {
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
-    @FXML
     private Scene scene;
     private FxmlView View;
 
@@ -60,29 +59,18 @@ public class MapController  {
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);*/
         View = new FxmlView();
         View.load("/fxml/Map.fxml", "Martial Hero");
-        Scene scene = View.getStartStage().getScene();
-        System.out.println(scene);
         scene = View.getScene();
-        System.out.println(scene);
-        scene = View.currentScene;
-        System.out.println(scene);
-
 
         Node N1 = scene.lookup("#canvas1");
         Node N2 = scene.lookup("#canvas2");
-        System.out.println(N1);
-        System.out.println(N2);
+
         background = (VBox) scene.lookup("#background");
-        System.out.println(background);
 
-
-        //GlobalMoveController PC = new GlobalMoveController(N1,N2,scene);
         PC = new GlobalMoveController(N1,N2,scene);
         PC.start();
 
-        //Main.startStage.setScene(scene);
 
-        /*System.out.println(scene.getWindow().getWidth());
+        System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
 
         scene.getWindow().setWidth(1920);
@@ -91,14 +79,13 @@ public class MapController  {
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
 
-        Main.startStage.setResizable(false);
-
-        Main.startStage.hide();
-        Main.startStage.show();
+        View.getStartStage().setResizable(false);
+        Stage stage = View.getCurrentStage();
+        View.exit();
+        View.show(stage);
 
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
-        this.scene = scene;*/
 
         //MapController MC1=fxmlLoader.getController();
         MapController MC1 = new MapController();
@@ -178,7 +165,6 @@ public class MapController  {
 
     @FXML
     protected void preparePause(){
-        scene = View.currentScene;
         AnchorPane pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
