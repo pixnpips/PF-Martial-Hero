@@ -8,10 +8,8 @@ import java.io.IOException;
 
 public class FxmlView {
 
-    private String url;
-    private String title;
     public FXMLLoader loader;
-    public Scene scene;
+    public Scene currentScene;
 
     public FxmlView(){
 
@@ -19,9 +17,9 @@ public class FxmlView {
     public Stage start(Stage stage, String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
         System.out.println(loader.getLocation());
-        Scene scene = new Scene(loader.load(), 1920, 1080);
+        currentScene = new Scene(loader.load(), 1920, 1080);
         stage.setTitle(title);
-        stage.setScene(scene);
+        stage.setScene(currentScene);
         return stage;
         //startStage=stage;
         //stage.show();
@@ -29,14 +27,14 @@ public class FxmlView {
     }
     public void load(String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
-        scene = new Scene(loader.load(), 1920, 1080);
+        currentScene = new Scene(loader.load(), 1920, 1080);
         System.out.println(loader.getLocation());
         Main.startStage.setTitle(title);
-        Main.startStage.setScene(scene);
+        Main.startStage.setScene(currentScene);
         Main.startStage.show();
     }
     public Scene getScene(){
-        return scene;
+        return currentScene;
     }
     public void exit(){
         Main.startStage.close();

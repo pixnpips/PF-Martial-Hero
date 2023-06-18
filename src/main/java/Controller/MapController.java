@@ -33,10 +33,11 @@ public class MapController  {
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
+    @FXML
     private Scene scene;
-    private FxmlView View = new FxmlView();
+    private FxmlView View;
 
-    public void chooseMap(int mapNr){
+    public void chooseMap(int mapNr, VBox background){
         if(mapNr==1){
             background.getStyleClass().add("map01");
         } else {
@@ -54,20 +55,34 @@ public class MapController  {
 
     @FXML
     protected void openMap(int mapNr)  throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
+        /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);*/
+        View = new FxmlView();
+        View.load("/fxml/Map.fxml", "Martial Hero");
+        Scene scene = View.getStartStage().getScene();
+        System.out.println(scene);
+        scene = View.getScene();
+        System.out.println(scene);
+        scene = View.currentScene;
+        System.out.println(scene);
+
 
         Node N1 = scene.lookup("#canvas1");
         Node N2 = scene.lookup("#canvas2");
+        System.out.println(N1);
+        System.out.println(N2);
+        background = (VBox) scene.lookup("#background");
+        System.out.println(background);
+
 
         //GlobalMoveController PC = new GlobalMoveController(N1,N2,scene);
         PC = new GlobalMoveController(N1,N2,scene);
         PC.start();
 
-        Main.startStage.setScene(scene);
+        //Main.startStage.setScene(scene);
 
-        System.out.println(scene.getWindow().getWidth());
+        /*System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
 
         scene.getWindow().setWidth(1920);
@@ -83,12 +98,12 @@ public class MapController  {
 
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
-        this.scene = scene;
+        this.scene = scene;*/
 
-        MapController MC1=fxmlLoader.getController();
-        MC1.chooseMap(mapNr);
+        //MapController MC1=fxmlLoader.getController();
+        MapController MC1 = new MapController();
+        MC1.chooseMap(mapNr, background);
         preparePause();
-        background = (VBox) scene.lookup("#background");
         System.out.println(background.toString());
         PC.setBackground(background);
         prepareTimer();
@@ -122,6 +137,7 @@ public class MapController  {
         Main.startStage.setScene(scene);
         Main.startStage.show();
         WinController WC = fxmlLoader.getController();*/
+        View = new FxmlView();
         View.load("/fxml/WinMenu.fxml", "WinMenu");
         WinController WC = new WinController();
         WC.setScene(View.getScene());
@@ -131,7 +147,7 @@ public class MapController  {
     private String getWinner() {
         ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
         ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
-        String name ="";
+        String name;
         if(hp01.getProgress()>hp02.getProgress()){
             name = "Player 1";
         }
@@ -162,6 +178,7 @@ public class MapController  {
 
     @FXML
     protected void preparePause(){
+        scene = View.currentScene;
         AnchorPane pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
