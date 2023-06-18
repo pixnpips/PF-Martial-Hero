@@ -1,20 +1,18 @@
-package Controller;
-import javafx.fxml.FXML;
+package View;
+
 import javafx.fxml.FXMLLoader;
-import View.Main;
 import javafx.scene.Scene;
 
 import java.io.IOException;
 
-
-public class FxmlController {
+public class FxmlView {
 
     private String url;
     private String title;
     public FXMLLoader loader;
     public Scene scene;
 
-    public FxmlController(){
+    public FxmlView(){
     }
     public void load(String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
@@ -30,6 +28,4 @@ public class FxmlController {
     public void exit(){
         Main.startStage.close();
     }
-
-
 }

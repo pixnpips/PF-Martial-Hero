@@ -1,5 +1,6 @@
 package Controller;
 
+import View.FxmlView;
 import View.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -36,7 +37,7 @@ public class MapController  {
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     private Scene scene;
-    private FxmlController FC = new FxmlController();
+    private FxmlView View = new FxmlView();
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -124,9 +125,9 @@ public class MapController  {
         Main.startStage.setScene(scene);
         Main.startStage.show();
         WinController WC = fxmlLoader.getController();*/
-        FC.load("/fxml/WinMenu.fxml", "WinMenu");
+        View.load("/fxml/WinMenu.fxml", "WinMenu");
         WinController WC = new WinController();
-        WC.setScene(FC.getScene());
+        WC.setScene(View.getScene());
         WC.setName(getWinner());
     }
 

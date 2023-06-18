@@ -1,5 +1,6 @@
 package Controller;
 
+import View.FxmlView;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -13,7 +14,7 @@ public class WinController {
     public Scene scene;
     @FXML
     private Label nameLabel;
-    private FxmlController FC = new FxmlController();
+    private FxmlView View = new FxmlView();
 
     public WinController(){
     }
@@ -26,11 +27,11 @@ public class WinController {
         this.scene = scene;
     }
     public void startMenu() throws IOException {
-        FC.load("/fxml/StartMenu.fxml", "Martial Hero");
+        View.load("/fxml/StartMenu.fxml", "Martial Hero");
     }
 
     public void exit(){
-        FC.exit();
+        View.exit();
     }
 
 
