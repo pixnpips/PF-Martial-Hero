@@ -18,7 +18,6 @@ public class StartController {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
-
     @FXML
     protected void exit(){
         Main.startStage.close();

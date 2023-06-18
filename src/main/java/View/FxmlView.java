@@ -2,6 +2,7 @@ package View;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ public class FxmlView {
     public Scene scene;
 
     public FxmlView(){
+
     }
     public void load(String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
@@ -27,5 +29,8 @@ public class FxmlView {
     }
     public void exit(){
         Main.startStage.close();
+    }
+    public Stage getStartStage(){
+        return Main.startStage;
     }
 }

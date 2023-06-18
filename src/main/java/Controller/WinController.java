@@ -14,9 +14,11 @@ public class WinController {
     public Scene scene;
     @FXML
     private Label nameLabel;
-    private FxmlView View = new FxmlView();
+    //private FxmlView View = new FxmlView();
+    private FxmlView View;
 
     public WinController(){
+        View = new FxmlView();
     }
     public void setName(String name){
         this.name = name;

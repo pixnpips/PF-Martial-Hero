@@ -29,9 +29,6 @@ public class MapController  {
 
     private GlobalMoveController PC;
 
-    @FXML
-    private Label count;
-
     private int startSeconds = 6;
     private Timeline timeline;
     private boolean paused = false;
@@ -170,7 +167,7 @@ public class MapController  {
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ESCAPE){
-                    if(paused==false){
+                    if(!paused){
                         paused = true;
                         //pauseGMC(true);
                         pause.setVisible(true);
@@ -178,7 +175,7 @@ public class MapController  {
                         System.out.println("ESCAPE, pause");
                         return;
                     }
-                    if(paused==true){
+                    if(paused){
                         paused = false;
                         //pauseGMC(false);
                         pause.setVisible(false);
