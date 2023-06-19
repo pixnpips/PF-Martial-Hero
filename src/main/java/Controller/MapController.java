@@ -54,9 +54,6 @@ public class MapController  {
 
     @FXML
     protected void openMap(int mapNr)  throws IOException {
-        /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);*/
         View = new FxmlView();
         View.load("/fxml/Map.fxml", "Martial Hero");
         scene = View.getScene();
@@ -79,7 +76,7 @@ public class MapController  {
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
 
-        View.getStartStage().setResizable(false);
+        //View.getStartStage().setResizable(false);
         Stage stage = View.getCurrentStage();
         View.exit();
         View.show(stage);
@@ -87,7 +84,6 @@ public class MapController  {
         System.out.println(scene.getWindow().getWidth());
         System.out.println(scene.getWindow().getHeight());
 
-        //MapController MC1=fxmlLoader.getController();
         MapController MC1 = new MapController();
         MC1.chooseMap(mapNr, background);
         preparePause();
@@ -117,13 +113,6 @@ public class MapController  {
 
     @FXML
     private void openWinMenu() throws IOException {
-        /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/WinMenu.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        Main.startStage.setTitle("WINNER");
-        Main.startStage.setScene(scene);
-        Main.startStage.show();
-        WinController WC = fxmlLoader.getController();*/
         View = new FxmlView();
         View.load("/fxml/WinMenu.fxml", "WinMenu");
         WinController WC = new WinController();
@@ -167,25 +156,23 @@ public class MapController  {
     protected void preparePause(){
         AnchorPane pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
-        EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE){
-                    if(!paused){
-                        paused = true;
-                        //pauseGMC(true);
-                        pause.setVisible(true);
-                        stopTimer();
-                        System.out.println("ESCAPE, pause");
-                        return;
-                    }
-                    if(paused){
-                        paused = false;
-                        //pauseGMC(false);
-                        pause.setVisible(false);
-                        startTimer(secondsLeft.intValue());
-                        System.out.println("ESCAPE, unpause");
-                        return;
-                    }
+        EventHandler<KeyEvent> pauseHandler = event -> {
+            if (event.getCode() == KeyCode.ESCAPE){
+                if(!paused){
+                    paused = true;
+                    //pauseGMC(true);
+                    pause.setVisible(true);
+                    stopTimer();
+                    System.out.println("ESCAPE, pause");
+                    return;
+                }
+                if(paused){
+                    paused = false;
+                    //pauseGMC(false);
+                    pause.setVisible(false);
+                    startTimer(secondsLeft.intValue());
+                    System.out.println("ESCAPE, unpause");
+                    return;
                 }
             }
         };

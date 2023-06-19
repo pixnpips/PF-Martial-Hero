@@ -19,9 +19,11 @@ public class FxmlView {
         loader = new FXMLLoader(Main.class.getResource(url));
         System.out.println(loader.getLocation());
         currentScene = new Scene(loader.load(), 1920, 1080);
+        stage.setResizable(false);
         stage.setTitle(title);
         stage.setScene(currentScene);
         currentStage = stage;
+        System.out.println(stage.getY());
         return currentStage;
 
     }
@@ -29,8 +31,10 @@ public class FxmlView {
         loader = new FXMLLoader(Main.class.getResource(url));
         currentScene = new Scene(loader.load(), 1920, 1080);
         System.out.println(loader.getLocation());
+        Main.startStage.setResizable(false);
         Main.startStage.setTitle(title);
         Main.startStage.setScene(currentScene);
+        Main.startStage.setY(0);
         currentStage = Main.startStage;
         Main.startStage.show();
     }
