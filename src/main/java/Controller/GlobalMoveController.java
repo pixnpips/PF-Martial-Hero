@@ -1,7 +1,6 @@
 package Controller;
 
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -29,37 +28,65 @@ public class GlobalMoveController extends Thread {
     private boolean moveRightN2;
     private boolean moveLeftN2;
 
+    private boolean N1reachedlimitofPaneL=false;
+    private boolean N1reachedlimitofPaneR=false;
+    private boolean N2reachedlimitofPaneL=false;
+    private boolean N2reachedlimitofPaneR=false;
+
+    private boolean scrollL=false;
+
+    private boolean scrollR=false;
+
+    private boolean hitPlayer1=false;
+    private boolean hitPLayer2=false;
+
+    private static final double SCROLL_SPEED =10.0;
+
     private boolean Airtime1=false;
 
     private boolean Airtime2=false;
-    private static final double NODE_TRANSLATE_SPEED = 10.0;
+    private static  double node1TranslateSpeed = 10.0;
+    private static  double node2TranslateSpeed = 10.0;
 
     private boolean isCollision=false;
 
     private SpriteAnimationController SAC1;
     private SpriteAnimationController SAC2;
+    private Node BackGroundScrollPane;
+
+    private AnimationTimer MapScrollTimer;
+
+    public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2){
+        this.N1 =N1;
+        this.N2 =N2;
+        this.S=S;
+        this.SAC1=S1;
+        this.SAC2=S2;
+        this.BackGroundScrollPane=this.S.lookup("#BackGroundScrollPane");
+        System.out.println(BackGroundScrollPane.toString());
+    }
 
 
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
                 if(!checkCollision()) {
-                    if (moveRightN1) {
-                        N1.setTranslateX((N1.getTranslateX() + NODE_TRANSLATE_SPEED));
+                    checkBoarders();
+                    if (moveRightN1 &&!N1reachedlimitofPaneR) {
+                        N1.setTranslateX((N1.getTranslateX() + node1TranslateSpeed));
                     }
-                    if (moveLeftN1) {
-                        N1.setTranslateX((N1.getTranslateX() - NODE_TRANSLATE_SPEED));
-
+                    if (moveLeftN1 &&!N1reachedlimitofPaneL) {
+                        N1.setTranslateX((N1.getTranslateX() - node1TranslateSpeed));
                     }
-                    if (moveRightN2) {
-                        N2.setTranslateX((N2.getTranslateX() + NODE_TRANSLATE_SPEED));
-
+                    if (moveRightN2 &&!N2reachedlimitofPaneR) {
+                        N2.setTranslateX((N2.getTranslateX() + node2TranslateSpeed));
                     }
-                    if (moveLeftN2) {
-                        N2.setTranslateX((N2.getTranslateX() - NODE_TRANSLATE_SPEED));
+                    if (moveLeftN2 &&!N2reachedlimitofPaneL) {
+                        N2.setTranslateX((N2.getTranslateX() - node2TranslateSpeed));
                     }
+                    resetBoarders();
                 }
-                else resetCollision();
+                else resetNodeCollision();
             }
     };
 
@@ -103,18 +130,36 @@ public class GlobalMoveController extends Thread {
     };
 
 
-    public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2){
-        this.N1 =N1;
-        this.N2 =N2;
-        this.S=S;
-        this.SAC1=S1;
-        this.SAC2=S2;
-    }
-
     public void run(){
         this.S.setOnKeyPressed(this::handleKeyPressD);
         this.S.setOnKeyReleased(this::handleKeyReleaseD);
         this.setTranslate();
+
+        this.MapScrollTimer= new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                checkBoarders();
+
+                double BackgroundXPostiion= BackGroundScrollPane.getTranslateX();
+
+                System.out.println("Koordinate X Scrollpane:" + BackgroundXPostiion);
+                if (N1reachedlimitofPaneL&&!N2reachedlimitofPaneR&&moveLeftN2&&BackgroundXPostiion<740) {
+                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+                }
+                if (N2reachedlimitofPaneR&&!N1reachedlimitofPaneL&&moveRightN1&&BackgroundXPostiion>-740) {
+                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion-SCROLL_SPEED);
+                }
+                if (N2reachedlimitofPaneL&&!N1reachedlimitofPaneR&&moveLeftN1&&BackgroundXPostiion<740) {
+                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+                }
+                if (N1reachedlimitofPaneR&&!N2reachedlimitofPaneL&&moveRightN2&&BackgroundXPostiion>-740) {
+                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+                }
+
+            }
+        };
+
+        this.MapScrollTimer.start();
     }
 
     private boolean handleKeyPressD(KeyEvent event) {
@@ -144,19 +189,19 @@ public class GlobalMoveController extends Thread {
         }
 
 
-
         if (event.getCode() == KeyCode.L) {
             moveRightN2 = true;
             if(!Airtime2){SAC2.setRun();}
             SAC2.setBeginn(false);
             SAC2.turn(false);
-
         }
+
         if (event.getCode() == KeyCode.J) {
             moveLeftN2 = true;
             if(!Airtime2){SAC2.setRun();}
             SAC2.turn(true);
         }
+
         if (event.getCode() == KeyCode.I ){
             // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
             SAC2.setJump();
@@ -192,6 +237,7 @@ public class GlobalMoveController extends Thread {
             SAC2.setIdle();
         }
     }
+    
     public boolean setTranslate(){
         this.translateTimer.start();
         return true;
@@ -206,34 +252,22 @@ public class GlobalMoveController extends Thread {
        // System.out.println(this.isCollision);
         // Überprüfe, ob die Formen tatsächlich kollidieren
 
-        double[] positions= this.getNodePositions();
+        double[] nodePositions= this.getNodePositions();
 
-
-        if (positions[2]>positions[0] ) {
-            this.isCollision = (positions[2]-positions[0]) < 200 && (Math.abs(positions[1]-positions[3]) < 500);
-        }else if (positions[2]<positions[0]) {
-            this.isCollision = (positions[0]-positions[2]) < 200 && (Math.abs(positions[1]-positions[3]) < 500);
+        if (nodePositions[2]>nodePositions[0] ) {
+            this.isCollision = (nodePositions[2]-nodePositions[0]) < 200 && (Math.abs(nodePositions[1]-nodePositions[3]) < 500);
+        }else if (nodePositions[2]<nodePositions[0]) {
+            this.isCollision = (nodePositions[0]-nodePositions[2]) < 200 && (Math.abs(nodePositions[1]-nodePositions[3]) < 500);
         }
         return this.isCollision;
-
-
-//        if (this.N1.getBoundsInParent().intersects(this.N2.getBoundsInParent())) {
-//            this.isCollision = true;
-//            return true;
-//        } else {
-//            this.isCollision = false;
-//            return false;
-//        }
-
     }
 
-    private boolean resetCollision(){
+    private boolean resetNodeCollision(){
 
         double N1x= this.N1.getBoundsInParent().getCenterX();
         double N2x= this.N2.getBoundsInParent().getCenterX();
         double N1y= this.N1.getTranslateY();
         double N2y= this.N2.getTranslateY();
-
         double velocity=1;
 
         if(N1y!=N2y){
@@ -250,7 +284,38 @@ public class GlobalMoveController extends Thread {
             this.N2.setTranslateX(N2.getTranslateX()-velocity);
             return false;
         }
+
         return true;
+    }
+
+    //hier könnte man schauen das man mit einfachen Threads arbeitet
+
+    public void checkBoarders(){
+
+        double[] nodePositions= this.getNodePositions();
+
+        if(nodePositions[0]<100){
+            this.N1reachedlimitofPaneL=true;
+        }
+
+        if(nodePositions[0]>1800){
+            this.N1reachedlimitofPaneR=true;
+        }
+
+        if(nodePositions[2]<100){
+            this.N2reachedlimitofPaneL=true;
+        }
+
+        if(nodePositions[2]>1800){
+            this.N2reachedlimitofPaneR=true;
+        }
+    }
+
+    public void resetBoarders(){
+        this.N1reachedlimitofPaneL=false;
+        this.N2reachedlimitofPaneL=false;
+        this.N1reachedlimitofPaneR=false;
+        this.N2reachedlimitofPaneR=false;
     }
 
 }

@@ -66,7 +66,6 @@ public class SpriteAnimationController {
         // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
 
         public void initialize() {
-
             // Load the sprite frames
            this.frames = this.idleFrames;
             {
@@ -133,7 +132,6 @@ public class SpriteAnimationController {
 
     public void setRun() {
         this.frames=this.runFrames;
-        currentFrameIndex = 0;
     }
 
     public void setAttack1() {
@@ -145,7 +143,6 @@ public class SpriteAnimationController {
             this.setIdle();
             System.out.println("Atack beendet");
         }
-
     }
 
     public void setAttack2() {
@@ -161,12 +158,12 @@ public class SpriteAnimationController {
     }
     public void setGetHit() {
         this.frames=this.takeHitFrames;
-        currentFrameIndex = 0;
+//        currentFrameIndex = 0;
     }
 
     public void setDead(){
             this.frames=this.deathFrames;
-        currentFrameIndex = 0;
+//        currentFrameIndex = 0;
     }
 
     public void setBeginn(boolean b){

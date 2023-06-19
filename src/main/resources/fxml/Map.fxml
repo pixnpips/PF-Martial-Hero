@@ -58,7 +58,7 @@
                </ProgressBar>
          </children>
       </HBox>
-         <AnchorPane fx:id="SpritePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="3500.0">
+         <AnchorPane fx:id="SpritePane" maxHeight="-Infinity" maxWidth="1920" minHeight="-Infinity" minWidth="1920" prefHeight="600.0" prefWidth="1920.0">
             <children>
             </children>
          </AnchorPane>

@@ -5,6 +5,7 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
@@ -17,7 +18,6 @@ import java.io.IOException;
 
 public class MapController  {
 
-
     @FXML
     private VBox background;
 
@@ -29,25 +29,10 @@ public class MapController  {
 
     private boolean paused = false;
 
-    private static final double SCROLL_SPEED = 2.0;
-
-    private AnimationTimer MapScrollTimer= new AnimationTimer() {
-        @Override
-        public void handle(long now) {
-            double currentX = BackGroundScrollPane.getTranslateX();
-            double newX = currentX + SCROLL_SPEED;
-
-            double[] positions=GMC.getNodePositions();
-
-            // Überprüfen, ob das Ziel erreicht wurde
-            if (positions[0]<300) {
-                BackGroundScrollPane.setTranslateX(200);
-            }
-        }
-    };
     private GlobalMoveController GMC;
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
+
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -75,16 +60,16 @@ public class MapController  {
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         Canvas C1 = new Canvas(1000, 500);
-        C1.setLayoutX(900); // X-Koordinate: 1200 Pixel
-        C1.setLayoutY(300); // Y-Koordinate: 400 Pixel
+        C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
+        C1.setLayoutY(300); // Y-Koordinate: 400 Pixelad
 
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
         SpritePane.getChildren().add(C1);
 
         Canvas C2 = new Canvas(1000, 500);
-        C2.setLayoutX(1700); // X-Koordinate: 1200 Pixel
-        C2.setLayoutY(300); // Y-Koordinate: 400 Pixel
+        C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
+        C2.setLayoutY(270); // Y-Koordinate: 400 Pixel
 
         SpritePane.getChildren().add(C2);
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
@@ -96,8 +81,6 @@ public class MapController  {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
-
-        MapScrollTimer.start();
 
 
         Main.startStage.setScene(scene);
@@ -112,8 +95,6 @@ public class MapController  {
         System.out.println(scene.getWindow().getHeight());
 
         Main.startStage.setResizable(false);
-
-
         Main.startStage.hide();
         Main.startStage.show();
 
