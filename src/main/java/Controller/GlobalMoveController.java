@@ -1,18 +1,23 @@
 package Controller;
 
 import javafx.animation.AnimationTimer;
+import java.beans.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalMoveController extends Thread {
 
-    public List Listener =new ArrayList();
 
+    private PropertyChangeSupport changes;
     private double jump_amount= 50;
     double GRAVITY = 2;
     private double node1JumpVelocity =0;
@@ -28,6 +33,13 @@ public class GlobalMoveController extends Thread {
     private boolean moveRightN2;
     private boolean moveLeftN2;
 
+
+    private double x_N1;
+    private double x_N2;
+
+    private double y_N1;
+    private double y_N2;
+
     private boolean N1reachedlimitofPaneL=false;
     private boolean N1reachedlimitofPaneR=false;
     private boolean N2reachedlimitofPaneL=false;
@@ -41,7 +53,6 @@ public class GlobalMoveController extends Thread {
     private boolean hitPLayer2=false;
 
     private static final double SCROLL_SPEED =10.0;
-
     private boolean Airtime1=false;
 
     private boolean Airtime2=false;
@@ -54,8 +65,6 @@ public class GlobalMoveController extends Thread {
     private SpriteAnimationController SAC2;
     private Node BackGroundScrollPane;
 
-    private AnimationTimer MapScrollTimer;
-
     public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2){
         this.N1 =N1;
         this.N2 =N2;
@@ -63,6 +72,7 @@ public class GlobalMoveController extends Thread {
         this.SAC1=S1;
         this.SAC2=S2;
         this.BackGroundScrollPane=this.S.lookup("#BackGroundScrollPane");
+        this.changes= new PropertyChangeSupport(this);
         System.out.println(BackGroundScrollPane.toString());
     }
 
@@ -70,19 +80,32 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
+            x_N1=(N1.getTranslateX());
+            x_N2=(N2.getTranslateX());
+            double xtemp=0;
+//            System.out.println(x_N1);
+//            System.out.println(x_N2);
                 if(!checkCollision()) {
                     checkBoarders();
                     if (moveRightN1 &&!N1reachedlimitofPaneR) {
-                        N1.setTranslateX((N1.getTranslateX() + node1TranslateSpeed));
+                        xtemp=x_N1 + node1TranslateSpeed;
+                        N1.setTranslateX((xtemp));
+                        setx_N1(xtemp);
                     }
                     if (moveLeftN1 &&!N1reachedlimitofPaneL) {
-                        N1.setTranslateX((N1.getTranslateX() - node1TranslateSpeed));
+                        xtemp=x_N1 - node1TranslateSpeed;
+                        N1.setTranslateX((xtemp));
+                        setx_N1(xtemp);
                     }
                     if (moveRightN2 &&!N2reachedlimitofPaneR) {
-                        N2.setTranslateX((N2.getTranslateX() + node2TranslateSpeed));
+                        xtemp=x_N2 + node2TranslateSpeed;
+                        N2.setTranslateX((xtemp));
+                        setx_N2(xtemp);
                     }
                     if (moveLeftN2 &&!N2reachedlimitofPaneL) {
-                        N2.setTranslateX((N2.getTranslateX() - node2TranslateSpeed));
+                        xtemp=x_N2 - node2TranslateSpeed;
+                        N2.setTranslateX((xtemp));
+                        setx_N2(xtemp);
                     }
                     resetBoarders();
                 }
@@ -94,15 +117,20 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer jumpTimer1= new AnimationTimer() {
         @Override
         public void handle(long now) {
+            y_N1=(N1.getTranslateY());
+            double ytemp=0;
             // Anwenden der Schwerkraft
             node1JumpVelocity += GRAVITY;
             Airtime1=true;
-            N1.setTranslateY(N1.getTranslateY() + node1JumpVelocity);
+            ytemp=y_N1 + node1JumpVelocity;
+            N1.setTranslateY(ytemp);
+            sety_N1(ytemp);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N1.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
                 node1JumpVelocity = 0;
                 N1.setTranslateY(0);
+                sety_N1(0);
                 this.stop();
                 SAC1.setIdle();
                 Airtime1=false;
@@ -113,15 +141,20 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer jumpTimer2 = new AnimationTimer() {
         @Override
         public void handle(long now) {
+            y_N2=(N2.getTranslateY());
+            double ytemp=0;
             // Anwenden der Schwerkraft
             Airtime2=true;
             Node2JumpVelocity += GRAVITY;
-            N2.setTranslateY(N2.getTranslateY() + Node2JumpVelocity);
+            ytemp=y_N1+ Node2JumpVelocity;
+            N2.setTranslateY(ytemp);
+            sety_N2(ytemp);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N2.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
                 Node2JumpVelocity = 0;
                 N2.setTranslateY(0);
+                sety_N2(0);
                 this.stop();
                 SAC2.setIdle();
                 Airtime2=false;
@@ -129,36 +162,32 @@ public class GlobalMoveController extends Thread {
         }
     };
 
+    private AnimationTimer MapScrollTimer = new AnimationTimer() {
+        @Override
+        public void handle(long l) {
+            checkBoarders();
+            double BackgroundXPostiion= BackGroundScrollPane.getTranslateX();
+
+//                System.out.println("Koordinate X Scrollpane:" + BackgroundXPostiion);
+            if (N1reachedlimitofPaneL&&!N2reachedlimitofPaneR&&moveLeftN2&&BackgroundXPostiion<740) {
+                BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+            }
+            if (N2reachedlimitofPaneR&&!N1reachedlimitofPaneL&&moveRightN1&&BackgroundXPostiion>-740) {
+                BackGroundScrollPane.setTranslateX(BackgroundXPostiion-SCROLL_SPEED);
+            }
+            if (N2reachedlimitofPaneL&&!N1reachedlimitofPaneR&&moveLeftN1&&BackgroundXPostiion<740) {
+                BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+            }
+            if (N1reachedlimitofPaneR&&!N2reachedlimitofPaneL&&moveRightN2&&BackgroundXPostiion>-740) {
+                BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
+            }
+        }
+    };
 
     public void run(){
         this.S.setOnKeyPressed(this::handleKeyPressD);
         this.S.setOnKeyReleased(this::handleKeyReleaseD);
-        this.setTranslate();
-
-        this.MapScrollTimer= new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                checkBoarders();
-
-                double BackgroundXPostiion= BackGroundScrollPane.getTranslateX();
-
-                System.out.println("Koordinate X Scrollpane:" + BackgroundXPostiion);
-                if (N1reachedlimitofPaneL&&!N2reachedlimitofPaneR&&moveLeftN2&&BackgroundXPostiion<740) {
-                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
-                }
-                if (N2reachedlimitofPaneR&&!N1reachedlimitofPaneL&&moveRightN1&&BackgroundXPostiion>-740) {
-                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion-SCROLL_SPEED);
-                }
-                if (N2reachedlimitofPaneL&&!N1reachedlimitofPaneR&&moveLeftN1&&BackgroundXPostiion<740) {
-                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
-                }
-                if (N1reachedlimitofPaneR&&!N2reachedlimitofPaneL&&moveRightN2&&BackgroundXPostiion>-740) {
-                    BackGroundScrollPane.setTranslateX(BackgroundXPostiion+SCROLL_SPEED);
-                }
-
-            }
-        };
-
+        this.translateTimer.start();
         this.MapScrollTimer.start();
     }
 
@@ -237,11 +266,7 @@ public class GlobalMoveController extends Thread {
             SAC2.setIdle();
         }
     }
-    
-    public boolean setTranslate(){
-        this.translateTimer.start();
-        return true;
-    }
+
 
     public double [] getNodePositions(){
         return new double[] {N1.getBoundsInParent().getCenterX(),this.N1.getBoundsInParent().getCenterY(),this.N2.getBoundsInParent().getCenterX(), this.N2.getBoundsInParent().getCenterY()};
@@ -318,4 +343,49 @@ public class GlobalMoveController extends Thread {
         this.N2reachedlimitofPaneR=false;
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        changes.removePropertyChangeListener(l);
+    }
+
+    // Getter und Setter Methoden für jeden Parameter der beiden Sprites für den PropertychangeSupport
+
+    public double getx_N1() {return this.x_N1;}
+    public void setx_N1(double newPos) {
+        Double oldValue = this.x_N1;
+        this.x_N1=newPos;
+        this.changes.firePropertyChange("x_N1", oldValue, this.x_N1);
+    }
+
+
+    public double getx_N2() {
+        return this.x_N2;
+    }
+    public void setx_N2(double newPos) {
+        Double oldValue = this.x_N2;
+        this.x_N2=newPos;
+        this.changes.firePropertyChange("x_N2", oldValue, this.x_N2);
+    }
+
+    public double gety_N1() {
+        return this.y_N1;
+    }
+    public void sety_N1(double newPos) {
+        Double oldValue = this.y_N1;
+        this.y_N1=newPos;
+        this.changes.firePropertyChange("y_N1", oldValue, this.y_N1);
+    }
+
+
+    public double gety_N2() {
+        return this.y_N2;
+    }
+    public void sety_N2(double newPos) {
+        Double oldValue = this.y_N2;
+        this.y_N2=newPos;
+        this.changes.firePropertyChange("y_N2", oldValue, this.y_N2);
+    }
 }

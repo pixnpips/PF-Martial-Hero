@@ -3,14 +3,17 @@ package Controller;
 import Model.Sprite;
 import Model.Spritefactory;
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
+import java.beans.*;
 import java.util.List;
 
 public class SpriteAnimationController {
+
+    private PropertyChangeSupport changes;
 
     private Sprite S;
 
@@ -28,8 +31,8 @@ public class SpriteAnimationController {
     private List<Image> deathFrames;
     private List<Image> jumpFrames;
 
-    private boolean attack1 = false;
-    private boolean attack2 = false;
+    private boolean attack1 =false;
+    private boolean attack2 =false;
 
     private boolean beginn;
     private int currentFrameIndex;
@@ -48,6 +51,7 @@ public class SpriteAnimationController {
         //Dieser Konstruktor wird es werden, den muss ihc erstellen
 
         public SpriteAnimationController(Canvas C, int num){
+
             this.playerNum=num;
             this.canvas=C;
             if(num==1){this.S= Spritefactory.constructSprite(1);
@@ -61,9 +65,11 @@ public class SpriteAnimationController {
             this.deathFrames=this.S.getDeathFrames();
             this.jumpFrames=this.S.getJumpFrames();
             this.beginn=true;
+            this.changes= new PropertyChangeSupport(this);
         }
 
         // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
+
 
         public void initialize() {
             // Load the sprite frames
@@ -101,8 +107,8 @@ public class SpriteAnimationController {
 
                             if((attack1||attack2)&&currentFrameIndex>=5){
                                 setIdle();
-                                attack1=false;
-                                attack2=false;
+                                setAttack1(false);
+                                setAttack2(false);
                             }
                         }
                     }
@@ -137,8 +143,7 @@ public class SpriteAnimationController {
     public void setAttack1() {
             this.frames=this.attack1Frames;
         currentFrameIndex = 0;
-        System.out.print("Attack1: "+this.currentFrameIndex);
-        this.attack1=true;
+        setAttack1(true);
         if(this.currentFrameIndex>=this.frames.size()){
             this.setIdle();
             System.out.println("Atack beendet");
@@ -148,8 +153,7 @@ public class SpriteAnimationController {
     public void setAttack2() {
         this.frames=this.attack2Frames;
         this.currentFrameIndex = 0;
-        System.out.print("Attack1: "+this.currentFrameIndex);
-        this.attack2=true;
+        setAttack2(true);
        if(this.currentFrameIndex>=this.frames.size()){
            this.setIdle();
            System.out.println("Atack beendet");
@@ -158,16 +162,42 @@ public class SpriteAnimationController {
     }
     public void setGetHit() {
         this.frames=this.takeHitFrames;
-//        currentFrameIndex = 0;
+        currentFrameIndex = 0;
     }
 
     public void setDead(){
             this.frames=this.deathFrames;
-//        currentFrameIndex = 0;
+        currentFrameIndex = 0;
     }
 
     public void setBeginn(boolean b){
             this.beginn=b;
+    }
+
+
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        changes.removePropertyChangeListener(l);
+    }
+
+    public boolean getattack1() {
+        return this.attack1;
+    }
+    public void setAttack1(boolean  b) {
+        boolean oldValue = this.attack1;
+        this.attack1=b;
+        this.changes.firePropertyChange("attack1"+this.playerNum, oldValue, this.attack1);
+    }
+
+    public boolean getattack2() {return this.attack2;
+    }
+    public void setAttack2(boolean  b) {
+        boolean oldValue = this.attack2;
+        this.attack2=b;
+        this.changes.firePropertyChange("attack2"+this.playerNum, oldValue, this.attack2);
     }
 
 }

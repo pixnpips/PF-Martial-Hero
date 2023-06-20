@@ -15,8 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 
-
-
 public class MapController  {
 
     @FXML
@@ -63,15 +61,14 @@ public class MapController  {
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
         C1.setLayoutY(300); // Y-Koordinate: 400 Pixelad
-
+        SpritePane.getChildren().add(C1);
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
-        SpritePane.getChildren().add(C1);
+
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
         C2.setLayoutY(270); // Y-Koordinate: 400 Pixel
-
         SpritePane.getChildren().add(C2);
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
         spriteAnimationController2.initialize();
@@ -79,10 +76,17 @@ public class MapController  {
         GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2);
         GMC.start();
 
+        // Hier werden die PropertyChangeListener gesettet
+        DamageController DC= new DamageController(GMC);
+        GMC.addPropertyChangeListener(DC);
+        spriteAnimationController1.addPropertyChangeListener(DC);
+        spriteAnimationController2.addPropertyChangeListener(DC);
+
+//        GMC.setx_N1(10);
+
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
-
 
         Main.startStage.setScene(scene);
 
