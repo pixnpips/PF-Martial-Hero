@@ -146,7 +146,7 @@ public class GlobalMoveController extends Thread {
             // Anwenden der Schwerkraft
             Airtime2=true;
             Node2JumpVelocity += GRAVITY;
-            ytemp=y_N1+ Node2JumpVelocity;
+            ytemp=y_N2+ Node2JumpVelocity;
             N2.setTranslateY(ytemp);
             sety_N2(ytemp);
             // Überprüfen, ob das Rechteck den Boden berührt
