@@ -42,7 +42,7 @@ public class MapController  {
     ScrollPane BackGroundScrollPane;
     private GlobalMoveController PC;
 
-    private int startSeconds = 6;
+    private int startSeconds = 60;
     private Timeline timeline;
     private boolean paused = false;
     private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
@@ -73,7 +73,7 @@ public class MapController  {
     @FXML
     protected void openMap(int mapNr)  throws IOException {
 
-     View = new FxmlView();
+        View = new FxmlView();
         View.load("/fxml/Map.fxml", "Martial Hero");
         scene = View.getScene();
 
@@ -105,7 +105,6 @@ public class MapController  {
         System.out.println(background.toString());
         prepareTimer();
 
-
         Main.startStage.setScene(scene);
 
         System.out.println(scene.getWindow().getWidth());
@@ -122,67 +121,8 @@ public class MapController  {
         Main.startStage.show();
 
     }
-    protected void updateTimer(){
-        int s = secondsLeft.get();
-        if(s > 0){
-            secondsLeft.set(s-1);
-        }
-        else if (s == 0){
-            endGame();
-        }
-    }
 
-    private void endGame() {
-        stopTimer();
-        exit();
-        try {
-            openWinMenu();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    private void openWinMenu() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/WinMenu.fxml", "WinMenu");
-        WinController WC = new WinController();
-        WC.setScene(View.getScene());
-        WC.setName(getWinner());
-    }
-
-    private String getWinner() {
-        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
-        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
-        String name;
-        if(hp01.getProgress()>hp02.getProgress()){
-            name = "Player 1";
-        }
-        else if(hp01.getProgress()<hp02.getProgress()){
-            name = "Player 2";
-        }
-        else{
-            name = "Unentschieden";
-        }
-        return name;
-    }
-
-    protected void startTimer(int seconds){
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        secondsLeft.set(seconds);
-        timeline.play();
-    }
-
-    protected void prepareTimer(){
-        Label count = (Label) scene.lookup("#count");
-        count.textProperty().bind(secondsLeft.asString());
-        startTimer(startSeconds);
-    }
-    public void stopTimer(){
-        timeline.stop();
-    }
-
+    // Pause
     @FXML
     protected void preparePause(){
         AnchorPane pause = (AnchorPane) scene.lookup("#pause");
@@ -208,6 +148,66 @@ public class MapController  {
             }
         };
         scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
+    }
+
+
+    // Timer
+    protected void updateTimer(){
+        int s = secondsLeft.get();
+        if(s > 0){
+            secondsLeft.set(s-1);
+        }
+        else if (s == 0){
+            endGame();
+        }
+    }
+    protected void startTimer(int seconds){
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        secondsLeft.set(seconds);
+        timeline.play();
+    }
+    protected void prepareTimer(){
+        Label count = (Label) scene.lookup("#count");
+        count.textProperty().bind(secondsLeft.asString());
+        startTimer(startSeconds);
+    }
+    public void stopTimer(){
+        timeline.stop();
+    }
+
+    // Ende des Spiels
+    private String getWinner() {
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        String name;
+        if(hp01.getProgress()>hp02.getProgress()){
+            name = "Player 1";
+        }
+        else if(hp01.getProgress()<hp02.getProgress()){
+            name = "Player 2";
+        }
+        else{
+            name = "Unentschieden";
+        }
+        return name;
+    }
+    private void endGame() {
+        stopTimer();
+        exit();
+        try {
+            openWinMenu();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    private void openWinMenu() throws IOException {
+        View = new FxmlView();
+        View.load("/fxml/WinMenu.fxml", "WinMenu");
+        WinController WC = new WinController();
+        WC.setScene(View.getScene());
+        WC.setName(getWinner());
     }
 
     @FXML
