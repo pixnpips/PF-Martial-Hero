@@ -21,7 +21,7 @@
       </ScrollPane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="3550.0" StackPane.alignment="TOP_CENTER">
          <children>
-               <ProgressBar fx:id="hp01" prefWidth="500.0" progress="0.27" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1000.0" translateY="100.0">
+               <ProgressBar fx:id="hp01" prefWidth="500.0" progress="1" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1000.0" translateY="100.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -47,7 +47,7 @@
                   <Insets top="25.0" />
                </HBox.margin>
             </Label>
-               <ProgressBar fx:id="hp02" prefWidth="500.0" progress="0.55" rotate="180.0" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1350.0" translateY="100.0">
+               <ProgressBar fx:id="hp02" prefWidth="500.0" progress="1" rotate="180.0" scaleX="1.0" scaleY="2.0" stylesheets="@../styles/map.css" translateX="1350.0" translateY="100.0">
                   <styleClass>
                      <String fx:value="health-bar" />
                      <String fx:value="hp02" />

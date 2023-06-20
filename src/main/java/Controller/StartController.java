@@ -25,5 +25,4 @@ public class StartController {
         View = new FxmlView();
         View.load("/fxml/MapChoice.fxml", "Choose your Map");
     }
-
 }
