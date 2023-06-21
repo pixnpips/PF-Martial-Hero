@@ -76,28 +76,24 @@ public class DamageController implements PropertyChangeListener {
 //                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P1=(boolean) evt.getNewValue();
                 this.getHit(this.SAC1.getPlayerNum());
-                this.P2.reduceEnergy(0.1);
             break;
 
             case "attack21":
 //                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P1=(boolean) evt.getNewValue();
                 this.getHit(this.SAC1.getPlayerNum());
-                this.P2.reduceEnergy(0.1);
             break;
 
             case "attack12":
 //                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P2=(boolean) evt.getNewValue();
                 this.getHit(this.SAC2.getPlayerNum());
-                this.P1.reduceEnergy(0.1);
                 break;
 
             case "attack22":
 //                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P2=(boolean) evt.getNewValue();
                 this.getHit(this.SAC2.getPlayerNum());
-                this.P1.reduceEnergy(0.1);
                 break;
 
         }
@@ -118,6 +114,7 @@ public class DamageController implements PropertyChangeListener {
 //        System.out.println(Math.abs(x_P2-x_P1));
         if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<200)&&(b1||b2))&&this.hitDirection(num)){
             System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
+            if(num==1){this.P2.reduceEnergy();} else{this.P1.reduceEnergy();}
         }
     }
 
