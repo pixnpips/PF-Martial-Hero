@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Player;
 import View.Main;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,6 +27,10 @@ public class MapController  {
 
     @FXML
     ScrollPane BackGroundScrollPane;
+
+    @FXML ProgressBar hp01;
+
+    @FXML ProgressBar hp02;
 
     private boolean paused = false;
 
@@ -65,6 +71,11 @@ public class MapController  {
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
 
+        Player Player1= new Player("Player1");
+        Player1.setHealthbar(this.hp01);
+        Player Player2=new Player("Player 2");
+        Player2.setHealthbar(this.hp02);
+
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
@@ -77,7 +88,7 @@ public class MapController  {
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
-        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2);
+        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2, Player1, Player2);
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
@@ -87,6 +98,9 @@ public class MapController  {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
         preparePause(scene);
+
+
+
 
         Main.startStage.setScene(scene);
 

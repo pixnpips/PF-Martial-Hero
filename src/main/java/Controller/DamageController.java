@@ -13,6 +13,7 @@ public class DamageController implements PropertyChangeListener {
     private SpriteAnimationController SAC2;
     private GlobalMoveController GMC;
 
+
     private boolean attack1_P1;
     private boolean attack2_P1;
     private boolean attack1_P2;
@@ -32,10 +33,12 @@ public class DamageController implements PropertyChangeListener {
     ProgressBar pb1;
     ProgressBar pb2;
 
-    public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
+    public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2, Player P1, Player P2){
         this.GMC= GMC;
         this.SAC1=S1;
         this.SAC2=S2;
+        this.P1=P1;
+        this.P2=P2;
     }
 
     @Override
@@ -73,24 +76,28 @@ public class DamageController implements PropertyChangeListener {
 //                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P1=(boolean) evt.getNewValue();
                 this.getHit(this.SAC1.getPlayerNum());
+                this.P2.reduceEnergy(0.1);
             break;
 
             case "attack21":
 //                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P1=(boolean) evt.getNewValue();
                 this.getHit(this.SAC1.getPlayerNum());
+                this.P2.reduceEnergy(0.1);
             break;
 
             case "attack12":
 //                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P2=(boolean) evt.getNewValue();
                 this.getHit(this.SAC2.getPlayerNum());
+                this.P1.reduceEnergy(0.1);
                 break;
 
             case "attack22":
 //                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P2=(boolean) evt.getNewValue();
                 this.getHit(this.SAC2.getPlayerNum());
+                this.P1.reduceEnergy(0.1);
                 break;
 
         }
