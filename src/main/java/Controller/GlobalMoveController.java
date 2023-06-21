@@ -83,6 +83,7 @@ public class GlobalMoveController extends Thread {
             x_N1=(N1.getTranslateX());
             x_N2=(N2.getTranslateX());
             double xtemp=0;
+            double[]posTemp=getNodePositions();
 //            System.out.println(x_N1);
 //            System.out.println(x_N2);
                 if(!checkCollision()) {
@@ -90,22 +91,26 @@ public class GlobalMoveController extends Thread {
                     if (moveRightN1 &&!N1reachedlimitofPaneR) {
                         xtemp=x_N1 + node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
-                        setx_N1(xtemp);
+//                        setx_N1(xtemp);
+                        setx_N1(posTemp[0]);
                     }
                     if (moveLeftN1 &&!N1reachedlimitofPaneL) {
                         xtemp=x_N1 - node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
-                        setx_N1(xtemp);
+//                        setx_N1(xtemp);
+                        setx_N1(posTemp[0]);
                     }
                     if (moveRightN2 &&!N2reachedlimitofPaneR) {
                         xtemp=x_N2 + node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
-                        setx_N2(xtemp);
+//                        setx_N2(xtemp);
+                        setx_N2(posTemp[2]);
                     }
                     if (moveLeftN2 &&!N2reachedlimitofPaneL) {
                         xtemp=x_N2 - node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
-                        setx_N2(xtemp);
+//                        setx_N2(xtemp);
+                        setx_N2(posTemp[2]);
                     }
                     resetBoarders();
                 }
@@ -119,12 +124,13 @@ public class GlobalMoveController extends Thread {
         public void handle(long now) {
             y_N1=(N1.getTranslateY());
             double ytemp=0;
+            double[]posTemp=getNodePositions();
             // Anwenden der Schwerkraft
             node1JumpVelocity += GRAVITY;
             Airtime1=true;
             ytemp=y_N1 + node1JumpVelocity;
             N1.setTranslateY(ytemp);
-            sety_N1(ytemp);
+            sety_N1(posTemp[1]);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N1.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
@@ -143,12 +149,13 @@ public class GlobalMoveController extends Thread {
         public void handle(long now) {
             y_N2=(N2.getTranslateY());
             double ytemp=0;
+            double[]posTemp=getNodePositions();
             // Anwenden der Schwerkraft
             Airtime2=true;
             Node2JumpVelocity += GRAVITY;
             ytemp=y_N2+ Node2JumpVelocity;
             N2.setTranslateY(ytemp);
-            sety_N2(ytemp);
+            sety_N2(posTemp[3]);
             // Überprüfen, ob das Rechteck den Boden berührt
             if (N2.getTranslateY() >=0) {
                 // Zurücksetzen der Vertikalgeschwindigkeit
@@ -194,12 +201,14 @@ public class GlobalMoveController extends Thread {
     private boolean handleKeyPressD(KeyEvent event) {
         if (event.getCode() == KeyCode.D) {
              moveRightN1 = true;
+             moveLeftN1 =false;
             if(!Airtime1){SAC1.setRun();}
             SAC1.turn(false);
 //            System.out.println(this.getState());
         }
         if (event.getCode() == KeyCode.A) {
             moveLeftN1 = true;
+            moveRightN1=false;
             if(!Airtime1){SAC1.setRun();}
             SAC1.turn(true);
 //            System.out.println(this.getState());
@@ -220,6 +229,7 @@ public class GlobalMoveController extends Thread {
 
         if (event.getCode() == KeyCode.L) {
             moveRightN2 = true;
+            moveLeftN2=false;
             if(!Airtime2){SAC2.setRun();}
             SAC2.setBeginn(false);
             SAC2.turn(false);
@@ -227,6 +237,7 @@ public class GlobalMoveController extends Thread {
 
         if (event.getCode() == KeyCode.J) {
             moveLeftN2 = true;
+            moveRightN2=false;
             if(!Airtime2){SAC2.setRun();}
             SAC2.turn(true);
         }
