@@ -3,11 +3,10 @@ package Controller;
 import Model.Sprite;
 import Model.Spritefactory;
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
+
 import java.beans.*;
 import java.util.List;
 
@@ -33,6 +32,13 @@ public class SpriteAnimationController {
 
     private boolean attack1 =false;
     private boolean attack2 =false;
+
+    private boolean attack1FramesLoaded;
+
+    private boolean attack2FramesLoaded;
+
+
+    private boolean turn;
 
     private boolean beginn;
     private int currentFrameIndex;
@@ -90,8 +96,10 @@ public class SpriteAnimationController {
                             gc.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
                             if(playerNum==2&&beginn){
-                                turn(true);
+                                turn=true;
                             }
+
+                            if(turn){canvas.setScaleX(-1);}else{canvas.setScaleX(1);};
                           //temporär
 //                            gc.setFill(Color.RED);
 //                            gc.fillRect(0,0,FRAME_WIDTH,FRAME_HEIGHT);
@@ -105,10 +113,19 @@ public class SpriteAnimationController {
                             // Remember the current time for the next frame
                             lastFrameTime = currentTime;
 
-                            if((attack1||attack2)&&currentFrameIndex>=5){
-                                setIdle();
+                            if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex==2){
+                                setAttack1(true);
+                                setAttack2(true);
+                            }
+                            if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex==4){
                                 setAttack1(false);
                                 setAttack2(false);
+                            }
+
+                            if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex>=5){
+                                setIdle();
+                                attack1FramesLoaded=false;
+                                attack2FramesLoaded=false;
                             }
                         }
                     }
@@ -119,10 +136,6 @@ public class SpriteAnimationController {
         }
 
 
-
-    protected void turn(boolean b){
-            if(b){this.canvas.setScaleX(-1);}else{this.canvas.setScaleX(1);};
-    }
 
         // Hier wird der Timer gestoppt
         public void setIdle() {
@@ -140,26 +153,7 @@ public class SpriteAnimationController {
         this.frames=this.runFrames;
     }
 
-    public void setAttack1() {
-            this.frames=this.attack1Frames;
-        currentFrameIndex = 0;
-        setAttack1(true);
-        if(this.currentFrameIndex>=this.frames.size()){
-            this.setIdle();
-            System.out.println("Atack beendet");
-        }
-    }
 
-    public void setAttack2() {
-        this.frames=this.attack2Frames;
-        this.currentFrameIndex = 0;
-        setAttack2(true);
-       if(this.currentFrameIndex>=this.frames.size()){
-           this.setIdle();
-           System.out.println("Atack beendet");
-       }
-
-    }
     public void setGetHit() {
         this.frames=this.takeHitFrames;
         currentFrameIndex = 0;
@@ -186,6 +180,19 @@ public class SpriteAnimationController {
     public boolean getattack1() {
         return this.attack1;
     }
+
+    public void setAttack1Frames() {
+        this.frames=this.attack1Frames;
+        this.attack1FramesLoaded=true;
+        currentFrameIndex = 0;
+    }
+
+    public void setAttack2Frames() {
+        this.frames=this.attack2Frames;
+        this.attack2FramesLoaded=true;
+        this.currentFrameIndex = 0;
+    }
+
     public void setAttack1(boolean  b) {
         boolean oldValue = this.attack1;
         this.attack1=b;
@@ -198,6 +205,19 @@ public class SpriteAnimationController {
         boolean oldValue = this.attack2;
         this.attack2=b;
         this.changes.firePropertyChange("attack2"+this.playerNum, oldValue, this.attack2);
+    }
+
+    public boolean getturn() {return this.turn;
+    }
+
+    public void setturn(boolean  b) {
+        boolean oldValue = this.turn;
+        this.turn=b;
+        this.changes.firePropertyChange("turn"+this.playerNum, oldValue, this.turn);
+    }
+
+    public int getPlayerNum(){
+            return this.playerNum;
     }
 
 }

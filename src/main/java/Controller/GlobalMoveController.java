@@ -1,9 +1,6 @@
 package Controller;
 
 import javafx.animation.AnimationTimer;
-import java.beans.*;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -11,8 +8,6 @@ import javafx.scene.input.KeyEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GlobalMoveController extends Thread {
 
@@ -32,7 +27,6 @@ public class GlobalMoveController extends Thread {
 
     private boolean moveRightN2;
     private boolean moveLeftN2;
-
 
     private double x_N1;
     private double x_N2;
@@ -80,34 +74,36 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            x_N1=(N1.getTranslateX());
-            x_N2=(N2.getTranslateX());
+            double xPos1=(N1.getTranslateX());
+            double xPos2=(N2.getTranslateX());
             double xtemp=0;
             double[]posTemp=getNodePositions();
+            setx_N1(posTemp[0]);
+            setx_N2(posTemp[2]);
 //            System.out.println(x_N1);
 //            System.out.println(x_N2);
                 if(!checkCollision()) {
                     checkBoarders();
                     if (moveRightN1 &&!N1reachedlimitofPaneR) {
-                        xtemp=x_N1 + node1TranslateSpeed;
+                        xtemp=xPos1 + node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
 //                        setx_N1(xtemp);
                         setx_N1(posTemp[0]);
                     }
                     if (moveLeftN1 &&!N1reachedlimitofPaneL) {
-                        xtemp=x_N1 - node1TranslateSpeed;
+                        xtemp=xPos1 - node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
 //                        setx_N1(xtemp);
                         setx_N1(posTemp[0]);
                     }
                     if (moveRightN2 &&!N2reachedlimitofPaneR) {
-                        xtemp=x_N2 + node2TranslateSpeed;
+                        xtemp=xPos2 + node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
 //                        setx_N2(xtemp);
                         setx_N2(posTemp[2]);
                     }
                     if (moveLeftN2 &&!N2reachedlimitofPaneL) {
-                        xtemp=x_N2 - node2TranslateSpeed;
+                        xtemp=xPos2 - node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
 //                        setx_N2(xtemp);
                         setx_N2(posTemp[2]);
@@ -203,14 +199,14 @@ public class GlobalMoveController extends Thread {
              moveRightN1 = true;
              moveLeftN1 =false;
             if(!Airtime1){SAC1.setRun();}
-            SAC1.turn(false);
+            SAC1.setturn(false);
 //            System.out.println(this.getState());
         }
         if (event.getCode() == KeyCode.A) {
             moveLeftN1 = true;
             moveRightN1=false;
             if(!Airtime1){SAC1.setRun();}
-            SAC1.turn(true);
+            SAC1.setturn(true);
 //            System.out.println(this.getState());
         }
         if (event.getCode() == KeyCode.W) {
@@ -220,26 +216,25 @@ public class GlobalMoveController extends Thread {
             this.jumpTimer1.start();
         }
         if (event.getCode() == KeyCode.E) {
-            SAC1.setAttack1();
+            SAC1.setAttack1Frames();
         }
         if (event.getCode() == KeyCode.Q) {
-            SAC1.setAttack2();
+            SAC1.setAttack2Frames();
         }
-
 
         if (event.getCode() == KeyCode.L) {
             moveRightN2 = true;
             moveLeftN2=false;
             if(!Airtime2){SAC2.setRun();}
             SAC2.setBeginn(false);
-            SAC2.turn(false);
+            SAC2.setturn(false);
         }
 
         if (event.getCode() == KeyCode.J) {
             moveLeftN2 = true;
             moveRightN2=false;
             if(!Airtime2){SAC2.setRun();}
-            SAC2.turn(true);
+            SAC2.setturn(true);
         }
 
         if (event.getCode() == KeyCode.I ){
@@ -251,10 +246,10 @@ public class GlobalMoveController extends Thread {
         }
 
         if (event.getCode() == KeyCode.U) {
-            SAC2.setAttack1();
+            SAC2.setAttack1Frames();
         }
         if (event.getCode() == KeyCode.O) {
-            SAC2.setAttack2();
+            SAC2.setAttack2Frames();
         }
         return true;
     }

@@ -77,7 +77,7 @@ public class MapController  {
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
-        DamageController DC= new DamageController(GMC);
+        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2);
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
