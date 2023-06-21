@@ -22,6 +22,8 @@ public class DamageController implements PropertyChangeListener {
     private double y_P1;
     private double x_P2;
     private double y_P2;
+    private boolean turn_P1;
+    private boolean turn_P2;
 
 
     private Player P1;
@@ -30,8 +32,10 @@ public class DamageController implements PropertyChangeListener {
     ProgressBar pb1;
     ProgressBar pb2;
 
-    public DamageController(GlobalMoveController GMC){
+    public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
         this.GMC= GMC;
+        this.SAC1=S1;
+        this.SAC2=S2;
     }
 
     @Override
@@ -54,26 +58,41 @@ public class DamageController implements PropertyChangeListener {
 //
             this.y_P2=(double) evt.getNewValue();
             break;
+
+            case "turn1" :
+//                System.out.println("PLayer 1 turn: "+evt.getNewValue());
+                this.turn_P1=(boolean)evt.getNewValue();
+                break;
+
+            case "turn2" :
+//                System.out.println("PLayer 2 turn: "+evt.getNewValue());
+                this.turn_P2=(boolean)evt.getNewValue();
+                break;
+
             case "attack11":
-                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
-                this.getHitP2();
-            this.attack1_P1=(boolean) evt.getNewValue();
+//                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
+                this.attack1_P1=(boolean) evt.getNewValue();
+                this.getHit(this.SAC1.getPlayerNum());
             break;
+
             case "attack21":
-                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
-                this.getHitP2();
-            this.attack2_P1=(boolean) evt.getNewValue();
+//                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
+                this.attack2_P1=(boolean) evt.getNewValue();
+                this.getHit(this.SAC1.getPlayerNum());
             break;
+
             case "attack12":
-                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
-            this.attack1_P2=(boolean) evt.getNewValue();
-                this.getHitP1();
+//                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
+                this.attack1_P2=(boolean) evt.getNewValue();
+                this.getHit(this.SAC2.getPlayerNum());
                 break;
+
             case "attack22":
-                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
-            this.attack2_P2=(boolean) evt.getNewValue();
-                this.getHitP1();
+//                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
+                this.attack2_P2=(boolean) evt.getNewValue();
+                this.getHit(this.SAC2.getPlayerNum());
                 break;
+
         }
     }
 
@@ -85,18 +104,23 @@ public class DamageController implements PropertyChangeListener {
         this.pb1.setProgress(this.pb1.getProgress()-10);
     }
 
-    public void getHitP1(){
-        System.out.println(Math.abs(x_P2-x_P1));
-        if ((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<300)&&(attack1_P2||attack2_P2)){
-            System.out.println("Player 1 wurde getroffen");
+    public void getHit(int num){
+        boolean b1;
+        boolean b2;
+        if (num==1) {b1=attack1_P1; b2=attack2_P1;} else{b1=attack1_P2; b2=attack2_P2;}
+//        System.out.println(Math.abs(x_P2-x_P1));
+        if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<200)&&(b1||b2))&&this.hitDirection(num)){
+            System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
         }
     }
 
-    public void getHitP2(){
-        System.out.println(Math.abs(x_P2-x_P1));
-        if ((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<300)&&(attack1_P1||attack2_P1)){
-            System.out.println("Player 2 wurde getroffen");
-        }
+    public boolean hitDirection(int num){
+        double x1;
+        double x2;
+        boolean turn;
+        if(num==1){x1=x_P1; x2=x_P2; turn=turn_P1;}else{x1=x_P2; x2=x_P1;turn=turn_P2;}
+//        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
+        return((x1<x2&&!turn)||(x2<x1&&turn));
     }
 
     public void die(Player p){
