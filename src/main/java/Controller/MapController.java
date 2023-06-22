@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Player;
 import View.Main;
+import Model.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -36,6 +37,8 @@ public class MapController  {
     private GlobalMoveController GMC;
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
+
+    private Timer timer;
 
 
     public void chooseMap(int mapNr){
@@ -97,8 +100,12 @@ public class MapController  {
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
 
+
         pauseController = new PauseController();
         pauseController.preparePause(scene);
+
+        timer = new Timer();
+        timer.prepareTimer(scene);
 
         Main.startStage.setScene(scene);
 
@@ -115,6 +122,39 @@ public class MapController  {
         Main.startStage.hide();
         Main.startStage.show();
 
+    }
+    public static void endGame() {
+        /*stopTimer();
+        exit();
+        try {
+            openWinMenu();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
+    }
+    @FXML
+    private void openWinMenu() throws IOException {
+        /*View = new FxmlView();
+        View.load("/fxml/WinMenu.fxml", "WinMenu");
+        WinController WC = new WinController();
+        WC.setScene(View.getScene());
+        WC.setName(getWinner());*/
+    }
+
+    private String getWinner() {
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        String name;
+        if(hp01.getProgress()>hp02.getProgress()){
+            name = "Player 1";
+        }
+        else if(hp01.getProgress()<hp02.getProgress()){
+            name = "Player 2";
+        }
+        else{
+            name = "Unentschieden";
+        }
+        return name;
     }
 
     @FXML
