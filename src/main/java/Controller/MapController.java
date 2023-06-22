@@ -2,9 +2,6 @@ package Controller;
 
 import Model.Player;
 import View.Main;
-import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -12,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
@@ -35,8 +30,6 @@ public class MapController  {
 
     @FXML
     Scene scene;
-
-    @FXML AnchorPane pause;
 
     private PauseController pauseController;
 
@@ -107,9 +100,6 @@ public class MapController  {
         pauseController = new PauseController();
         pauseController.preparePause(scene);
 
-
-
-
         Main.startStage.setScene(scene);
 
         System.out.println(scene.getWindow().getWidth());
@@ -127,39 +117,6 @@ public class MapController  {
 
     }
 
-    /*@FXML
-    protected void preparePause(Scene scene){
-        this.pause = (AnchorPane) scene.lookup("#pause");
-        pause.setVisible(false);
-        EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE){
-                    pause();
-                }
-            }
-        };
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
-    }*/
-
-    /*@FXML
-    private void pause(){
-        //AnchorPane pause = (AnchorPane) scene.lookup("#pause");
-        //pause.setVisible(false);
-
-        if(paused==false){
-            paused = true;
-            pause.setVisible(true);
-            System.out.println("ESCAPE, pause");
-            return;
-        }
-        if(paused==true){
-            paused = false;
-            pause.setVisible(false);
-            System.out.println("ESCAPE, unpause");
-            return;
-        }
-    }*/
-
     @FXML
     public void exit(){
         Main.startStage.close();
@@ -168,12 +125,5 @@ public class MapController  {
     @FXML
     protected void initialize() {
     }
-
-    /*public static boolean getPaused(){
-        return paused;
-    }
-    private void setPaused(boolean b){
-        paused = b;
-    }*/
 
 }
