@@ -39,12 +39,11 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
 
-    private static Timer timer;
+    public Timer timer;
     private FxmlView View;
 
 
     public MapController(){
-
     }
 
     public void chooseMap(int mapNr){
@@ -65,16 +64,13 @@ public class MapController  {
 
     @FXML
     protected void openMap(int mapNr)  throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
+        System.out.println(fxmlLoader.getLocation());
+        fxmlLoader.setController(this);
 
-        View = new FxmlView();
-        View.load("/fxml/Map.fxml", "Martial Hero");
-        scene = View.getScene();
-        background = (VBox) scene.lookup("#background");
-        SpritePane = (AnchorPane) scene.lookup("#SpritePane");
-        System.out.println(scene.toString());
-        System.out.println(background.toString());
-        System.out.println(SpritePane.toString());
+        scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
+        chooseMap(mapNr);
 
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
@@ -87,7 +83,6 @@ public class MapController  {
         Player1.setHealthbar(this.hp01);
         Player Player2=new Player("Player 2");
         Player2.setHealthbar(this.hp02);
-
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
@@ -106,17 +101,11 @@ public class MapController  {
         spriteAnimationController2.addPropertyChangeListener(DC);
 
 //        GMC.setx_N1(10);
-
-        //MapController MC1=fxmlLoader.getController();
-        //MC1.chooseMap(mapNr);
-        chooseMap(mapNr);
-
-
-        pauseController = new PauseController();
-        pauseController.preparePause(scene);
-
         timer = new Timer();
         timer.prepareTimer(scene);
+
+        pauseController = new PauseController();
+        pauseController.preparePause(scene, timer);
 
         Main.startStage.setScene(scene);
 
@@ -154,8 +143,8 @@ public class MapController  {
     }
 
     private String getWinner() {
-        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
-        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        //ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        //ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
         String name;
         if(hp01.getProgress()>hp02.getProgress()){
             name = "Player 1";

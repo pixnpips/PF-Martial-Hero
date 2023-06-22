@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Timer;
 import View.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,15 +17,14 @@ public class PauseController {
     private static AnchorPane pause;
 
     private static boolean paused;
-
+    private static Timer timer;
     private EventHandler<KeyEvent> pauseHandler;
-    //private MapController mapController = new MapController();
-    private MapController mapController;
 
     public PauseController(){
         //mapController = new MapController();
     }
-    public void preparePause(Scene scene){
+    public void preparePause(Scene scene, Timer timer){
+        this.timer = timer;
         pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
         paused = false;
@@ -44,18 +44,18 @@ public class PauseController {
         System.out.println("Paused: "+ paused);
 
         if(!paused){
-
             pause.setVisible(true);
             System.out.println("ESCAPE, pause");
             paused = true;
+            timer.stopTimer();
             System.out.println("Paused: "+ paused);
             return;
         }
         else if(paused){
-
             pause.setVisible(false);
             System.out.println("ESCAPE, unpause");
             paused = false;
+            timer.startTimer(timer.secondsLeft.intValue());
             return;
         }
     }
@@ -69,6 +69,7 @@ public class PauseController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void exit(){
         Main.exit();

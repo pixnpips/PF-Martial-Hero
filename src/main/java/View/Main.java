@@ -32,7 +32,8 @@ public class Main extends Application {
     }
 
     public void restart() throws IOException {
-        start(initStage);
+        View = new FxmlView();
+        View.load("/fxml/StartMenu.fxml", "Martial Hero");
     }
 
 }

@@ -12,15 +12,14 @@ import javafx.util.Duration;
 import Controller.MapController;
 
 public class Timer {
-    private int startSeconds = 5;
+    private int startSeconds = 50;
     private Timeline timeline;
-    private final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
+    public final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     @FXML
     private static Scene scene;
     @FXML
     private static Label count;
-
-    private static MapController mapController;
+    private MapController mapController;
 
     public Timer(){
     }
@@ -31,7 +30,7 @@ public class Timer {
         count.textProperty().bind(secondsLeft.asString());
         startTimer(startSeconds);
     }
-    protected void startTimer(int seconds){
+    public void startTimer(int seconds){
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
         timeline.setCycleCount(Animation.INDEFINITE);
         secondsLeft.set(seconds);
