@@ -17,8 +17,8 @@ public class StartController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
     @FXML
-    protected void exit(){
-        Main.startStage.close();
+    public void exit(){
+        Main.exit();
     }
     @FXML
     protected void openMapChoice() throws IOException {

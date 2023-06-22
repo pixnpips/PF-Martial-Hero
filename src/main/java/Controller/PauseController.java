@@ -1,6 +1,6 @@
 package Controller;
 
-
+import View.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -20,7 +20,7 @@ public class PauseController {
     private MapController mapController;
 
     public PauseController(){
-        mapController = new MapController();
+        //mapController = new MapController();
     }
     public void preparePause(Scene scene){
         pause = (AnchorPane) scene.lookup("#pause");
@@ -57,13 +57,12 @@ public class PauseController {
             return;
         }
     }
-
     @FXML
     private void StartMenu(){
         //
     }
     @FXML
     private void exit(){
-        mapController.exit();
+        Main.exit();
     }
 }

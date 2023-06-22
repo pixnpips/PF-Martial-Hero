@@ -119,7 +119,7 @@ public class MapController  {
 
     @FXML
     public void exit(){
-        Main.startStage.close();
+        Main.exit();
     }
 
     @FXML
