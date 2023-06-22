@@ -9,16 +9,14 @@ import java.io.IOException;
 public class Main extends Application {
 
    public static Stage startStage;
+   public FxmlView View;
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/StartMenu.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        startStage=stage;
-        stage.show();
+        View = new FxmlView();
+        startStage = View.start(stage, "/fxml/StartMenu.fxml", "Martial Hero");
+        startStage.show();
+
     }
     public static void main(String[] args) {
         launch();
