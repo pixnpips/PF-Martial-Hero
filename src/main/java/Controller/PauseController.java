@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Timer;
+import View.FxmlView;
 import View.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,13 +16,12 @@ public class PauseController {
 
     @FXML
     private static AnchorPane pause;
-
     private static boolean paused;
     private static Timer timer;
     private EventHandler<KeyEvent> pauseHandler;
+    private FxmlView View;
 
     public PauseController(){
-        //mapController = new MapController();
     }
     public void preparePause(Scene scene, Timer timer){
         this.timer = timer;

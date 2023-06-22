@@ -31,7 +31,6 @@ public class WinController {
     public void startMenu() throws IOException {
         View.load("/fxml/StartMenu.fxml", "Martial Hero");
     }
-
     public void exit(){
         Main.exit();
     }

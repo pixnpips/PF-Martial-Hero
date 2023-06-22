@@ -80,9 +80,9 @@ public class MapController  {
         spriteAnimationController1.initialize();
 
         Player Player1= new Player("Player1");
-        Player1.setHealthbar(this.hp01);
-        Player Player2=new Player("Player 2");
-        Player2.setHealthbar(this.hp02);
+        Player1.setHealthbar(hp01);
+        Player Player2= new Player("Player 2");
+        Player2.setHealthbar(hp02);
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
@@ -100,7 +100,7 @@ public class MapController  {
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
 
-//        GMC.setx_N1(10);
+//      GMC.setx_N1(10);
         timer = new Timer();
         timer.prepareTimer(scene);
 
@@ -142,8 +142,8 @@ public class MapController  {
     }
 
     private String getWinner() {
-        //ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
-        //ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
         String name;
         if(hp01.getProgress()>hp02.getProgress()){
             name = "Player 1";
