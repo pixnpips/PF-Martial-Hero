@@ -38,7 +38,7 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
 
-    private Timer timer;
+    private static Timer timer;
 
 
     public void chooseMap(int mapNr){
@@ -123,17 +123,18 @@ public class MapController  {
         Main.startStage.show();
 
     }
-    public static void endGame() {
-        /*stopTimer();
-        exit();
+    public void endGame() {
+        timer.stopTimer();
+        Main.exit();
         try {
             openWinMenu();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
     @FXML
     private void openWinMenu() throws IOException {
+        System.out.println("WinMenu");
         /*View = new FxmlView();
         View.load("/fxml/WinMenu.fxml", "WinMenu");
         WinController WC = new WinController();
