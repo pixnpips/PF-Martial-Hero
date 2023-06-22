@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Player;
+import View.FxmlView;
 import View.Main;
 import Model.Timer;
 import javafx.fxml.FXML;
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class MapController  {
 
     @FXML
-    private VBox background;
+    VBox background;
 
     @FXML
     AnchorPane SpritePane;
@@ -30,7 +31,7 @@ public class MapController  {
     @FXML ProgressBar hp02;
 
     @FXML
-    Scene scene;
+    static Scene scene;
 
     private PauseController pauseController;
 
@@ -39,7 +40,12 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController2;
 
     private static Timer timer;
+    private FxmlView View;
 
+
+    public MapController(){
+
+    }
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -60,11 +66,15 @@ public class MapController  {
     @FXML
     protected void openMap(int mapNr)  throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        fxmlLoader.setController(this);
+        View = new FxmlView();
+        View.load("/fxml/Map.fxml", "Martial Hero");
+        scene = View.getScene();
+        background = (VBox) scene.lookup("#background");
+        SpritePane = (AnchorPane) scene.lookup("#SpritePane");
+        System.out.println(scene.toString());
+        System.out.println(background.toString());
+        System.out.println(SpritePane.toString());
 
-        scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
@@ -97,8 +107,9 @@ public class MapController  {
 
 //        GMC.setx_N1(10);
 
-        MapController MC1=fxmlLoader.getController();
-        MC1.chooseMap(mapNr);
+        //MapController MC1=fxmlLoader.getController();
+        //MC1.chooseMap(mapNr);
+        chooseMap(mapNr);
 
 
         pauseController = new PauseController();

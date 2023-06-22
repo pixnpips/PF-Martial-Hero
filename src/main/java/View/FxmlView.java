@@ -9,11 +9,10 @@ import java.io.IOException;
 public class FxmlView {
 
     public FXMLLoader loader;
-    private Scene currentScene;
-    private Stage currentStage;
+    private static Scene currentScene;
+    private static Stage currentStage;
 
     public FxmlView(){
-
     }
     public Stage start(Stage stage, String url, String title) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(url));
