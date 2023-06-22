@@ -3,6 +3,7 @@ package Controller;
 import Model.Player;
 import View.Main;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +33,12 @@ public class MapController  {
 
     @FXML ProgressBar hp02;
 
-    private boolean paused = false;
+    @FXML
+    Scene scene;
+
+    @FXML AnchorPane pause;
+
+    private PauseController pauseController;
 
     private GlobalMoveController GMC;
     private SpriteAnimationController spriteAnimationController1;
@@ -62,7 +68,7 @@ public class MapController  {
         System.out.println(fxmlLoader.getLocation());
         fxmlLoader.setController(this);
 
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
@@ -97,7 +103,9 @@ public class MapController  {
 
         MapController MC1=fxmlLoader.getController();
         MC1.chooseMap(mapNr);
-        preparePause(scene);
+
+        pauseController = new PauseController();
+        pauseController.preparePause(scene);
 
 
 
@@ -119,39 +127,53 @@ public class MapController  {
 
     }
 
-    @FXML
+    /*@FXML
     protected void preparePause(Scene scene){
-        AnchorPane pause = (AnchorPane) scene.lookup("#pause");
+        this.pause = (AnchorPane) scene.lookup("#pause");
         pause.setVisible(false);
         EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ESCAPE){
-                    if(paused==false){
-                        paused = true;
-                        pause.setVisible(true);
-                        System.out.println("ESCAPE, pause");
-                        return;
-                    }
-                    if(paused==true){
-                        paused = false;
-                        pause.setVisible(false);
-                        System.out.println("ESCAPE, unpause");
-                        return;
-                    }
+                    pause();
                 }
             }
         };
         scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
-    }
+    }*/
+
+    /*@FXML
+    private void pause(){
+        //AnchorPane pause = (AnchorPane) scene.lookup("#pause");
+        //pause.setVisible(false);
+
+        if(paused==false){
+            paused = true;
+            pause.setVisible(true);
+            System.out.println("ESCAPE, pause");
+            return;
+        }
+        if(paused==true){
+            paused = false;
+            pause.setVisible(false);
+            System.out.println("ESCAPE, unpause");
+            return;
+        }
+    }*/
 
     @FXML
-    protected void exit(){
+    public void exit(){
         Main.startStage.close();
     }
 
     @FXML
     protected void initialize() {
-
     }
+
+    /*public static boolean getPaused(){
+        return paused;
+    }
+    private void setPaused(boolean b){
+        paused = b;
+    }*/
 
 }
