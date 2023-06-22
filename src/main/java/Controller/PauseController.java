@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.io.IOException;
+
 public class PauseController {
 
     @FXML
@@ -59,7 +61,13 @@ public class PauseController {
     }
     @FXML
     private void StartMenu(){
-        //
+        Main.exit();
+        Main main = new Main();
+        try {
+            main.restart();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     @FXML
     private void exit(){

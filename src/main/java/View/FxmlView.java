@@ -40,12 +40,6 @@ public class FxmlView {
     public Scene getScene(){
         return currentScene;
     }
-    public void exit(){
-        Main.startStage.close();
-    }
-    public Stage getStartStage(){
-        return Main.startStage;
-    }
     public void show(Stage stage){
         stage.show();
     }
