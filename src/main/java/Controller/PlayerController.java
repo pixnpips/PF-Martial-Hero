@@ -30,7 +30,18 @@ public class PlayerController {
             System.out.println("no input");
         }
         else{
-            createPlayers(name1, name2);
+            if(playerExists(name1)){
+                //get Player from DB
+                //player1 =
+            }
+            if(playerExists(name2)){
+                //get Player from DB
+                //player2 =
+            }
+            else{
+                player1 = new Player(name1);
+                player2 = new Player(name2);
+            }
             System.out.println(name1);
             System.out.println(name2);
             try {
@@ -40,13 +51,15 @@ public class PlayerController {
             }
         }
     }
-    public void createPlayers(String name1, String name2){
-        player1 = new Player(name1);
-        player2 = new Player(name2);
-    }
-    public void openMapChoice() throws IOException {
+    protected void openMapChoice() throws IOException {
         View = new FxmlView();
         View.load("/fxml/MapChoice.fxml", "Choose your Map");
     }
+    protected boolean playerExists(String name){
+        //Existiert der Name schon in der Datenbank?
+        //return true;
+        return false;
+    }
+
 
 }
