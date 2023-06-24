@@ -28,4 +28,10 @@ public class StartController {
         View = new FxmlView();
         View.load("/fxml/NameMenu.fxml", "Choose Player Names");
     }
+
+    @FXML
+    protected void openHighscoreMenu() throws IOException {
+        View = new FxmlView();
+        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
+    }
 }

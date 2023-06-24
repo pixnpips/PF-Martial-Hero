@@ -18,7 +18,6 @@ public class WinController {
     private FxmlView View;
 
     public WinController(){
-        View = new FxmlView();
     }
     public void setName(String name){
         this.name = name;
@@ -28,7 +27,8 @@ public class WinController {
     public void setScene(Scene scene){
         this.scene = scene;
     }
-    public void startMenu() throws IOException {
+    public void openStartMenu() throws IOException {
+        View = new FxmlView();
         View.load("/fxml/StartMenu.fxml", "Martial Hero");
     }
     public void exit(){

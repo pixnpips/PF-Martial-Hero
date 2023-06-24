@@ -29,7 +29,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#startMenu" styleClass="menu-button" stylesheets="@../styles/menu.css" text="Start">
+                  <Button mnemonicParsing="false" onAction="#openStartMenu" styleClass="menu-button" stylesheets="@../styles/menu.css" text="Start">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
