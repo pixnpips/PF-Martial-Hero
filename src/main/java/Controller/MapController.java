@@ -79,10 +79,8 @@ public class MapController  {
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
 
-        Player Player1= new Player("Player1");
-        Player1.setHealthbar(hp01);
-        Player Player2= new Player("Player 2");
-        Player2.setHealthbar(hp02);
+        PlayerController.player1.setHealthbar(hp01);
+        PlayerController.player2.setHealthbar(hp02);
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
@@ -95,7 +93,7 @@ public class MapController  {
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
-        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2, Player1, Player2);
+        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2);
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
@@ -146,10 +144,10 @@ public class MapController  {
         ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
         String name;
         if(hp01.getProgress()>hp02.getProgress()){
-            name = "Player 1";
+            name = PlayerController.player1.getName();
         }
         else if(hp01.getProgress()<hp02.getProgress()){
-            name = "Player 2";
+            name = PlayerController.player2.getName();
         }
         else{
             name = "Unentschieden";

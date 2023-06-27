@@ -13,7 +13,6 @@ public class DamageController implements PropertyChangeListener {
     private SpriteAnimationController SAC2;
     private GlobalMoveController GMC;
 
-
     private boolean attack1_P1;
     private boolean attack2_P1;
     private boolean attack1_P2;
@@ -33,12 +32,12 @@ public class DamageController implements PropertyChangeListener {
     ProgressBar pb1;
     ProgressBar pb2;
 
-    public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2, Player P1, Player P2){
+    public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
         this.GMC= GMC;
         this.SAC1=S1;
         this.SAC2=S2;
-        this.P1=P1;
-        this.P2=P2;
+        this.P1=PlayerController.player1;
+        this.P2=PlayerController.player2;
     }
 
     @Override
@@ -104,7 +103,7 @@ public class DamageController implements PropertyChangeListener {
     }
 
     public void reducePb2(){
-        this.pb1.setProgress(this.pb1.getProgress()-10);
+        this.pb2.setProgress(this.pb2.getProgress()-10);
     }
 
     public void getHit(int num){

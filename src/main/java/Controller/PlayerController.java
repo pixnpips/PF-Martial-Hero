@@ -16,8 +16,8 @@ public class PlayerController {
     private String name1;
     private String name2;
 
-    private static Player player1;
-    private static Player player2;
+    public static Player player1;
+    public static Player player2;
 
     private FxmlView View;
 
