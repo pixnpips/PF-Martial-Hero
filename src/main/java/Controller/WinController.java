@@ -33,7 +33,7 @@ public class WinController {
     }
     public void openHighscoreMenu() throws IOException{
         View = new FxmlView();
-        View.load("/fxml/StartMenu.fxml", "Martial Hero");
+        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
     }
     public void exit(){
         Main.exit();
