@@ -36,7 +36,7 @@ VBox {
 }
 
 .highBox{
-    -fx-background-image: url("../images/BG_Highscore.png");
+    -fx-background-image: url("../images/BG_Highscore_2.png");
 }
 
 .mapChoiceBox{
@@ -68,5 +68,5 @@ VBox {
     -fx-opacity: 0;
 }
 .win{
--fx-background-image: url("../images/BG_Highscore.png");
+-fx-background-image: url("../images/Win.png");
 }
