@@ -28,12 +28,14 @@ public class WinController {
         this.scene = scene;
     }
     public void openStartMenu() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/StartMenu.fxml", "Martial Hero");
+//        View = new FxmlView();
+//        View.load("/fxml/StartMenu.fxml", "Martial Hero");
+        FxmlView.setScenefromXML("/fxml/StartMenu.fxml");
     }
     public void openHighscoreMenu() throws IOException{
-        View = new FxmlView();
-        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
+//        View = new FxmlView();
+//        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
+        FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
     }
     public void exit(){
         Main.exit();
