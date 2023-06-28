@@ -11,15 +11,7 @@ public class Main extends Application {
    public static Stage startStage;
    public static Stage initStage;
    public FxmlView View;
-
-//    @Override
-//    public void start(Stage stage) throws IOException {
-//        initStage = stage;
-//        View = new FxmlView();
-//        startStage = View.start(stage, "/fxml/StartMenu.fxml", "Martial Hero");
-//        startStage.show();
-//    }
-
+   
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/StartMenu.fxml"));
