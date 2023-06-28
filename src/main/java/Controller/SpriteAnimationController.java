@@ -117,11 +117,10 @@ public class SpriteAnimationController {
                                 setAttack1(true);
                                 setAttack2(true);
                             }
-                            if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex==4){
+                            if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex==3){
                                 setAttack1(false);
                                 setAttack2(false);
                             }
-
                             if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex>=5){
                                 setIdle();
                                 attack1FramesLoaded=false;

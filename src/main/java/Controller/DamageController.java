@@ -74,25 +74,26 @@ public class DamageController implements PropertyChangeListener {
             case "attack11":
 //                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P1=(boolean) evt.getNewValue();
-                this.getHit(this.SAC1.getPlayerNum());
+                if(this.attack1_P1){this.getHit(this.SAC1.getPlayerNum());}
+
             break;
 
             case "attack21":
 //                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P1=(boolean) evt.getNewValue();
-                this.getHit(this.SAC1.getPlayerNum());
+                if(this.attack2_P2){this.getHit(this.SAC1.getPlayerNum());}
             break;
 
             case "attack12":
 //                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P2=(boolean) evt.getNewValue();
-                this.getHit(this.SAC2.getPlayerNum());
+                if(this.attack1_P2){this.getHit(this.SAC2.getPlayerNum());}
                 break;
 
             case "attack22":
 //                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P2=(boolean) evt.getNewValue();
-                this.getHit(this.SAC2.getPlayerNum());
+                if(this.attack2_P2){this.getHit(this.SAC2.getPlayerNum());}
                 break;
 
         }
@@ -111,7 +112,7 @@ public class DamageController implements PropertyChangeListener {
         boolean b2;
         if (num==1) {b1=attack1_P1; b2=attack2_P1;} else{b1=attack1_P2; b2=attack2_P2;}
 //        System.out.println(Math.abs(x_P2-x_P1));
-        if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<200)&&(b1||b2))&&this.hitDirection(num)){
+        if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<30)&&(b1||b2))&&this.hitDirection(num)){
             System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
             if(num==1){this.P2.reduceEnergy();} else{this.P1.reduceEnergy();}
         }
@@ -121,8 +122,8 @@ public class DamageController implements PropertyChangeListener {
         double x1;
         double x2;
         boolean turn;
-        if(num==1){x1=x_P1; x2=x_P2; turn=turn_P1;}else{x1=x_P2; x2=x_P1;turn=turn_P2;}
-//        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
+        if(num==1){x1=x_P1; x2=x_P2; turn=this.SAC1.getturn();}else{x1=x_P2; x2=x_P1;turn=this.SAC2.getturn();}
+        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
         return((x1<x2&&!turn)||(x2<x1&&turn));
     }
 

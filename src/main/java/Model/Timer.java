@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import Controller.MapController;
 
 public class Timer {
-    private int startSeconds = 10;
+    private int startSeconds = 60;
     private Timeline timeline;
     public final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     @FXML

@@ -67,6 +67,8 @@ public class GlobalMoveController extends Thread {
         this.SAC2=S2;
         this.BackGroundScrollPane=this.S.lookup("#BackGroundScrollPane");
         this.changes= new PropertyChangeSupport(this);
+        this.SAC2.setturn(true);
+        this.SAC1.setturn(false);
         System.out.println(BackGroundScrollPane.toString());
     }
 
