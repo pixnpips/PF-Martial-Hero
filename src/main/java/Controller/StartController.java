@@ -32,5 +32,4 @@ public class StartController {
         Main.startStage.setScene(scene);
         Main.startStage.show();
     }
-
 }
