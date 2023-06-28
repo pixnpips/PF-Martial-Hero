@@ -1,13 +1,13 @@
-package Model;
+package Controller;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDAO {
+public class DatabaseController {
     private Connection connection;
 
-    public PlayerDAO() {
+    public DatabaseController() {
         // Verbindung zur Datenbank herstellen
         String url = "jdbc:mysql://localhost:3306/MYSQL80";
         String username = "root";
