@@ -50,7 +50,7 @@ public class Player {
     }
 
     public double getEnergy() {
-        return energy;
+        return Healthbar.getProgress();
     }
 
     public ProgressBar getHealthbar() {

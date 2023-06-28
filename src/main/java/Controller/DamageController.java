@@ -1,11 +1,13 @@
 package Controller;
 
 import Model.Player;
+import Model.Timer;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.ProgressBar;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 
 public class DamageController implements PropertyChangeListener {
 
@@ -31,6 +33,9 @@ public class DamageController implements PropertyChangeListener {
 
     ProgressBar pb1;
     ProgressBar pb2;
+
+    private MapController MC= new MapController();
+
 
     public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
         this.GMC= GMC;
@@ -114,7 +119,18 @@ public class DamageController implements PropertyChangeListener {
 //        System.out.println(Math.abs(x_P2-x_P1));
         if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<30)&&(b1||b2))&&this.hitDirection(num)){
             System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
-            if(num==1){this.P2.reduceEnergy();} else{this.P1.reduceEnergy();}
+            if(num==1){
+                this.P2.reduceEnergy();
+                if(P2.getEnergy()<=0){
+                    die();
+                }
+            }
+            else{
+                this.P1.reduceEnergy();
+                if(P1.getEnergy()<=0){
+                    die();
+                }
+            }
         }
     }
 
@@ -127,8 +143,8 @@ public class DamageController implements PropertyChangeListener {
         return((x1<x2&&!turn)||(x2<x1&&turn));
     }
 
-    public void die(Player p){
-
+    public void die(){
+MC.endGame();
     }
 
 }
