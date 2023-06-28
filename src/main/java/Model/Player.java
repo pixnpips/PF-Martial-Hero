@@ -27,7 +27,6 @@ public class Player {
         this.Healthbar=null;
 
     }
-
     public void setName(String name) {
         this.name = name;
     }

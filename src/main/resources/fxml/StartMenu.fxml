@@ -13,8 +13,8 @@
             <Insets top="160.0" />
          </VBox.margin></Label>
         <HBox alignment="CENTER" spacing="40.0">
-            <Button prefWidth="100.0" styleClass="menu-button" text="Play" onAction="#openMapChoice" />
-            <Button prefWidth="100.0" styleClass="menu-button" text="Options" />
+            <Button prefWidth="100.0" styleClass="menu-button" text="Play" onAction="#openNameMenu" />
+            <Button prefWidth="100.0" styleClass="menu-button" text="Highscore" onAction="#openHighscoreMenu"/>
             <Button prefWidth="100.0" styleClass="menu-button" text="Exit" onAction="#exit" />
         </HBox>
     </children>

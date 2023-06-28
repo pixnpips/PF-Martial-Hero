@@ -1,9 +1,9 @@
 package Controller;
 
 import Model.Player;
+import View.FxmlView;
 import View.Main;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
+import Model.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -11,8 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
@@ -20,7 +18,7 @@ import java.io.IOException;
 public class MapController  {
 
     @FXML
-    private VBox background;
+    VBox background;
 
     @FXML
     AnchorPane SpritePane;
@@ -32,12 +30,21 @@ public class MapController  {
 
     @FXML ProgressBar hp02;
 
-    private boolean paused = false;
+    @FXML
+    static Scene scene;
+
+    private PauseController pauseController;
 
     private GlobalMoveController GMC;
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
 
+    public Timer timer;
+    private FxmlView View;
+
+
+    public MapController(){
+    }
 
     public void chooseMap(int mapNr){
         if(mapNr==1){
@@ -57,12 +64,13 @@ public class MapController  {
 
     @FXML
     protected void openMap(int mapNr)  throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
         System.out.println(fxmlLoader.getLocation());
         fxmlLoader.setController(this);
 
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        scene = new Scene(fxmlLoader.load(), 1920, 1080);
+
+        chooseMap(mapNr);
 
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
@@ -71,11 +79,8 @@ public class MapController  {
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
 
-        Player Player1= new Player("Player1");
-        Player1.setHealthbar(this.hp01);
-        Player Player2=new Player("Player 2");
-        Player2.setHealthbar(this.hp02);
-
+        PlayerController.player1.setHealthbar(hp01);
+        PlayerController.player2.setHealthbar(hp02);
 
         Canvas C2 = new Canvas(1000, 500);
         C2.setLayoutX(1000); // X-Koordinate: 1200 Pixel
@@ -88,19 +93,17 @@ public class MapController  {
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
-        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2, Player1, Player2);
+        DamageController DC= new DamageController(GMC,spriteAnimationController1,spriteAnimationController2);
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
 
-//        GMC.setx_N1(10);
+//      GMC.setx_N1(10);
+        timer = new Timer();
+        timer.prepareTimer(scene);
 
-        MapController MC1=fxmlLoader.getController();
-        MC1.chooseMap(mapNr);
-        preparePause(scene);
-
-
-
+        pauseController = new PauseController();
+        pauseController.preparePause(scene, timer);
 
         Main.startStage.setScene(scene);
 
@@ -118,40 +121,47 @@ public class MapController  {
         Main.startStage.show();
 
     }
-
+    public void endGame() {
+        Main.exit();
+        try {
+            openWinMenu();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
-    protected void preparePause(Scene scene){
-        AnchorPane pause = (AnchorPane) scene.lookup("#pause");
-        pause.setVisible(false);
-        EventHandler<KeyEvent> pauseHandler = new EventHandler<>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE){
-                    if(paused==false){
-                        paused = true;
-                        pause.setVisible(true);
-                        System.out.println("ESCAPE, pause");
-                        return;
-                    }
-                    if(paused==true){
-                        paused = false;
-                        pause.setVisible(false);
-                        System.out.println("ESCAPE, unpause");
-                        return;
-                    }
-                }
-            }
-        };
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
+    private void openWinMenu() throws IOException {
+        System.out.println("WinMenu");
+        View = new FxmlView();
+        View.load("/fxml/WinMenu.fxml", "WinMenu");
+        WinController WC = new WinController();
+        WC.setScene(View.getScene());
+        WC.setName(getWinner());
+    }
+
+    private String getWinner() {
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
+        String name;
+        if(hp01.getProgress()>hp02.getProgress()){
+            name = PlayerController.player1.getName();
+        }
+        else if(hp01.getProgress()<hp02.getProgress()){
+            name = PlayerController.player2.getName();
+        }
+        else{
+            name = "Unentschieden";
+        }
+        return name;
     }
 
     @FXML
-    protected void exit(){
-        Main.startStage.close();
+    public void exit(){
+        Main.exit();
     }
 
     @FXML
     protected void initialize() {
-
     }
 
 }

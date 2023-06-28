@@ -1,8 +1,7 @@
 package Controller;
 
+import View.FxmlView;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import View.Main;
 
@@ -12,6 +11,7 @@ public class StartController {
 
     @FXML
     private Label welcomeText;
+    private FxmlView View;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -19,17 +19,19 @@ public class StartController {
     }
 
     @FXML
-    protected void exit(){
-        Main.startStage.close();
+    public void exit(){
+        Main.exit();
     }
 
     @FXML
-    protected void openMapChoice() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/MapChoice.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        Main.startStage.setTitle("Choose your Map");
-        Main.startStage.setScene(scene);
-        Main.startStage.show();
+    protected void openNameMenu() throws IOException {
+        View = new FxmlView();
+        View.load("/fxml/NameMenu.fxml", "Choose Player Names");
+    }
+
+    @FXML
+    protected void openHighscoreMenu() throws IOException {
+        View = new FxmlView();
+        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
     }
 }
