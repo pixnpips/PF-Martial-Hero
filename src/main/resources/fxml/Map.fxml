@@ -64,7 +64,7 @@
          </AnchorPane>
       <AnchorPane fx:id="pause" prefHeight="200.0" prefWidth="200.0" stylesheets="@../styles/menu.css">
          <children>
-            <fx:include layoutX="815.0" prefHeight="1080.0" prefWidth="1920.0" source="PauseMenu.fxml" />
+            <fx:include layoutX="550" layoutY="400" source="PauseMenu.fxml" />
          </children>
       </AnchorPane>
    </children>

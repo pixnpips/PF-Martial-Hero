@@ -5,17 +5,27 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox styleClass="startBox" fx:controller="Controller.StartController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" styleClass="startBox" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartController">
     <children>
-        <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="title" text="Martial Hero">
-         <VBox.margin>
-            <Insets top="160.0" />
-         </VBox.margin></Label>
         <HBox alignment="CENTER" spacing="40.0">
-            <Button prefWidth="100.0" styleClass="menu-button" text="Play" onAction="#openNameMenu" />
-            <Button prefWidth="100.0" styleClass="menu-button" text="Highscore" onAction="#openHighscoreMenu"/>
-            <Button prefWidth="100.0" styleClass="menu-button" text="Exit" onAction="#exit" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="title" text="Martial Hero">
+            <font>
+               <Font name="System Bold" size="64.0" />
+            </font>
+            <HBox.margin>
+               <Insets top="250.0" />
+            </HBox.margin>
+         </Label>
+        </HBox>
+        <HBox alignment="CENTER" spacing="40.0">
+            <Button onAction="#openNameMenu" prefWidth="100.0" styleClass="menu-button" text="Play" />
+            <Button onAction="#openHighscoreMenu" prefWidth="200.0" styleClass="menu-button" text="Highscore" />
+            <Button onAction="#exit" prefWidth="100.0" styleClass="menu-button" text="Exit" />
+         <VBox.margin>
+            <Insets top="100.0" />
+         </VBox.margin>
         </HBox>
     </children>
 </VBox>

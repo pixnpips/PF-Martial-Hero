@@ -52,8 +52,9 @@ public class PlayerController {
         }
     }
     protected void openMapChoice() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/MapChoice.fxml", "Choose your Map");
+//        View = new FxmlView();
+//        View.load("/fxml/MapChoice.fxml", "Choose your Map");
+        FxmlView.setScenefromXML("/fxml/MapChoice.fxml");
     }
     protected boolean playerExists(String name){
         //Existiert der Name schon in der Datenbank?

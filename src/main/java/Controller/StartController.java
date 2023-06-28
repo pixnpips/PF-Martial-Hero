@@ -25,13 +25,15 @@ public class StartController {
 
     @FXML
     protected void openNameMenu() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/NameMenu.fxml", "Choose Player Names");
+//        View = new FxmlView();
+//        View.load("/fxml/NameMenu.fxml", "Choose Player Names");
+        FxmlView.setScenefromXML("/fxml/NameMenu.fxml");
     }
 
     @FXML
     protected void openHighscoreMenu() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
+//        View = new FxmlView();
+//        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
+        FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
     }
 }

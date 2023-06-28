@@ -60,14 +60,15 @@ public class PauseController {
         }
     }
     @FXML
-    private void StartMenu(){
-        Main.exit();
-        Main main = new Main();
-        try {
-            main.restart();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void StartMenu() throws IOException {
+//        Main.exit();
+//        Main main = new Main();
+//        try {
+//            main.restart();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        FxmlView.setScenefromXML("/fxml/StartMenu.fxml");
     }
 
     @FXML

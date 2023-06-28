@@ -14,12 +14,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        initStage = stage;
-        View = new FxmlView();
-        startStage = View.start(stage, "/fxml/StartMenu.fxml", "Martial Hero");
-        startStage.show();
-
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/StartMenu.fxml"));
+        System.out.println(fxmlLoader.getLocation());
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        stage.setTitle("Hello!");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        startStage=stage;
+        stage.show();
     }
+
     public static void main(String[] args) {
         launch();
     }
@@ -32,8 +36,9 @@ public class Main extends Application {
     }
 
     public void restart() throws IOException {
-        View = new FxmlView();
-        View.load("/fxml/StartMenu.fxml", "Martial Hero");
+//        View = new FxmlView();
+//        View.load("/fxml/StartMenu.fxml", "Martial Hero");
+        FxmlView.setScenefromXML("/fxml/StartMenu.fxml");
     }
 
 }
