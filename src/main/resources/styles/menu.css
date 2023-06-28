@@ -1,5 +1,4 @@
 .title {
-    -fx-font-size: 36px;
     -fx-text-fill: #f8f8f8;
     -fx-font-family: "Press Start 2P", monospace;
     -fx-effect: dropshadow(three-pass-box, black, 5, 0.4, 2, 2);

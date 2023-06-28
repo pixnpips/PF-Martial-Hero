@@ -121,21 +121,17 @@ public class MapController  {
         Main.startStage.show();
 
     }
-    public void endGame() {
-        Main.exit();
-        try {
-            openWinMenu();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void endGame () throws IOException {
+        openWinMenu();
     }
     @FXML
     private void openWinMenu() throws IOException {
         System.out.println("WinMenu");
-        View = new FxmlView();
-        View.load("/fxml/WinMenu.fxml", "WinMenu");
+//        View = new FxmlView();
+//        View.load("/fxml/WinMenu.fxml", "WinMenu");
+        FxmlView.setScenefromXML("/fxml/WinMenu.fxml");
         WinController WC = new WinController();
-        WC.setScene(View.getScene());
+        WC.setScene(Main.startStage.getScene());
         WC.setName(getWinner());
     }
 

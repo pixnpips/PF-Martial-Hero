@@ -11,8 +11,10 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import Controller.MapController;
 
+import java.io.IOException;
+
 public class Timer {
-    private int startSeconds = 60;
+    private int startSeconds = 5;
     private Timeline timeline;
     public final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     @FXML
@@ -31,12 +33,18 @@ public class Timer {
         startTimer(startSeconds);
     }
     public void startTimer(int seconds){
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTimer()));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> {
+            try {
+                updateTimer();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
         timeline.setCycleCount(Animation.INDEFINITE);
         secondsLeft.set(seconds);
         timeline.play();
     }
-    protected void updateTimer(){
+    protected void updateTimer() throws IOException {
         int s = secondsLeft.get();
         if(s > 0){
             secondsLeft.set(s-1);

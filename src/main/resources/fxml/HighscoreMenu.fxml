@@ -6,13 +6,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" styleClass="highBox" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WinController">
     <children>
         <Label alignment="CENTER" prefHeight="50.0" prefWidth="1920.0" styleClass="title" text="Highscores">
-         <padding>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-         </padding></Label>
+         <font>
+            <Font size="48.0" />
+         </font></Label>
             <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0" spacing="10.0">
                 <TableView fx:id="highscoreTable" layoutX="100.0" maxHeight="500.0" maxWidth="1000.0" minHeight="500.0" minWidth="1000.0" prefHeight="500.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
                     <columns>
@@ -23,8 +25,10 @@
                <Insets />
             </VBox.margin>
                 </TableView>
-                <Button alignment="CENTER" onAction="#openStartMenu" prefWidth="100.0" styleClass="menu-button" text="Start" />
-                <Button onAction="#exit" prefWidth="100.0" styleClass="menu-button" text="Exit" />
+                <HBox alignment="CENTER" spacing="40">
+                    <Button alignment="CENTER" onAction="#openStartMenu" prefWidth="100.0" styleClass="menu-button" text="Start" />
+                    <Button alignment="CENTER"  onAction="#exit" prefWidth="100.0" styleClass="menu-button" text="Exit" />
+                </HBox>
             </VBox>
     </children>
 </VBox>
