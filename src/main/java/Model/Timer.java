@@ -57,4 +57,9 @@ public class Timer {
     public void stopTimer(){
         timeline.stop();
     }
+
+    public void resetTimer(){
+        timeline.playFromStart();
+        stopTimer();
+    }
 }

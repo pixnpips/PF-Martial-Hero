@@ -38,7 +38,7 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
 
-    public Timer timer;
+    public static Timer timer;
     private FxmlView View;
 
     @FXML
@@ -130,6 +130,7 @@ public class MapController  {
 
     }
     public void endGame() throws IOException {
+        timer.resetTimer();
         openWinMenu();
     }
     @FXML
