@@ -52,9 +52,10 @@ public class SpriteAnimationController {
         private AnimationTimer moveAnimationTimer;
 
     private AnimationTimer attackAnimationTimer;
+    private boolean getHit;
 
 
-        //Dieser Konstruktor wird es werden, den muss ihc erstellen
+    //Dieser Konstruktor wird es werden, den muss ihc erstellen
 
         public SpriteAnimationController(Canvas C, int num){
 
@@ -113,6 +114,11 @@ public class SpriteAnimationController {
                             // Remember the current time for the next frame
                             lastFrameTime = currentTime;
 
+                            if(getHit&&currentFrameIndex==3){
+                                setIdle();
+                                getHit=false;
+                            }
+
                             if((attack1FramesLoaded||attack2FramesLoaded)&&currentFrameIndex==2){
                                 setAttack1(true);
                                 setAttack2(true);
@@ -126,6 +132,7 @@ public class SpriteAnimationController {
                                 attack1FramesLoaded=false;
                                 attack2FramesLoaded=false;
                             }
+
                         }
                     }
                 };
@@ -155,7 +162,8 @@ public class SpriteAnimationController {
 
     public void setGetHit() {
         this.frames=this.takeHitFrames;
-        currentFrameIndex = 0;
+        this.getHit=true;
+        currentFrameIndex = 1;
     }
 
     public void setDead(){
@@ -181,15 +189,19 @@ public class SpriteAnimationController {
     }
 
     public void setAttack1Frames() {
-        this.frames=this.attack1Frames;
-        this.attack1FramesLoaded=true;
-        currentFrameIndex = 0;
+            if(!getHit) {
+                this.frames = this.attack1Frames;
+                this.attack1FramesLoaded = true;
+                currentFrameIndex = 0;
+            }
     }
 
     public void setAttack2Frames() {
-        this.frames=this.attack2Frames;
-        this.attack2FramesLoaded=true;
-        this.currentFrameIndex = 0;
+            if(!getHit) {
+                this.frames = this.attack2Frames;
+                this.attack2FramesLoaded = true;
+                this.currentFrameIndex = 0;
+            }
     }
 
     public void setAttack1(boolean  b) {

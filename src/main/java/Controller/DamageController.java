@@ -122,12 +122,14 @@ public class DamageController implements PropertyChangeListener {
             System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
             if(num==1){
                 this.P2.reduceEnergy();
+                this.SAC2.setGetHit();
                 if(P2.getEnergy()<=0){
                     die();
                 }
             }
             else{
                 this.P1.reduceEnergy();
+                this.SAC1.setGetHit();
                 if(P1.getEnergy()<=0){
                     die();
                 }
