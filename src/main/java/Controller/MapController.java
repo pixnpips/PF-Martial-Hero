@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +40,12 @@ public class MapController  {
 
     public Timer timer;
     private FxmlView View;
+
+    @FXML
+    Label p1name;
+
+    @FXML
+    Label p2name;
 
 
     public MapController(){
@@ -102,6 +109,9 @@ public class MapController  {
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
+
+        p1name.textProperty().set(PlayerController.player1.getName());
+        p2name.textProperty().set(PlayerController.player2.getName());
 
         Main.startStage.setScene(scene);
 
