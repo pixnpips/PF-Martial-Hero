@@ -34,6 +34,9 @@ public class WinController {
             winnerName.textProperty().set("Unentschieden");
         }
     }
+    public void openMapChoice() throws IOException {
+        FxmlView.setScenefromXML("/fxml/MapChoice.fxml");
+    }
     public void openStartMenu() throws IOException {
 //        View = new FxmlView();
 //        View.load("/fxml/StartMenu.fxml", "Martial Hero");
