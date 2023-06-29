@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class FxmlView {
 
-    public FXMLLoader loader;
     private static Scene currentScene;
     private static Stage currentStage;
 
@@ -18,14 +17,14 @@ public class FxmlView {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(url));
         System.out.println(loader.getLocation());
         Scene scene = new Scene(loader.load(), 1920, 1080);
+        currentScene = scene;
         Main.startStage.setResizable(false);
         Main.startStage.setScene(scene);
         Main.startStage.hide();
         Main.startStage.show();
     }
 
-
-    public Scene getScene(){
+    public static Scene getScene(){
         return currentScene;
     }
     public void show(Stage stage){

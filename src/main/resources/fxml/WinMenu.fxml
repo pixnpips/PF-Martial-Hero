@@ -17,7 +17,7 @@
                   <Font size="96.0" />
                </font>
             </Label>
-            <Label id="name" fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" stylesheets="@../styles/menu.css" text="Name" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" stylesheets="@../styles/menu.css" text="Name" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="96.0" />
                </font>
