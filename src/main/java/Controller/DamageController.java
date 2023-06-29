@@ -87,7 +87,7 @@ public class DamageController implements PropertyChangeListener {
             case "attack21":
 //                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P1=(boolean) evt.getNewValue();
-                if(this.attack2_P2){this.getHit(this.SAC1.getPlayerNum());}
+                if(this.attack2_P1){this.getHit(this.SAC1.getPlayerNum());}
             break;
 
             case "attack12":
