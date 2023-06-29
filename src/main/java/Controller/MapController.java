@@ -1,12 +1,10 @@
 package Controller;
 
-import Model.Player;
 import View.FxmlView;
 import View.Main;
 import Model.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ProgressBar;
@@ -130,22 +128,8 @@ public class MapController  {
 //        View = new FxmlView();
 //        View.load("/fxml/WinMenu.fxml", "WinMenu");
         FxmlView.setScenefromXML("/fxml/WinMenu.fxml");
-    }
-
-    private String getWinner() {
-        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
-        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
-        String name;
-        if(hp01.getProgress()>hp02.getProgress()){
-            name = PlayerController.player1.getName();
-        }
-        else if(hp01.getProgress()<hp02.getProgress()){
-            name = PlayerController.player2.getName();
-        }
-        else{
-            name = "Unentschieden";
-        }
-        return name;
+        WinController WC = FxmlView.loader.getController();
+        WC.initialize(FxmlView.getScene());
     }
 
     @FXML

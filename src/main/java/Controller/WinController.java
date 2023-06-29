@@ -11,18 +11,20 @@ import java.io.IOException;
 
 public class WinController {
 
-    @FXML
     //private String name;
-    public Scene scene;
+    private Scene scene;
     @FXML
     private Label winnerName;
     private FxmlView View;
 
     public WinController(){
     }
-    @FXML
+    public void initialize(Scene scene){
+        this.scene = scene;
+        setName();
+    }
     public void setName(){
-        Scene scene = FxmlView.getScene();
+        //Scene scene = FxmlView.getScene();
         //this.name = name;
         winnerName = (Label) scene.lookup("#name");
         if(getWinner()!=null){
@@ -31,9 +33,6 @@ public class WinController {
         else{
             winnerName.textProperty().set("Unentschieden");
         }
-    }
-    public void setScene(Scene scene){
-        this.scene = FxmlView.getScene();
     }
     public void openStartMenu() throws IOException {
 //        View = new FxmlView();
