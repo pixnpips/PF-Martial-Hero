@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0" styleClass="pauseBox" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PauseController">
+<VBox layoutX="700" layoutY="400" prefHeight="400.0" prefWidth="600.0" spacing="20.0" styleClass="pauseBox" stylesheets="@../styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PauseController">
     <children>
         <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="title" text="Pause">
          <font>
