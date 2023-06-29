@@ -7,6 +7,7 @@ import javafx.scene.control.ProgressBar;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 
 public class DamageController implements PropertyChangeListener {
@@ -144,7 +145,11 @@ public class DamageController implements PropertyChangeListener {
     }
 
     public void die(){
-MC.endGame();
+        try {
+            MC.endGame();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

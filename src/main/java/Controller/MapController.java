@@ -89,7 +89,14 @@ public class MapController  {
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
         spriteAnimationController2.initialize();
 
-        GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2);
+//      GMC.setx_N1(10);
+        timer = new Timer();
+        timer.prepareTimer(scene);
+
+        pauseController = new PauseController();
+        pauseController.preparePause(scene, timer);
+
+        GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2,pauseController);
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
@@ -97,13 +104,6 @@ public class MapController  {
         GMC.addPropertyChangeListener(DC);
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
-
-//      GMC.setx_N1(10);
-        timer = new Timer();
-        timer.prepareTimer(scene);
-
-        pauseController = new PauseController();
-        pauseController.preparePause(scene, timer);
 
         Main.startStage.setScene(scene);
 
