@@ -24,6 +24,11 @@
             </Label>
             <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#openMapChoice" styleClass="menu-button" stylesheets="@../styles/menu.css" text="Rematch">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#openHighscoreMenu" styleClass="menu-button" stylesheets="@../styles/menu.css" text="Highscore">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
