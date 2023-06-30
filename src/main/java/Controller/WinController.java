@@ -7,12 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public class WinController {
@@ -61,7 +58,7 @@ public class WinController {
 //        View = new FxmlView();
 //        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
         FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
-        showTable();
+//        showTable();
     }
     public void exit(){
         Main.exit();
@@ -77,23 +74,23 @@ public class WinController {
     }
     public void setScene(Scene scene){this.scene=scene;}
 
-    public void showTable(){
-        highscoreTable = (TableView) scene.lookup("#highscoreTable");
-        List<String> players = DBC.getAllPlayers();
-        List<Integer> numbers=new ArrayList<>();
-        System.out.println(players);
-        TableColumn name = new TableColumn<>();
-        TableColumn wins = new TableColumn<>();
-
-        for(String player : players){
-            int winsn = DBC.getWinsByName(player);
-            numbers.add(winsn);
-            System.out.println(player + DBC.getWinsByName(player));
-
-            TableRow newRow = new TableRow();
-            // Füge die Zeile zur Tabelle hinzu
-            highscoreTable.getItems().add(newRow);
-        }
-    }
+//    public void showTable(){
+//        highscoreTable = (TableView) scene.lookup("#highscoreTable");
+//        List<String> players = DBC.getAllPlayers();
+//        List<Integer> numbers=new ArrayList<>();
+//        System.out.println(players);
+//        TableColumn name = new TableColumn<>();
+//        TableColumn wins = new TableColumn<>();
+//
+//        for(String player : players){
+//            int winsn = DBC.getWinsByName(player);
+//            numbers.add(winsn);
+//            System.out.println(player + DBC.getWinsByName(player));
+//
+//            TableRow newRow = new TableRow();
+//            // Füge die Zeile zur Tabelle hinzu
+//            highscoreTable.getItems().add(newRow);
+//        }
+//    }
 
 }

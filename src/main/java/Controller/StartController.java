@@ -38,7 +38,7 @@ public class StartController {
         FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
         winController = FxmlView.loader.getController();
         winController.setScene(FxmlView.getScene());
-        winController.showTable();
+//        winController.showTable();
 
 
     }
