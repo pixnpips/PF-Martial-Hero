@@ -37,9 +37,11 @@ public class SpriteAnimationController {
 
     private boolean attack2FramesLoaded;
 
-
+    private boolean getHit;
+    private boolean deadframesloaded =false;
     private boolean turn;
 
+    private boolean dead=false;
     private boolean beginn;
     private int currentFrameIndex;
     private long lastFrameTime;
@@ -51,8 +53,7 @@ public class SpriteAnimationController {
         // Hier wird der AnimationTimer initialisiert
         private AnimationTimer moveAnimationTimer;
 
-    private boolean getHit;
-    private boolean dead=false;
+
 
 
     //Dieser Konstruktor wird es werden, den muss ihc erstellen
@@ -80,7 +81,7 @@ public class SpriteAnimationController {
 
         public void initialize() {
             // Load the sprite frames
-            if(!dead) {
+            if(!deadframesloaded) {
                 this.frames = this.idleFrames;
             }
             {
@@ -89,7 +90,7 @@ public class SpriteAnimationController {
                     @Override
                     public void handle(long currentTime) {
 
-                        if(dead){System.out.println(currentFrameIndex);}
+                        if(deadframesloaded){System.out.println(currentFrameIndex);}
 
 
 
@@ -116,9 +117,10 @@ public class SpriteAnimationController {
 
                             // Update the frame index
 
-                            if(dead&&currentFrameIndex==5){
+                            if(deadframesloaded &&currentFrameIndex==5){
                                 moveAnimationTimer.stop();
                                 System.out.println("Endtstatus:" + frames.toString() +" "+ currentFrameIndex);
+                                setdead(true);
                             }
 
                             currentFrameIndex = (currentFrameIndex + 1) % frames.size();
@@ -174,27 +176,26 @@ public class SpriteAnimationController {
 
 
     public void setGetHit() {
-            if(!dead) {
+            if(!deadframesloaded) {
                 this.frames = this.takeHitFrames;
                 this.getHit = true;
                 currentFrameIndex = 1;
             }
     }
 
-    public void setDead(){
+    public void setDeadFrames(){
             this.attack1=false;
             this.attack2=false;
             this.attack1FramesLoaded=false;
             this.attack2FramesLoaded=false;
             this.getHit=false;
-            this.dead=true;
+            this.deadframesloaded =true;
             this.frames=this.deathFrames;
     }
 
     public void setBeginn(boolean b){
             this.beginn=b;
     }
-
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         changes.addPropertyChangeListener(l);
@@ -245,6 +246,12 @@ public class SpriteAnimationController {
         boolean oldValue = this.turn;
         this.turn=b;
         this.changes.firePropertyChange("turn"+this.playerNum, oldValue, this.turn);
+    }
+
+    public void setdead(boolean b){
+        boolean oldValue = this.dead;
+        this.dead=b;
+        this.changes.firePropertyChange("dead", oldValue, this.dead);
     }
 
     public int getPlayerNum(){

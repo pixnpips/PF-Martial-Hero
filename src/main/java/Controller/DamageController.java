@@ -1,8 +1,6 @@
 package Controller;
 
 import Model.Player;
-import Model.Timer;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.ProgressBar;
 
 import java.beans.PropertyChangeEvent;
@@ -36,6 +34,7 @@ public class DamageController implements PropertyChangeListener {
     ProgressBar pb2;
 
     private MapController MC= new MapController();
+    private boolean dead;
 
 
     public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
@@ -97,7 +96,16 @@ public class DamageController implements PropertyChangeListener {
                 this.attack2_P2=(boolean) evt.getNewValue();
                 if(this.attack2_P2){this.getHit(this.SAC2.getPlayerNum());}
                 break;
-
+            case "dead":
+                this.dead=(boolean) evt.getNewValue();
+                System.out.println("Tot?! "+ this.dead);
+                try {
+                    Thread.sleep(1000);
+                    die();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
         }
     }
 
@@ -120,7 +128,7 @@ public class DamageController implements PropertyChangeListener {
                 this.P2.reduceEnergy();
                 this.SAC2.setGetHit();
                 if(P2.getEnergy()<=0){
-                    this.SAC2.setDead();
+                    this.SAC2.setDeadFrames();
 //                    die();
                 }
             }
@@ -128,7 +136,7 @@ public class DamageController implements PropertyChangeListener {
                 this.P1.reduceEnergy();
                 this.SAC1.setGetHit();
                 if(P1.getEnergy()<=0){
-                    this.SAC1.setDead();
+                    this.SAC1.setDeadFrames();
 //                    die();
                 }
             }
