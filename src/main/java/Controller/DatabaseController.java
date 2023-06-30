@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Player;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +22,12 @@ public class DatabaseController {
     }
 
     // Spieler in die "players"-Tabelle einfügen
-    public void insertPlayer(String name, int wins, int loses) {
+    public void insertPlayer(Player player) {
         try {
-            String query = "INSERT INTO players (name, wins, loses) VALUES (?, ?, ?)";
+            String query = "INSERT INTO players (name, wins) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, name);
-            statement.setInt(2, wins);
-            statement.setInt(3, loses);
+            statement.setString(1, player.getName());
+            statement.setInt(2, player.getWins());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,29 +35,62 @@ public class DatabaseController {
     }
 
     // Wins eines Spielers aktualisieren
-    public void updateWins(String name, int wins) {
+    public void updateWins(Player player) {
         try {
             String query = "UPDATE players SET wins = ? WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, wins);
-            statement.setString(2, name);
+            statement.setInt(1, player.getWins());
+            statement.setString(2, player.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Loses eines Spielers aktualisieren
-    public void updateLoses(String name, int loses) {
+    // Spieler aus der "players"-Tabelle löschen
+    public void deletePlayer(String name) {
         try {
-            String query = "UPDATE players SET loses = ? WHERE name = ?";
+            String query = "DELETE FROM players WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, loses);
-            statement.setString(2, name);
+            statement.setString(1, name);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // Spieler in der "players"-Tabelle abrufen
+    public Player getPlayerByName(String name) {
+        try {
+            String query = "SELECT * FROM players WHERE name = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int wins = resultSet.getInt("wins");
+                return new Player(name, wins);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Überprüfen, ob ein Spieler in der "players"-Tabelle existiert
+    public boolean playerExists(String name) {
+        try {
+            String query = "SELECT COUNT(*) AS count FROM players WHERE name = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Alle Map-Namen aus der "maps"-Tabelle abrufen
@@ -88,93 +122,70 @@ public class DatabaseController {
         }
     }
 
-    // Highscore eines Spielers für eine bestimmte Map aktualisieren
+    // Highscore für einen Spieler und eine Map aktualisieren
     public void updateHighscore(String playerName, String map, int highscore) {
         try {
-            // Spieler-ID abrufen
-            int playerId = getPlayerIdByName(playerName);
+            int playerId = getPlayerId(playerName);
 
-            // Prüfen, ob die Kombination aus Spieler und Map bereits existiert
-            int mapId = getMapIdByPlayerAndMap(playerId, map);
-
-            if (mapId != -1) {
-                // Die Kombination aus Spieler und Map existiert bereits, Highscore aktualisieren
-                String query = "UPDATE maps SET highscore = ? WHERE id = ?";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setInt(1, highscore);
-                statement.setInt(2, mapId);
-                statement.executeUpdate();
-            } else {
-                // Die Kombination aus Spieler und Map existiert nicht, neuen Eintrag erstellen
-                String query = "INSERT INTO maps (map, highscore, player_id) VALUES (?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1, map);
-                statement.setInt(2, highscore);
-                statement.setInt(3, playerId);
-                statement.executeUpdate();
+            // Highscore in die "highscores"-Tabelle einfügen oder aktualisieren
+            if (playerId != -1) {
+                int currentHighscore = getHighscore(playerId, map);
+                if (currentHighscore == -1) {
+                    insertHighscore(playerId, map, highscore);
+                } else {
+                    if (highscore < currentHighscore) {
+                        updateHighscore(playerId, map, highscore);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Hilfsmethode: Spieler-ID anhand des Spielernamens abrufen
-    private int getPlayerIdByName(String playerName) {
-        int playerId = -1;
-        try {
-            String query = "SELECT id FROM players WHERE name = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, playerName);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                playerId = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Spieler-ID anhand des Namens abrufen
+    private int getPlayerId(String playerName) throws SQLException {
+        String query = "SELECT id FROM players WHERE name = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, playerName);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("id");
         }
-        return playerId;
+        return -1;
     }
 
-    // Hilfsmethode: Map-ID anhand des Spielers und des Map-Namens abrufen
-    private int getMapIdByPlayerAndMap(int playerId, String map) {
-        int mapId = -1;
-        try {
-            String query = "SELECT id FROM maps WHERE player_id = ? AND map = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, playerId);
-            statement.setString(2, map);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                mapId = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Highscore eines Spielers für eine bestimmte Map abrufen
+    private int getHighscore(int playerId, String map) throws SQLException {
+        String query = "SELECT highscore FROM highscores WHERE player_id = ? AND map = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, playerId);
+        statement.setString(2, map);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("highscore");
         }
-        return mapId;
+        return -1;
     }
 
-    // Spieler aus der "players"-Tabelle löschen
-    public void deletePlayer(String name) {
-        try {
-            String query = "DELETE FROM players WHERE name = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // Highscore eines Spielers für eine bestimmte Map in die "highscores"-Tabelle einfügen
+    private void insertHighscore(int playerId, String map, int highscore) throws SQLException {
+        String query = "INSERT INTO highscores (player_id, map, highscore) VALUES (?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, playerId);
+        statement.setString(2, map);
+        statement.setInt(3, highscore);
+        statement.executeUpdate();
     }
 
-    // Map aus der "maps"-Tabelle löschen
-    public void deleteMap(String map) {
-        try {
-            String query = "DELETE FROM maps WHERE map = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, map);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // Highscore eines Spielers für eine bestimmte Map in der "highscores"-Tabelle aktualisieren
+    private void updateHighscore(int playerId, String map, int highscore) throws SQLException {
+        String query = "UPDATE highscores SET highscore = ? WHERE player_id = ? AND map = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, highscore);
+        statement.setInt(2, playerId);
+        statement.setString(3, map);
+        statement.executeUpdate();
     }
 
     // Datenbankverbindung schließen

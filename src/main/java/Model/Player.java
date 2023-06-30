@@ -1,15 +1,6 @@
 package Model;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Player {
 
@@ -20,7 +11,7 @@ public class Player {
     private ProgressBar Healthbar;
 
 
-    public Player(String n){
+    public Player(String n, int wins){
         this.name=n;
         this.wins=0;
         this.energy=1.0;
