@@ -16,6 +16,7 @@ public class WinController {
     @FXML
     private Label winnerName;
     private FxmlView View;
+    DatabaseController DBC = new DatabaseController();
 
     public WinController(){
     }
@@ -27,6 +28,7 @@ public class WinController {
         //Scene scene = FxmlView.getScene();
         //this.name = name;
         winnerName = (Label) scene.lookup("#name");
+        DBC.updateWins(getWinner());
         if(getWinner()!=null){
             winnerName.textProperty().set(getWinner().getName());
         }

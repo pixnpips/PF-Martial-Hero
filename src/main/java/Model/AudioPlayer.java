@@ -1,4 +1,5 @@
 package Model;
+
 import javafx.scene.media.AudioClip;
 
 import static javafx.scene.media.AudioClip.INDEFINITE;

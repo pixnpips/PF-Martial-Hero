@@ -56,7 +56,7 @@ public class DatabaseController {
         try {
             String query = "UPDATE players SET wins = ? WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, player.getWins());
+            statement.setInt(1, player.getWins()+1);
             statement.setString(2, player.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
