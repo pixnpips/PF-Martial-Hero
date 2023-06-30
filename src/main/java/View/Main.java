@@ -1,5 +1,6 @@
 package View;
 
+import Model.AudioPlayer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ public class Main extends Application {
    public static Stage startStage;
    public static Stage initStage;
    public FxmlView View;
+   public static AudioPlayer AP;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,6 +24,8 @@ public class Main extends Application {
         stage.setScene(scene);
         startStage=stage;
         stage.show();
+        AP = new AudioPlayer();
+        AP.playBackgroundAudio();
     }
 
     public static void main(String[] args) {
@@ -33,6 +37,7 @@ public class Main extends Application {
 
     public static void exit(){
         startStage.close();
+        AP.stop();
     }
 
     public void restart() throws IOException {

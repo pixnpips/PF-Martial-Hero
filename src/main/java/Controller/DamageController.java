@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AudioPlayer;
 import Model.Player;
 import javafx.scene.control.ProgressBar;
 
@@ -35,6 +36,7 @@ public class DamageController implements PropertyChangeListener {
 
     private MapController MC= new MapController();
     private boolean dead;
+    AudioPlayer AP = new AudioPlayer();
 
 
     public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
@@ -98,6 +100,7 @@ public class DamageController implements PropertyChangeListener {
                 break;
             case "dead":
                 this.dead=(boolean) evt.getNewValue();
+                AP.playDeadAudio();
                 System.out.println("Tot?! "+ this.dead);
                 try {
                     Thread.sleep(1000);

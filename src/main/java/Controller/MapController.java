@@ -1,8 +1,8 @@
 package Controller;
 
+import Model.Timer;
 import View.FxmlView;
 import View.Main;
-import Model.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 
 public class MapController  {
@@ -141,6 +142,7 @@ public class MapController  {
         FxmlView.setScenefromXML("/fxml/WinMenu.fxml");
         WinController WC = FxmlView.loader.getController();
         WC.initialize(FxmlView.getScene());
+
     }
 
     @FXML
