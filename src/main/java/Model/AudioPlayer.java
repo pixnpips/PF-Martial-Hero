@@ -14,7 +14,7 @@ public class AudioPlayer {
     public void playBackgroundAudio(){
         background = new AudioClip(this.getClass().getResource("/sounds/685206__x1shi__video-game-music-seamless.wav").toExternalForm());
         background.setCycleCount(INDEFINITE);
-        background.setVolume(0.5);
+        background.setVolume(0.2);
         background.play();
     }
     public void playPunch1(){
