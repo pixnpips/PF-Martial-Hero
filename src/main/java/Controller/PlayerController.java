@@ -29,18 +29,22 @@ public class PlayerController {
     public void getNames() {
         name1 = input1.getText();
         name2 = input2.getText();
+        int wins = 0;
         if (name1.isEmpty() || name2.isEmpty()) {
             System.out.println("no input");
         } else {
-            if (playerExists(name1)) {
+            if (playerExists(name1) && !playerExists(name2)) {
                 // Player aus der Datenbank abrufen
                 player1 = getPlayerByName(name1);
+                player2 = new Player(name2, wins);
+                databaseController.insertPlayer(player2);
             }
-            if (playerExists(name2)) {
+            if (playerExists(name2) && !playerExists(name1)) {
                 // Player aus der Datenbank abrufen
                 player2 = getPlayerByName(name2);
+                player1 = new Player(name1, wins);
+                databaseController.insertPlayer(player1);
             } else {
-                int wins = 0;
                 player1 = new Player(name1, wins);
                 player2 = new Player(name2, wins);
                 // Player in die Datenbank einfügen
