@@ -44,7 +44,11 @@ public class PlayerController {
                 player2 = getPlayerByName(name2);
                 player1 = new Player(name1, wins);
                 databaseController.insertPlayer(player1);
-            } else {
+            }
+            if(playerExists(name1)&& playerExists(name2)){
+                player1 = getPlayerByName(name1);
+                player2 = getPlayerByName(name2);
+            }else {
                 player1 = new Player(name1, wins);
                 player2 = new Player(name2, wins);
                 // Player in die Datenbank einfügen

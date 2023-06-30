@@ -6,15 +6,26 @@ import View.Main;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class WinController {
 
     //private String name;
     private Scene scene;
     @FXML
     private Label winnerName;
+    @FXML
+    TableColumn names;
+    @FXML
+    TableView highscoreTable;
+
+    @FXML
+    TableColumn wins;
     private FxmlView View;
     DatabaseController DBC = new DatabaseController();
 
@@ -48,6 +59,7 @@ public class WinController {
 //        View = new FxmlView();
 //        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
         FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
+        showTable();
     }
     public void exit(){
         Main.exit();
@@ -60,6 +72,16 @@ public class WinController {
             return PlayerController.player2;
         }
         else{return null;}
+    }
+    public void setScene(Scene scene){this.scene=scene;}
+
+    public void showTable(){
+        highscoreTable = (TableView) scene.lookup("#highscoreTable");
+        List<Player> players = DBC.getAllPlayers();
+        for(Player player : players){
+            System.out.println(player.getName() + player.getWins());
+        }
+
     }
 
 }

@@ -12,6 +12,7 @@ public class StartController {
     @FXML
     private Label welcomeText;
     private FxmlView View;
+    private WinController winController;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -35,5 +36,10 @@ public class StartController {
 //        View = new FxmlView();
 //        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
         FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
+        winController = FxmlView.loader.getController();
+        winController.setScene(FxmlView.getScene());
+        winController.showTable();
+
+
     }
 }

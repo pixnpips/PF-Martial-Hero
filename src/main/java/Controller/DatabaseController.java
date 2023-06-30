@@ -126,6 +126,25 @@ public class DatabaseController {
         }
         return maps;
     }
+    public List<Player> getAllPlayers() {
+        List<Player> players = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM players";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int wins = resultSet.getInt("wins");
+                System.out.println(resultSet.toString());
+                Player player = new Player(name, wins);
+                players.add(player);
+                System.out.println(player.getName()+player.getWins());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return players;
+    }
 
     // Map in die "maps"-Tabelle einfügen
     public void insertMap(String map) {
