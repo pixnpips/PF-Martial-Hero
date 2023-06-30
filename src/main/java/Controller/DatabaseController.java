@@ -52,17 +52,37 @@ public class DatabaseController {
     }
 
     // Wins eines Spielers aktualisieren
-    public void updateWins(Player player) {
+    public void updateWins(String name) {
         try {
+            int currentWins = getWinsByName(name);
+            int newWins = currentWins + 1;
             String query = "UPDATE players SET wins = ? WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, player.getWins()+1);
-            statement.setString(2, player.getName());
+            statement.setInt(1, newWins);
+            statement.setString(2, name);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public int getWinsByName(String name) {
+        int wins=0;
+        try {
+            String query = "SELECT wins FROM players WHERE name = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                wins = resultSet.getInt("wins");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wins;
+    }
+
+
 
     // Spieler aus der "players"-Tabelle löschen
     public void deletePlayer(String name) {
@@ -126,24 +146,20 @@ public class DatabaseController {
         }
         return maps;
     }
-    public List<Player> getAllPlayers() {
-        List<Player> players = new ArrayList<>();
+    public List<String> getAllPlayers() {
+        List<String> playerNames = new ArrayList<>();
         try {
             String query = "SELECT * FROM players";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
-                int wins = resultSet.getInt("wins");
-                System.out.println(resultSet.toString());
-                Player player = new Player(name, wins);
-                players.add(player);
-                System.out.println(player.getName()+player.getWins());
+                playerNames.add(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return players;
+        return playerNames;
     }
 
     // Map in die "maps"-Tabelle einfügen

@@ -17,10 +17,6 @@
          </font></Label>
             <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0" spacing="10.0">
                 <TableView fx:id="highscoreTable" layoutX="100.0" maxHeight="500.0" maxWidth="1000.0" minHeight="500.0" minWidth="1000.0" prefHeight="500.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="nameColumn" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" text="Name" />
-                        <TableColumn fx:id="scoreColumn" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" text="Score" />
-                    </columns>
             <VBox.margin>
                <Insets />
             </VBox.margin>

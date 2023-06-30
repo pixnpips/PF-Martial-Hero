@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
@@ -39,7 +41,7 @@ public class WinController {
         //Scene scene = FxmlView.getScene();
         //this.name = name;
         winnerName = (Label) scene.lookup("#name");
-        DBC.updateWins(getWinner());
+        DBC.updateWins(getWinner().getName());
         if(getWinner()!=null){
             winnerName.textProperty().set(getWinner().getName());
         }
@@ -77,11 +79,21 @@ public class WinController {
 
     public void showTable(){
         highscoreTable = (TableView) scene.lookup("#highscoreTable");
-        List<Player> players = DBC.getAllPlayers();
-        for(Player player : players){
-            System.out.println(player.getName() + player.getWins());
-        }
+        List<String> players = DBC.getAllPlayers();
+        List<Integer> numbers=new ArrayList<>();
+        System.out.println(players);
+        TableColumn name = new TableColumn<>();
+        TableColumn wins = new TableColumn<>();
 
+        for(String player : players){
+            int winsn = DBC.getWinsByName(player);
+            numbers.add(winsn);
+            System.out.println(player + DBC.getWinsByName(player));
+
+            TableRow newRow = new TableRow();
+            // Füge die Zeile zur Tabelle hinzu
+            highscoreTable.getItems().add(newRow);
+        }
     }
 
 }

@@ -36,18 +36,22 @@ public class PlayerController {
             if (playerExists(name1) && !playerExists(name2)) {
                 // Player aus der Datenbank abrufen
                 player1 = getPlayerByName(name1);
+                //player1 = new Player(name1, databaseController.getWins(name1));
                 player2 = new Player(name2, wins);
                 databaseController.insertPlayer(player2);
             }
             if (playerExists(name2) && !playerExists(name1)) {
                 // Player aus der Datenbank abrufen
                 player2 = getPlayerByName(name2);
+                //player2 = new Player(name2, databaseController.getWins(name2));
                 player1 = new Player(name1, wins);
                 databaseController.insertPlayer(player1);
             }
             if(playerExists(name1)&& playerExists(name2)){
                 player1 = getPlayerByName(name1);
                 player2 = getPlayerByName(name2);
+                //player1 = new Player(name1, databaseController.getWins(name1));
+                //player2 = new Player(name2, databaseController.getWins(name2));
             }else {
                 player1 = new Player(name1, wins);
                 player2 = new Player(name2, wins);
