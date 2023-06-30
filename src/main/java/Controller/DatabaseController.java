@@ -11,11 +11,28 @@ public class DatabaseController {
 
     public DatabaseController() {
         // Verbindung zur Datenbank herstellen
-        String url = "jdbc:mysql://localhost:3306/MYSQL80";
+        String url = "jdbc:mysql://localhost:3306/mysql";
         String username = "root";
-        String password = "%v8yW4*LX6nKec*ryEEqc3Fkxtn#oAwC73uR6bd9V$KaLj!$hNFRg8dw*H85*nJ&";
+//        String password = "%v8yW4*LX6nKec*ryEEqc3Fkxtn#oAwC73uR6bd9V$KaLj!$hNFRg8dw*H85*nJ&";
+        String password = "";
+
         try {
             connection = DriverManager.getConnection(url, username, password);
+            Statement statement = connection.createStatement();
+
+            String createSchemaQuery = "CREATE SCHEMA IF NOT EXISTS martial_hero";
+            statement.executeUpdate(createSchemaQuery);
+
+            // Wechsle zur Verwendung des Schemas
+            String useSchemaQuery = "USE  martial_hero";
+            statement.executeUpdate(useSchemaQuery);
+                String createPlayersTableQuery = "CREATE TABLE IF NOT EXISTS players (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, wins INT, PRIMARY KEY (id))";
+                statement.executeUpdate(createPlayersTableQuery);
+                String createMapsTableQuery = "CREATE TABLE IF NOT EXISTS maps (id INT AUTO_INCREMENT, map VARCHAR(255) NOT NULL, PRIMARY KEY (id))";
+                statement.executeUpdate(createMapsTableQuery);
+                String createHighscoresTableQuery = "CREATE TABLE IF NOT EXISTS highscores (id INT AUTO_INCREMENT, player_id INT, map VARCHAR(255) NOT NULL, highscore INT, PRIMARY KEY (id), FOREIGN KEY (player_id) REFERENCES players(id))";
+                statement.executeUpdate(createHighscoresTableQuery);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
