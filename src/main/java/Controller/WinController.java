@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Player;
 import View.FxmlView;
 import View.Main;
 import javafx.fxml.FXML;
@@ -10,22 +11,31 @@ import java.io.IOException;
 
 public class WinController {
 
+    //private String name;
+    private Scene scene;
     @FXML
-    private String name;
-    public Scene scene;
-    @FXML
-    private Label nameLabel;
+    private Label winnerName;
     private FxmlView View;
 
     public WinController(){
     }
-    public void setName(String name){
-        this.name = name;
-        nameLabel = (Label) scene.lookup("#name");
-        nameLabel.textProperty().set(name);
-    }
-    public void setScene(Scene scene){
+    public void initialize(Scene scene){
         this.scene = scene;
+        setName();
+    }
+    public void setName(){
+        //Scene scene = FxmlView.getScene();
+        //this.name = name;
+        winnerName = (Label) scene.lookup("#name");
+        if(getWinner()!=null){
+            winnerName.textProperty().set(getWinner().getName());
+        }
+        else{
+            winnerName.textProperty().set("Unentschieden");
+        }
+    }
+    public void openMapChoice() throws IOException {
+        FxmlView.setScenefromXML("/fxml/MapChoice.fxml");
     }
     public void openStartMenu() throws IOException {
 //        View = new FxmlView();
@@ -39,6 +49,15 @@ public class WinController {
     }
     public void exit(){
         Main.exit();
+    }
+
+    public Player getWinner(){
+        if(PlayerController.player1.getEnergy()>PlayerController.player2.getEnergy()){
+            return PlayerController.player1;
+        } else if (PlayerController.player2.getEnergy() > PlayerController.player1.getEnergy()) {
+            return PlayerController.player2;
+        }
+        else{return null;}
     }
 
 }

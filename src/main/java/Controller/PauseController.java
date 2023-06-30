@@ -75,4 +75,8 @@ public class PauseController {
     private void exit(){
         Main.exit();
     }
+
+    public boolean getPaused(){
+        return this.paused;
+    }
 }

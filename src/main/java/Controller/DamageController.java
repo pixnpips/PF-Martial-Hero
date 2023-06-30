@@ -1,11 +1,13 @@
 package Controller;
 
+import Model.AudioPlayer;
 import Model.Player;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.ProgressBar;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+
 
 public class DamageController implements PropertyChangeListener {
 
@@ -31,6 +33,11 @@ public class DamageController implements PropertyChangeListener {
 
     ProgressBar pb1;
     ProgressBar pb2;
+
+    private MapController MC= new MapController();
+    private boolean dead;
+    AudioPlayer AP = new AudioPlayer();
+
 
     public DamageController(GlobalMoveController GMC,SpriteAnimationController S1, SpriteAnimationController S2){
         this.GMC= GMC;
@@ -75,27 +82,33 @@ public class DamageController implements PropertyChangeListener {
 //                System.out.println("Player 1 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P1=(boolean) evt.getNewValue();
                 if(this.attack1_P1){this.getHit(this.SAC1.getPlayerNum());}
-
             break;
-
             case "attack21":
 //                System.out.println("Player 1 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P1=(boolean) evt.getNewValue();
-                if(this.attack2_P2){this.getHit(this.SAC1.getPlayerNum());}
+                if(this.attack2_P1){this.getHit(this.SAC1.getPlayerNum());}
             break;
-
             case "attack12":
 //                System.out.println("Player 2 Attacke 1 :"+ evt.getNewValue());
                 this.attack1_P2=(boolean) evt.getNewValue();
                 if(this.attack1_P2){this.getHit(this.SAC2.getPlayerNum());}
                 break;
-
             case "attack22":
 //                System.out.println("Player 2 Attacke 2 :"+ evt.getNewValue());
                 this.attack2_P2=(boolean) evt.getNewValue();
                 if(this.attack2_P2){this.getHit(this.SAC2.getPlayerNum());}
                 break;
-
+            case "dead":
+                this.dead=(boolean) evt.getNewValue();
+                AP.playDeadAudio();
+                System.out.println("Tot?! "+ this.dead);
+                try {
+                    Thread.sleep(1000);
+                    die();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
         }
     }
 
@@ -113,8 +126,23 @@ public class DamageController implements PropertyChangeListener {
         if (num==1) {b1=attack1_P1; b2=attack2_P1;} else{b1=attack1_P2; b2=attack2_P2;}
 //        System.out.println(Math.abs(x_P2-x_P1));
         if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<30)&&(b1||b2))&&this.hitDirection(num)){
-            System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
-            if(num==1){this.P2.reduceEnergy();} else{this.P1.reduceEnergy();}
+//            System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
+            if(num==1){
+                this.P2.reduceEnergy();
+                this.SAC2.setGetHit();
+                if(P2.getEnergy()<=0){
+                    this.SAC2.setDeadFrames();
+//                    die();
+                }
+            }
+            else{
+                this.P1.reduceEnergy();
+                this.SAC1.setGetHit();
+                if(P1.getEnergy()<=0){
+                    this.SAC1.setDeadFrames();
+//                    die();
+                }
+            }
         }
     }
 
@@ -123,12 +151,16 @@ public class DamageController implements PropertyChangeListener {
         double x2;
         boolean turn;
         if(num==1){x1=x_P1; x2=x_P2; turn=this.SAC1.getturn();}else{x1=x_P2; x2=x_P1;turn=this.SAC2.getturn();}
-        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
+//        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
         return((x1<x2&&!turn)||(x2<x1&&turn));
     }
 
-    public void die(Player p){
-
+    public void die(){
+        try {
+            MC.endGame();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

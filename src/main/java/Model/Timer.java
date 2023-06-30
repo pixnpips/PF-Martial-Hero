@@ -14,7 +14,7 @@ import Controller.MapController;
 import java.io.IOException;
 
 public class Timer {
-    private int startSeconds = 5;
+    private int startSeconds = 30;
     private Timeline timeline;
     public final IntegerProperty secondsLeft = new SimpleIntegerProperty(startSeconds);
     @FXML
@@ -56,5 +56,10 @@ public class Timer {
     }
     public void stopTimer(){
         timeline.stop();
+    }
+
+    public void resetTimer(){
+        timeline.playFromStart();
+        stopTimer();
     }
 }

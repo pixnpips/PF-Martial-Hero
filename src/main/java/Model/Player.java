@@ -27,8 +27,8 @@ public class Player {
     }
 
     public void reduceEnergy() {
-        System.out.println(this.Healthbar.toString());
-        System.out.println(this.Healthbar.getProgress());
+//        System.out.println(this.Healthbar.toString());
+//        System.out.println(this.Healthbar.getProgress());
         this.Healthbar.setProgress((this.Healthbar.getProgress()-0.05));
     }
 
@@ -41,7 +41,7 @@ public class Player {
     }
 
     public double getEnergy() {
-        return energy;
+        return Healthbar.getProgress();
     }
 
     public ProgressBar getHealthbar() {

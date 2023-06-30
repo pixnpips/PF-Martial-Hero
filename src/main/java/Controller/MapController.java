@@ -1,14 +1,14 @@
 package Controller;
 
-import Model.Player;
+import Model.AudioPlayer;
 import View.FxmlView;
 import View.Main;
 import Model.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -39,8 +39,14 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController1;
     private SpriteAnimationController spriteAnimationController2;
 
-    public Timer timer;
+    public static Timer timer;
     private FxmlView View;
+
+    @FXML
+    Label p1name;
+
+    @FXML
+    Label p2name;
 
 
     public MapController(){
@@ -89,7 +95,14 @@ public class MapController  {
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
         spriteAnimationController2.initialize();
 
-        GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2);
+//      GMC.setx_N1(10);
+        timer = new Timer();
+        timer.prepareTimer(scene);
+
+        pauseController = new PauseController();
+        pauseController.preparePause(scene, timer);
+
+        GMC = new GlobalMoveController(C1,C2,scene,this.spriteAnimationController1, this.spriteAnimationController2,pauseController);
         GMC.start();
 
         // Hier werden die PropertyChangeListener gesettet
@@ -98,12 +111,8 @@ public class MapController  {
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
 
-//      GMC.setx_N1(10);
-        timer = new Timer();
-        timer.prepareTimer(scene);
-
-        pauseController = new PauseController();
-        pauseController.preparePause(scene, timer);
+        p1name.textProperty().set(PlayerController.player1.getName());
+        p2name.textProperty().set(PlayerController.player2.getName());
 
         Main.startStage.setScene(scene);
 
@@ -121,7 +130,8 @@ public class MapController  {
         Main.startStage.show();
 
     }
-    public void endGame () throws IOException {
+    public void endGame() throws IOException {
+        timer.resetTimer();
         openWinMenu();
     }
     @FXML
@@ -130,25 +140,8 @@ public class MapController  {
 //        View = new FxmlView();
 //        View.load("/fxml/WinMenu.fxml", "WinMenu");
         FxmlView.setScenefromXML("/fxml/WinMenu.fxml");
-        WinController WC = new WinController();
-        WC.setScene(Main.startStage.getScene());
-        WC.setName(getWinner());
-    }
-
-    private String getWinner() {
-        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
-        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
-        String name;
-        if(hp01.getProgress()>hp02.getProgress()){
-            name = PlayerController.player1.getName();
-        }
-        else if(hp01.getProgress()<hp02.getProgress()){
-            name = PlayerController.player2.getName();
-        }
-        else{
-            name = "Unentschieden";
-        }
-        return name;
+        WinController WC = FxmlView.loader.getController();
+        WC.initialize(FxmlView.getScene());
     }
 
     @FXML

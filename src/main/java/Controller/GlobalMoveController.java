@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AudioPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -59,7 +60,10 @@ public class GlobalMoveController extends Thread {
     private SpriteAnimationController SAC2;
     private Node BackGroundScrollPane;
 
-    public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2){
+    private PauseController PauseController;
+    AudioPlayer AP = new AudioPlayer();
+
+    public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2, PauseController PC){
         this.N1 =N1;
         this.N2 =N2;
         this.S=S;
@@ -69,6 +73,7 @@ public class GlobalMoveController extends Thread {
         this.changes= new PropertyChangeSupport(this);
         this.SAC2.setturn(true);
         this.SAC1.setturn(false);
+        this.PauseController=PC;
         System.out.println(BackGroundScrollPane.toString());
     }
 
@@ -76,44 +81,45 @@ public class GlobalMoveController extends Thread {
     private AnimationTimer translateTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            double xPos1=(N1.getTranslateX());
-            double xPos2=(N2.getTranslateX());
-            double xtemp=0;
-            double[]posTemp=getNodePositions();
+            double xPos1 = (N1.getTranslateX());
+            double xPos2 = (N2.getTranslateX());
+            double xtemp = 0;
+            double[] posTemp = getNodePositions();
             setx_N1(posTemp[0]);
             setx_N2(posTemp[2]);
 //            System.out.println(x_N1);
 //            System.out.println(x_N2);
-                if(!checkCollision()) {
+
+                if (!checkCollision()) {
                     checkBoarders();
-                    if (moveRightN1 &&!N1reachedlimitofPaneR) {
-                        xtemp=xPos1 + node1TranslateSpeed;
+                    if (moveRightN1 && !N1reachedlimitofPaneR) {
+                        xtemp = xPos1 + node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
 //                        setx_N1(xtemp);
                         setx_N1(posTemp[0]);
                     }
-                    if (moveLeftN1 &&!N1reachedlimitofPaneL) {
-                        xtemp=xPos1 - node1TranslateSpeed;
+                    if (moveLeftN1 && !N1reachedlimitofPaneL) {
+                        xtemp = xPos1 - node1TranslateSpeed;
                         N1.setTranslateX((xtemp));
 //                        setx_N1(xtemp);
                         setx_N1(posTemp[0]);
                     }
-                    if (moveRightN2 &&!N2reachedlimitofPaneR) {
-                        xtemp=xPos2 + node2TranslateSpeed;
+                    if (moveRightN2 && !N2reachedlimitofPaneR) {
+                        xtemp = xPos2 + node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
 //                        setx_N2(xtemp);
                         setx_N2(posTemp[2]);
                     }
-                    if (moveLeftN2 &&!N2reachedlimitofPaneL) {
-                        xtemp=xPos2 - node2TranslateSpeed;
+                    if (moveLeftN2 && !N2reachedlimitofPaneL) {
+                        xtemp = xPos2 - node2TranslateSpeed;
                         N2.setTranslateX((xtemp));
 //                        setx_N2(xtemp);
                         setx_N2(posTemp[2]);
                     }
                     resetBoarders();
-                }
-                else resetNodeCollision();
+                } else resetNodeCollision();
             }
+
     };
 
 
@@ -197,61 +203,75 @@ public class GlobalMoveController extends Thread {
     }
 
     private boolean handleKeyPressD(KeyEvent event) {
-        if (event.getCode() == KeyCode.D) {
-             moveRightN1 = true;
-             moveLeftN1 =false;
-            if(!Airtime1){SAC1.setRun();}
-            SAC1.setturn(false);
-//            System.out.println(this.getState());
-        }
-        if (event.getCode() == KeyCode.A) {
-            moveLeftN1 = true;
-            moveRightN1=false;
-            if(!Airtime1){SAC1.setRun();}
-            SAC1.setturn(true);
-//            System.out.println(this.getState());
-        }
-        if (event.getCode() == KeyCode.W) {
-            // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
-            node1JumpVelocity = -jump_amount;
-            SAC1.setJump();
-            this.jumpTimer1.start();
-        }
-        if (event.getCode() == KeyCode.E) {
-            SAC1.setAttack1Frames();
-        }
-        if (event.getCode() == KeyCode.Q) {
-            SAC1.setAttack2Frames();
-        }
+        if (!PauseController.getPaused()) {
+            if (event.getCode() == KeyCode.D) {
+                moveRightN1 = true;
+                moveLeftN1 = false;
+                if (!Airtime1) {
+                    SAC1.setRun();
+                }
+                SAC1.setturn(false);
+                //            System.out.println(this.getState());
+            }
+            if (event.getCode() == KeyCode.A) {
+                moveLeftN1 = true;
+                moveRightN1 = false;
+                if (!Airtime1) {
+                    SAC1.setRun();
+                }
+                SAC1.setturn(true);
+                //            System.out.println(this.getState());
+            }
+            if (event.getCode() == KeyCode.W) {
+                // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
+                node1JumpVelocity = -jump_amount;
+                SAC1.setJump();
+                this.jumpTimer1.start();
+            }
+            if (event.getCode() == KeyCode.E) {
+                SAC1.setAttack1Frames();
+                AP.playPunch1();
+            }
+            if (event.getCode() == KeyCode.Q) {
+                SAC1.setAttack2Frames();
+                AP.playPunch1();
+            }
 
-        if (event.getCode() == KeyCode.L) {
-            moveRightN2 = true;
-            moveLeftN2=false;
-            if(!Airtime2){SAC2.setRun();}
-            SAC2.setBeginn(false);
-            SAC2.setturn(false);
-        }
+            if (event.getCode() == KeyCode.L) {
+                moveRightN2 = true;
+                moveLeftN2 = false;
+                if (!Airtime2) {
+                    SAC2.setRun();
+                }
+                SAC2.setBeginn(false);
+                SAC2.setturn(false);
+            }
 
-        if (event.getCode() == KeyCode.J) {
-            moveLeftN2 = true;
-            moveRightN2=false;
-            if(!Airtime2){SAC2.setRun();}
-            SAC2.setturn(true);
-        }
+            if (event.getCode() == KeyCode.J) {
+                moveLeftN2 = true;
+                moveRightN2 = false;
+                if (!Airtime2) {
+                    SAC2.setRun();
+                }
+                SAC2.setturn(true);
+            }
 
-        if (event.getCode() == KeyCode.I ){
-            // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
-            SAC2.setJump();
-            Node2JumpVelocity = -jump_amount;
-            this.jumpTimer2.start();
-//            System.out.println(this.getState());
-        }
+            if (event.getCode() == KeyCode.I) {
+                // Führe einen Sprung aus, wenn die Taste "w" gwedrückt wird
+                SAC2.setJump();
+                Node2JumpVelocity = -jump_amount;
+                this.jumpTimer2.start();
+                //            System.out.println(this.getState());
+            }
 
-        if (event.getCode() == KeyCode.U) {
-            SAC2.setAttack1Frames();
-        }
-        if (event.getCode() == KeyCode.O) {
-            SAC2.setAttack2Frames();
+            if (event.getCode() == KeyCode.U) {
+                SAC2.setAttack1Frames();
+                AP.playPunch2();
+            }
+            if (event.getCode() == KeyCode.O) {
+                SAC2.setAttack2Frames();
+                AP.playPunch2();
+            }
         }
         return true;
     }
