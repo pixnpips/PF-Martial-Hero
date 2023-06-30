@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AudioPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -60,6 +61,7 @@ public class GlobalMoveController extends Thread {
     private Node BackGroundScrollPane;
 
     private PauseController PauseController;
+    AudioPlayer AP = new AudioPlayer();
 
     public GlobalMoveController(Node N1, Node N2, Scene S, SpriteAnimationController S1, SpriteAnimationController S2, PauseController PC){
         this.N1 =N1;
@@ -228,9 +230,11 @@ public class GlobalMoveController extends Thread {
             }
             if (event.getCode() == KeyCode.E) {
                 SAC1.setAttack1Frames();
+                AP.playPunch1();
             }
             if (event.getCode() == KeyCode.Q) {
                 SAC1.setAttack2Frames();
+                AP.playPunch1();
             }
 
             if (event.getCode() == KeyCode.L) {
@@ -262,9 +266,11 @@ public class GlobalMoveController extends Thread {
 
             if (event.getCode() == KeyCode.U) {
                 SAC2.setAttack1Frames();
+                AP.playPunch2();
             }
             if (event.getCode() == KeyCode.O) {
                 SAC2.setAttack2Frames();
+                AP.playPunch2();
             }
         }
         return true;

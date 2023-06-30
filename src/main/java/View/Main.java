@@ -25,7 +25,7 @@ public class Main extends Application {
         startStage=stage;
         stage.show();
         AP = new AudioPlayer();
-        AP.play();
+        AP.playBackgroundAudio();
     }
 
     public static void main(String[] args) {

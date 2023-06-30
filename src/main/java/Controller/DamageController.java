@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AudioPlayer;
 import Model.Player;
 import javafx.scene.control.ProgressBar;
 
@@ -153,6 +154,9 @@ public class DamageController implements PropertyChangeListener {
     }
 
     public void die(){
+        AudioPlayer audio = new AudioPlayer();
+        audio.playDeadAudio();
+        System.out.println("DeadAudio");
         try {
             MC.endGame();
         } catch (IOException e) {

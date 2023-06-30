@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AudioPlayer;
 import View.FxmlView;
 import View.Main;
 import Model.Timer;
