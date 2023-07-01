@@ -23,7 +23,7 @@ public class PlayerController {
     private DatabaseController databaseController;
 
     public PlayerController() {
-        databaseController = new DatabaseController();
+        databaseController = DatabaseController.getInstance();
     }
 
     public void getNames() {

@@ -8,12 +8,12 @@ import java.util.List;
 
 public class DatabaseController {
     private Connection connection;
+    private static DatabaseController instance;
 
-    public DatabaseController() {
+    private DatabaseController() {
         // Verbindung zur Datenbank herstellen
         String url = "jdbc:mysql://localhost:3306/mysql";
         String username = "root";
-//        String password = "%v8yW4*LX6nKec*ryEEqc3Fkxtn#oAwC73uR6bd9V$KaLj!$hNFRg8dw*H85*nJ&";
         String password = "";
 
         try {
@@ -24,21 +24,33 @@ public class DatabaseController {
             statement.executeUpdate(createSchemaQuery);
 
             // Wechsle zur Verwendung des Schemas
-            String useSchemaQuery = "USE  martial_hero";
+            String useSchemaQuery = "USE martial_hero";
             statement.executeUpdate(useSchemaQuery);
-                String createPlayersTableQuery = "CREATE TABLE IF NOT EXISTS players (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, wins INT, PRIMARY KEY (id))";
-                statement.executeUpdate(createPlayersTableQuery);
-                String createMapsTableQuery = "CREATE TABLE IF NOT EXISTS maps (id INT AUTO_INCREMENT, map VARCHAR(255) NOT NULL, PRIMARY KEY (id))";
-                statement.executeUpdate(createMapsTableQuery);
-                String createHighscoresTableQuery = "CREATE TABLE IF NOT EXISTS highscores (id INT AUTO_INCREMENT, player_id INT, map VARCHAR(255) NOT NULL, highscore INT, PRIMARY KEY (id), FOREIGN KEY (player_id) REFERENCES players(id))";
-                statement.executeUpdate(createHighscoresTableQuery);
 
+            String createPlayersTableQuery = "CREATE TABLE IF NOT EXISTS players (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, wins INT, PRIMARY KEY (id))";
+            statement.executeUpdate(createPlayersTableQuery);
+
+            String createMapsTableQuery = "CREATE TABLE IF NOT EXISTS maps (id INT AUTO_INCREMENT, map VARCHAR(255) NOT NULL, PRIMARY KEY (id))";
+            statement.executeUpdate(createMapsTableQuery);
+
+            String createHighscoresTableQuery = "CREATE TABLE IF NOT EXISTS highscores (id INT AUTO_INCREMENT, player_id INT, map VARCHAR(255) NOT NULL, highscore INT, PRIMARY KEY (id), FOREIGN KEY (player_id) REFERENCES players(id))";
+            statement.executeUpdate(createHighscoresTableQuery);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Spieler in die "players"-Tabelle einfügen
+    public static DatabaseController getInstance() {
+        if (instance == null) {
+            synchronized (DatabaseController.class) {
+                if (instance == null) {
+                    instance = new DatabaseController();
+                }
+            }
+        }
+        return instance;
+    }
+
     public void insertPlayer(Player player) {
         try {
             String query = "INSERT INTO players (name, wins) VALUES (?, ?)";
@@ -51,7 +63,6 @@ public class DatabaseController {
         }
     }
 
-    // Wins eines Spielers aktualisieren
     public void updateWins(String name) {
         try {
             int currentWins = getWinsByName(name);
@@ -67,7 +78,7 @@ public class DatabaseController {
     }
 
     public int getWinsByName(String name) {
-        int wins=0;
+        int wins = 0;
         try {
             String query = "SELECT wins FROM players WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -82,9 +93,6 @@ public class DatabaseController {
         return wins;
     }
 
-
-
-    // Spieler aus der "players"-Tabelle löschen
     public void deletePlayer(String name) {
         try {
             String query = "DELETE FROM players WHERE name = ?";
@@ -96,7 +104,6 @@ public class DatabaseController {
         }
     }
 
-    // Spieler in der "players"-Tabelle abrufen
     public Player getPlayerByName(String name) {
         try {
             String query = "SELECT * FROM players WHERE name = ?";
@@ -113,7 +120,6 @@ public class DatabaseController {
         return null;
     }
 
-    // Überprüfen, ob ein Spieler in der "players"-Tabelle existiert
     public boolean playerExists(String name) {
         try {
             String query = "SELECT COUNT(*) AS count FROM players WHERE name = ?";
@@ -130,7 +136,6 @@ public class DatabaseController {
         return false;
     }
 
-    // Alle Map-Namen aus der "maps"-Tabelle abrufen
     public List<String> getAllMaps() {
         List<String> maps = new ArrayList<>();
         try {
@@ -146,6 +151,7 @@ public class DatabaseController {
         }
         return maps;
     }
+
     public List<String> getAllPlayers() {
         List<String> playerNames = new ArrayList<>();
         try {
@@ -162,7 +168,6 @@ public class DatabaseController {
         return playerNames;
     }
 
-    // Map in die "maps"-Tabelle einfügen
     public void insertMap(String map) {
         try {
             String query = "INSERT INTO maps (map) VALUES (?)";
@@ -174,12 +179,9 @@ public class DatabaseController {
         }
     }
 
-    // Highscore für einen Spieler und eine Map aktualisieren
     public void updateHighscore(String playerName, String map, int highscore) {
         try {
             int playerId = getPlayerId(playerName);
-
-            // Highscore in die "highscores"-Tabelle einfügen oder aktualisieren
             if (playerId != -1) {
                 int currentHighscore = getHighscore(playerId, map);
                 if (currentHighscore == -1) {
@@ -195,7 +197,6 @@ public class DatabaseController {
         }
     }
 
-    // Spieler-ID anhand des Namens abrufen
     private int getPlayerId(String playerName) throws SQLException {
         String query = "SELECT id FROM players WHERE name = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -207,7 +208,6 @@ public class DatabaseController {
         return -1;
     }
 
-    // Highscore eines Spielers für eine bestimmte Map abrufen
     private int getHighscore(int playerId, String map) throws SQLException {
         String query = "SELECT highscore FROM highscores WHERE player_id = ? AND map = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -220,7 +220,6 @@ public class DatabaseController {
         return -1;
     }
 
-    // Highscore eines Spielers für eine bestimmte Map in die "highscores"-Tabelle einfügen
     private void insertHighscore(int playerId, String map, int highscore) throws SQLException {
         String query = "INSERT INTO highscores (player_id, map, highscore) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -230,7 +229,6 @@ public class DatabaseController {
         statement.executeUpdate();
     }
 
-    // Highscore eines Spielers für eine bestimmte Map in der "highscores"-Tabelle aktualisieren
     private void updateHighscore(int playerId, String map, int highscore) throws SQLException {
         String query = "UPDATE highscores SET highscore = ? WHERE player_id = ? AND map = ?";
         PreparedStatement statement = connection.prepareStatement(query);
