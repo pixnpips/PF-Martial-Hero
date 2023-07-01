@@ -26,7 +26,7 @@ public class WinController {
     @FXML
     TableColumn wins;
     private FxmlView View;
-    DatabaseController DBC = new DatabaseController();
+    DatabaseController DBC = DatabaseController.getInstance();
 
     public WinController(){
     }
