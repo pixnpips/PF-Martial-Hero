@@ -1,9 +1,10 @@
 package Controller;
 
 import Model.Player;
-import View.FxmlView;
+import View.FxmlViewFactory;
 import View.Main;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -26,18 +27,11 @@ public class WinController {
 
     @FXML
     TableColumn wins;
-    private FxmlView View;
-    DatabaseController DBC = DatabaseController.getInstance();
+    DatabaseController DBC = new DatabaseController();
 
     public WinController(){
     }
-    public void initialize(Scene scene) throws SQLException {
-        this.scene = scene;
-        setName();
-    }
     public void setName() throws SQLException {
-        //Scene scene = FxmlView.getScene();
-        //this.name = name;
         winnerName = (Label) scene.lookup("#name");
         DBC.updateWins(getWinner().getName());
         if(getWinner()!=null){
@@ -47,18 +41,35 @@ public class WinController {
             winnerName.textProperty().set("Unentschieden");
         }
     }
-    public void openMapChoice() throws IOException {
-        FxmlView.setScenefromXML("/fxml/MapChoice.fxml");
+    public void openMapChoice() {
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/MapChoice.fxml", 1920, 1080);
+            FXMLLoader loader = factory.getLoader();
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public void openStartMenu() throws IOException {
-//        View = new FxmlView();
-//        View.load("/fxml/StartMenu.fxml", "Martial Hero");
-        FxmlView.setScenefromXML("/fxml/StartMenu.fxml");
+    public void openStartMenu() {
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/StartMenu.fxml", 1920, 1080);
+            FXMLLoader loader = factory.getLoader();
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public void openHighscoreMenu() throws IOException{
-//        View = new FxmlView();
-//        View.load("/fxml/HighscoreMenu.fxml", "Highscore");
-        FxmlView.setScenefromXML("/fxml/HighscoreMenu.fxml");
+    public void openHighscoreMenu(){
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/HighscoreMenu.fxml", 1920, 1080);
+            FXMLLoader loader = factory.getLoader();
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        showTable();
     }
     public void exit(){
@@ -76,25 +87,13 @@ public class WinController {
         }
         else{return null;}
     }
-    public void setScene(Scene scene){this.scene=scene;}
-
-//    public void showTable(){
-//        highscoreTable = (TableView) scene.lookup("#highscoreTable");
-//        List<String> players = DBC.getAllPlayers();
-//        List<Integer> numbers=new ArrayList<>();
-//        System.out.println(players);
-//        TableColumn name = new TableColumn<>();
-//        TableColumn wins = new TableColumn<>();
-//
-//        for(String player : players){
-//            int winsn = DBC.getWinsByName(player);
-//            numbers.add(winsn);
-//            System.out.println(player + DBC.getWinsByName(player));
-//
-//            TableRow newRow = new TableRow();
-//            // Füge die Zeile zur Tabelle hinzu
-//            highscoreTable.getItems().add(newRow);
-//        }
-//    }
+    public void setScene(Scene scene){
+        this.scene=scene;
+        try {
+            setName();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
