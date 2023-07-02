@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Timer;
 import View.FxmlView;
+import View.FxmlViewFactory;
 import View.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +41,7 @@ public class MapController  {
     private SpriteAnimationController spriteAnimationController2;
 
     public static Timer timer;
+    private WinController winController;
     private FxmlView View;
 
     @FXML
@@ -52,38 +54,31 @@ public class MapController  {
     public MapController(){
     }
 
-    public void chooseMap(int mapNr){
-        if(mapNr==1){
-            background.getStyleClass().add("map01");
-        } else {
-            background.getStyleClass().add("map02");
+    @FXML
+    protected void openMap(int mapNr) {
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            scene = factory.createSceneFromFXML("/fxml/Map.fxml", 1920, 1080);
+            FXMLLoader loader = factory.getLoader();
+            loader.setController(this);
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-    @FXML
-    public void map1() throws IOException {
-        openMap(1);
-    }
-    @FXML
-    public void map2() throws IOException {
-        openMap(2);
-    }
 
-    @FXML
-    protected void openMap(int mapNr)  throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Map.fxml"));
-        System.out.println(fxmlLoader.getLocation());
-        fxmlLoader.setController(this);
-
-        scene = new Scene(fxmlLoader.load(), 1920, 1080);
-
+        background = (VBox) scene.lookup("#background");
         chooseMap(mapNr);
 
         Canvas C1 = new Canvas(1000, 500);
         C1.setLayoutX(000); // X-Koordinate: 1200 Pixel
         C1.setLayoutY(300); // Y-Koordinate: 400 Pixelad
+        AnchorPane SpritePane = (AnchorPane) scene.lookup("#SpritePane");
         SpritePane.getChildren().add(C1);
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
         spriteAnimationController1.initialize();
+
+        ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
+        ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
 
         PlayerController.player1.setHealthbar(hp01);
         PlayerController.player2.setHealthbar(hp02);
@@ -95,7 +90,6 @@ public class MapController  {
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
         spriteAnimationController2.initialize();
 
-//      GMC.setx_N1(10);
         timer = new Timer();
         timer.prepareTimer(scene);
 
@@ -111,37 +105,45 @@ public class MapController  {
         spriteAnimationController1.addPropertyChangeListener(DC);
         spriteAnimationController2.addPropertyChangeListener(DC);
 
+        Label p1name = (Label) scene.lookup("#p1name");
+        Label p2name = (Label) scene.lookup("#p2name");
+
         p1name.textProperty().set(PlayerController.player1.getName());
         p2name.textProperty().set(PlayerController.player2.getName());
-
-        Main.startStage.setScene(scene);
-
-        System.out.println(scene.getWindow().getWidth());
-        System.out.println(scene.getWindow().getHeight());
-
-        scene.getWindow().setWidth(1920);
-        scene.getWindow().setHeight(1080);
-
-        System.out.println(scene.getWindow().getWidth());
-        System.out.println(scene.getWindow().getHeight());
-
-        Main.startStage.setResizable(false);
-        Main.startStage.hide();
-        Main.startStage.show();
-
     }
-    public void endGame() throws IOException {
+    public void chooseMap(int mapNr){
+        if(mapNr==1){
+            background.getStyleClass().add("map01");
+        } else {
+            background.getStyleClass().add("map02");
+        }
+    }
+    @FXML
+    public void map1() {
+        openMap(1);
+    }
+    @FXML
+    public void map2() {
+        openMap(2);
+    }
+    public void endGame() {
         timer.resetTimer();
         openWinMenu();
     }
     @FXML
-    private void openWinMenu() throws IOException {
+    private void openWinMenu() {
         System.out.println("WinMenu");
-//        View = new FxmlView();
-//        View.load("/fxml/WinMenu.fxml", "WinMenu");
-        FxmlView.setScenefromXML("/fxml/WinMenu.fxml");
-        WinController WC = FxmlView.loader.getController();
-        WC.initialize(FxmlView.getScene());
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/WinMenu.fxml", 1920, 1080);
+            FXMLLoader loader = factory.getLoader();
+            winController = loader.getController();
+            winController.setScene(scene);
+
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

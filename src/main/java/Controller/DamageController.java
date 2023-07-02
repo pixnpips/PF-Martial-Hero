@@ -156,11 +156,7 @@ public class DamageController implements PropertyChangeListener {
     }
 
     public void die(){
-        try {
-            MC.endGame();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        MC.endGame();
     }
 
 }
