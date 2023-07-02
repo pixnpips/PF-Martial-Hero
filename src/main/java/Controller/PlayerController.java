@@ -34,7 +34,7 @@ public class PlayerController {
         if (name1.isEmpty() || name2.isEmpty()) {
             System.out.println("no input");
         } else {
-            /*if (playerExists(name1) && !playerExists(name2)) {
+            if (playerExists(name1) && !playerExists(name2)) {
                 // Player aus der Datenbank abrufen
                 player1 = getPlayerByName(name1);
                 //player1 = new Player(name1, databaseController.getWins(name1));
@@ -59,9 +59,7 @@ public class PlayerController {
                 // Player in die Datenbank einfügen
                 databaseController.insertPlayer(player1);
                 databaseController.insertPlayer(player2);
-            }*/
-            player1 = new Player(name1, wins);
-            player2 = new Player(name2, wins);
+            }
             System.out.println(name1);
             System.out.println(name2);
             try {
