@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @SuppressWarnings("rawtypes")
 public class WinController {
@@ -30,11 +31,11 @@ public class WinController {
 
     public WinController(){
     }
-    public void initialize(Scene scene){
+    public void initialize(Scene scene) throws SQLException {
         this.scene = scene;
         setName();
     }
-    public void setName(){
+    public void setName() throws SQLException {
         //Scene scene = FxmlView.getScene();
         //this.name = name;
         winnerName = (Label) scene.lookup("#name");
@@ -64,10 +65,13 @@ public class WinController {
         Main.exit();
     }
 
-    public Player getWinner(){
+    public Player getWinner() throws SQLException {
         if(PlayerController.player1.getEnergy()>PlayerController.player2.getEnergy()){
+            DBC.insertHighscore(1,"Map1",PlayerController.player1.getWins()+1);
             return PlayerController.player1;
+
         } else if (PlayerController.player2.getEnergy() > PlayerController.player1.getEnergy()) {
+            DBC.insertHighscore(2,"Map1",PlayerController.player2.getWins()+1);
             return PlayerController.player2;
         }
         else{return null;}

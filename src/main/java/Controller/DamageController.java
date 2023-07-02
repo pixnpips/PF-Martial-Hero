@@ -7,6 +7,7 @@ import javafx.scene.control.ProgressBar;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class DamageController implements PropertyChangeListener {
@@ -159,6 +160,8 @@ public class DamageController implements PropertyChangeListener {
         try {
             MC.endGame();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

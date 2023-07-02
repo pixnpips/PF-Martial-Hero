@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import Controller.MapController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Timer {
     private int startSeconds = 30;
@@ -51,7 +52,11 @@ public class Timer {
         }
         else if (s == 0){
             stopTimer();
-            mapController.endGame();
+            try {
+                mapController.endGame();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void stopTimer(){

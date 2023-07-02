@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseController {
-    private Connection connection;
+    private static Connection connection;
     private static DatabaseController instance;
 
     private DatabaseController() {
@@ -197,7 +197,7 @@ public class DatabaseController {
         }
     }
 
-    private int getPlayerId(String playerName) throws SQLException {
+   public int getPlayerId(String playerName) throws SQLException {
         String query = "SELECT id FROM players WHERE name = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, playerName);
@@ -208,7 +208,7 @@ public class DatabaseController {
         return -1;
     }
 
-    private int getHighscore(int playerId, String map) throws SQLException {
+   public int getHighscore(int playerId, String map) throws SQLException {
         String query = "SELECT highscore FROM highscores WHERE player_id = ? AND map = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, playerId);
@@ -220,7 +220,7 @@ public class DatabaseController {
         return -1;
     }
 
-    private void insertHighscore(int playerId, String map, int highscore) throws SQLException {
+    public static void insertHighscore(int playerId, String map, int highscore) throws SQLException {
         String query = "INSERT INTO highscores (player_id, map, highscore) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, playerId);
@@ -229,7 +229,7 @@ public class DatabaseController {
         statement.executeUpdate();
     }
 
-    private void updateHighscore(int playerId, String map, int highscore) throws SQLException {
+    public void updateHighscore(int playerId, String map, int highscore) throws SQLException {
         String query = "UPDATE highscores SET highscore = ? WHERE player_id = ? AND map = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, highscore);

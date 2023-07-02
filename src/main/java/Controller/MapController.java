@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MapController  {
 
@@ -130,12 +131,12 @@ public class MapController  {
         Main.startStage.show();
 
     }
-    public void endGame() throws IOException {
+    public void endGame() throws IOException, SQLException {
         timer.resetTimer();
         openWinMenu();
     }
     @FXML
-    private void openWinMenu() throws IOException {
+    private void openWinMenu() throws IOException, SQLException {
         System.out.println("WinMenu");
 //        View = new FxmlView();
 //        View.load("/fxml/WinMenu.fxml", "WinMenu");
