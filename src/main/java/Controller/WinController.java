@@ -30,10 +30,6 @@ public class WinController {
 
     public WinController(){
     }
-    public void initialize(Scene scene){
-        this.scene = scene;
-        setName();
-    }
     public void setName(){
         winnerName = (Label) scene.lookup("#name");
         DBC.updateWins(getWinner().getName());
@@ -87,7 +83,10 @@ public class WinController {
         }
         else{return null;}
     }
-    public void setScene(Scene scene){this.scene=scene;}
+    public void setScene(Scene scene){
+        this.scene=scene;
+        setName();
+    }
 
 //    public void showTable(){
 //        highscoreTable = (TableView) scene.lookup("#highscoreTable");
