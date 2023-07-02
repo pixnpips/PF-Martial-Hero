@@ -10,7 +10,7 @@ public class DatabaseController {
     private static Connection connection;
     private static DatabaseController instance;
 
-    private DatabaseController() {
+    public DatabaseController() {
         // Verbindung zur Datenbank herstellen
         String url = "jdbc:mysql://localhost:3306/mysql";
         String username = "root";

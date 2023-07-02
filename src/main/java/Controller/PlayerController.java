@@ -1,8 +1,11 @@
 package Controller;
 
 import Model.Player;
-import View.FxmlView;
+import View.FxmlViewFactory;
+import View.Main;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -18,8 +21,6 @@ public class PlayerController {
 
     public static Player player1;
     public static Player player2;
-
-    private FxmlView view;
     private DatabaseController databaseController;
 
     public PlayerController() {
@@ -70,7 +71,13 @@ public class PlayerController {
     }
 
     protected void openMapChoice() throws IOException {
-        FxmlView.setScenefromXML("/fxml/MapChoice.fxml");
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/MapChoice.fxml", 1920, 1080);
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected boolean playerExists(String name) {
