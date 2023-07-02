@@ -6,7 +6,6 @@ import javafx.scene.control.ProgressBar;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 
 public class DamageController implements PropertyChangeListener {
@@ -112,27 +111,16 @@ public class DamageController implements PropertyChangeListener {
         }
     }
 
-    public void reducePb1(){
-        this.pb1.setProgress(this.pb1.getProgress()-10);
-    }
-
-    public void reducePb2(){
-        this.pb2.setProgress(this.pb2.getProgress()-10);
-    }
-
     public void getHit(int num){
         boolean b1;
         boolean b2;
         if (num==1) {b1=attack1_P1; b2=attack2_P1;} else{b1=attack1_P2; b2=attack2_P2;}
-//        System.out.println(Math.abs(x_P2-x_P1));
         if (((Math.abs(x_P2-x_P1)<630&&Math.abs(y_P1-y_P2)<30)&&(b1||b2))&&this.hitDirection(num)){
-//            System.out.println("Player " + num + "hat getroffen! Höhenunterschied:"+ Math.abs(y_P1-y_P2));
             if(num==1){
                 this.P2.reduceEnergy();
                 this.SAC2.setGetHit();
                 if(P2.getEnergy()<=0){
                     this.SAC2.setDeadFrames();
-//                    die();
                 }
             }
             else{
@@ -140,7 +128,6 @@ public class DamageController implements PropertyChangeListener {
                 this.SAC1.setGetHit();
                 if(P1.getEnergy()<=0){
                     this.SAC1.setDeadFrames();
-//                    die();
                 }
             }
         }
@@ -151,7 +138,6 @@ public class DamageController implements PropertyChangeListener {
         double x2;
         boolean turn;
         if(num==1){x1=x_P1; x2=x_P2; turn=this.SAC1.getturn();}else{x1=x_P2; x2=x_P1;turn=this.SAC2.getturn();}
-//        System.out.println("Hitdirection Player " +num +" "+ ((x1<x2&&!turn)||(x2<x1&&turn)));
         return((x1<x2&&!turn)||(x2<x1&&turn));
     }
 

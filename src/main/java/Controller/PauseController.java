@@ -1,10 +1,11 @@
 package Controller;
 
 import Model.Timer;
-import View.FxmlView;
+import View.FxmlViewFactory;
 import View.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.KeyCode;
@@ -19,7 +20,6 @@ public class PauseController {
     private static boolean paused;
     private static Timer timer;
     private EventHandler<KeyEvent> pauseHandler;
-    private FxmlView View;
 
     public PauseController(){
     }
@@ -60,15 +60,14 @@ public class PauseController {
         }
     }
     @FXML
-    private void StartMenu() throws IOException {
-//        Main.exit();
-//        Main main = new Main();
-//        try {
-//            main.restart();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        FxmlView.setScenefromXML("/fxml/StartMenu.fxml");
+    private void StartMenu() {
+        FxmlViewFactory factory = new FxmlViewFactory();
+        try {
+            Scene scene = factory.createSceneFromFXML("/fxml/StartMenu.fxml", 1920, 1080);
+            factory.showOnStage(scene, Main.startStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

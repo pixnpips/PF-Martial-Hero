@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Timer;
-import View.FxmlView;
 import View.FxmlViewFactory;
 import View.Main;
 import javafx.fxml.FXML;
@@ -42,7 +41,6 @@ public class MapController  {
 
     public static Timer timer;
     private WinController winController;
-    private FxmlView View;
 
     @FXML
     Label p1name;
@@ -132,7 +130,6 @@ public class MapController  {
     }
     @FXML
     private void openWinMenu() {
-        System.out.println("WinMenu");
         FxmlViewFactory factory = new FxmlViewFactory();
         try {
             Scene scene = factory.createSceneFromFXML("/fxml/WinMenu.fxml", 1920, 1080);
