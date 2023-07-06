@@ -6,11 +6,10 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
 import java.beans.*;
 import java.util.List;
 
-public class SpriteAnimationController {
+public class SpriteAnimationController extends Thread{
 
     private PropertyChangeSupport changes;
 
@@ -58,7 +57,7 @@ public class SpriteAnimationController {
 
     //Dieser Konstruktor wird es werden, den muss ihc erstellen
 
-        public SpriteAnimationController(Canvas C, int num){
+        public SpriteAnimationController (Canvas C, int num){
 
             this.playerNum=num;
             this.canvas=C;
@@ -78,8 +77,8 @@ public class SpriteAnimationController {
 
         // Hier werden sämtliche Animationen als Arraylisten in das Sprite Modell als Objektattribute geladen
 
-
-        public void initialize() {
+        @Override
+        public void run() {
             // Load the sprite frames
             if(!deadframesloaded) {
                 this.frames = this.idleFrames;

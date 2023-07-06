@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class MapController  {
 
@@ -74,7 +73,7 @@ public class MapController  {
         AnchorPane SpritePane = (AnchorPane) scene.lookup("#SpritePane");
         SpritePane.getChildren().add(C1);
         spriteAnimationController1 = new SpriteAnimationController(C1,1);
-        spriteAnimationController1.initialize();
+        spriteAnimationController1.run();
 
         ProgressBar hp01 = (ProgressBar) scene.lookup("#hp01");
         ProgressBar hp02 = (ProgressBar) scene.lookup("#hp02");
@@ -87,7 +86,7 @@ public class MapController  {
         C2.setLayoutY(270); // Y-Koordinate: 400 Pixel
         SpritePane.getChildren().add(C2);
         spriteAnimationController2 = new SpriteAnimationController(C2,2);
-        spriteAnimationController2.initialize();
+        spriteAnimationController2.run();
 
         timer = new Timer();
         timer.prepareTimer(scene);
