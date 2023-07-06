@@ -27,7 +27,7 @@ public class WinController {
 
     @FXML
     TableColumn wins;
-    DatabaseController DBC = new DatabaseController();
+    DatabaseController DBC = DatabaseController.getInstance();
 
     public WinController(){
     }
